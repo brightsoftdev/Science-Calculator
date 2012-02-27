@@ -1,0 +1,296 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		799A9CC314F9B2EA00454F81 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC214F9B2EA00454F81 /* UIKit.framework */; };
+		799A9CC514F9B2EA00454F81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC414F9B2EA00454F81 /* Foundation.framework */; };
+		799A9CC714F9B2EA00454F81 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC614F9B2EA00454F81 /* CoreGraphics.framework */; };
+		799A9CCD14F9B2EA00454F81 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CCB14F9B2EA00454F81 /* InfoPlist.strings */; };
+		799A9CCF14F9B2EA00454F81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 799A9CCE14F9B2EA00454F81 /* main.m */; };
+		799A9CD314F9B2EA00454F81 /* DZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 799A9CD214F9B2EA00454F81 /* DZAppDelegate.m */; };
+		799A9CD614F9B2EA00454F81 /* DZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799A9CD514F9B2EA00454F81 /* DZViewController.m */; };
+		799A9CD914F9B2EA00454F81 /* DZViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CD714F9B2EA00454F81 /* DZViewController.xib */; };
+		799A9CE514F9D91200454F81 /* button50x42.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CE314F9D91200454F81 /* button50x42.png */; };
+		799A9CE614F9D91200454F81 /* button50x42pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CE414F9D91200454F81 /* button50x42pressed.png */; };
+		799A9CE914F9EA1500454F81 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CE814F9EA1500454F81 /* background.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		799A9CBE14F9B2EA00454F81 /* ScienceCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScienceCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		799A9CC214F9B2EA00454F81 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		799A9CC414F9B2EA00454F81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		799A9CC614F9B2EA00454F81 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		799A9CCA14F9B2EA00454F81 /* ScienceCalculator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ScienceCalculator-Info.plist"; sourceTree = "<group>"; };
+		799A9CCC14F9B2EA00454F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		799A9CCE14F9B2EA00454F81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		799A9CD014F9B2EA00454F81 /* ScienceCalculator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ScienceCalculator-Prefix.pch"; sourceTree = "<group>"; };
+		799A9CD114F9B2EA00454F81 /* DZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZAppDelegate.h; sourceTree = "<group>"; };
+		799A9CD214F9B2EA00454F81 /* DZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZAppDelegate.m; sourceTree = "<group>"; };
+		799A9CD414F9B2EA00454F81 /* DZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZViewController.h; sourceTree = "<group>"; };
+		799A9CD514F9B2EA00454F81 /* DZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZViewController.m; sourceTree = "<group>"; };
+		799A9CD814F9B2EA00454F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DZViewController.xib; sourceTree = "<group>"; };
+		799A9CE314F9D91200454F81 /* button50x42.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button50x42.png; sourceTree = "<group>"; };
+		799A9CE414F9D91200454F81 /* button50x42pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button50x42pressed.png; sourceTree = "<group>"; };
+		799A9CE814F9EA1500454F81 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		799A9CBB14F9B2EA00454F81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				799A9CC314F9B2EA00454F81 /* UIKit.framework in Frameworks */,
+				799A9CC514F9B2EA00454F81 /* Foundation.framework in Frameworks */,
+				799A9CC714F9B2EA00454F81 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		799A9CB314F9B2EA00454F81 = {
+			isa = PBXGroup;
+			children = (
+				799A9CC814F9B2EA00454F81 /* ScienceCalculator */,
+				799A9CC114F9B2EA00454F81 /* Frameworks */,
+				799A9CBF14F9B2EA00454F81 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		799A9CBF14F9B2EA00454F81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				799A9CBE14F9B2EA00454F81 /* ScienceCalculator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		799A9CC114F9B2EA00454F81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				799A9CC214F9B2EA00454F81 /* UIKit.framework */,
+				799A9CC414F9B2EA00454F81 /* Foundation.framework */,
+				799A9CC614F9B2EA00454F81 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		799A9CC814F9B2EA00454F81 /* ScienceCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				799A9CE814F9EA1500454F81 /* background.png */,
+				799A9CE314F9D91200454F81 /* button50x42.png */,
+				799A9CE414F9D91200454F81 /* button50x42pressed.png */,
+				799A9CD114F9B2EA00454F81 /* DZAppDelegate.h */,
+				799A9CD214F9B2EA00454F81 /* DZAppDelegate.m */,
+				799A9CD414F9B2EA00454F81 /* DZViewController.h */,
+				799A9CD514F9B2EA00454F81 /* DZViewController.m */,
+				799A9CD714F9B2EA00454F81 /* DZViewController.xib */,
+				799A9CC914F9B2EA00454F81 /* Supporting Files */,
+			);
+			path = ScienceCalculator;
+			sourceTree = "<group>";
+		};
+		799A9CC914F9B2EA00454F81 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				799A9CCA14F9B2EA00454F81 /* ScienceCalculator-Info.plist */,
+				799A9CCB14F9B2EA00454F81 /* InfoPlist.strings */,
+				799A9CCE14F9B2EA00454F81 /* main.m */,
+				799A9CD014F9B2EA00454F81 /* ScienceCalculator-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		799A9CBD14F9B2EA00454F81 /* ScienceCalculator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 799A9CDC14F9B2EA00454F81 /* Build configuration list for PBXNativeTarget "ScienceCalculator" */;
+			buildPhases = (
+				799A9CBA14F9B2EA00454F81 /* Sources */,
+				799A9CBB14F9B2EA00454F81 /* Frameworks */,
+				799A9CBC14F9B2EA00454F81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScienceCalculator;
+			productName = ScienceCalculator;
+			productReference = 799A9CBE14F9B2EA00454F81 /* ScienceCalculator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		799A9CB514F9B2EA00454F81 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DZ;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "复旦大学";
+			};
+			buildConfigurationList = 799A9CB814F9B2EA00454F81 /* Build configuration list for PBXProject "ScienceCalculator" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 799A9CB314F9B2EA00454F81;
+			productRefGroup = 799A9CBF14F9B2EA00454F81 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				799A9CBD14F9B2EA00454F81 /* ScienceCalculator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		799A9CBC14F9B2EA00454F81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				799A9CCD14F9B2EA00454F81 /* InfoPlist.strings in Resources */,
+				799A9CD914F9B2EA00454F81 /* DZViewController.xib in Resources */,
+				799A9CE514F9D91200454F81 /* button50x42.png in Resources */,
+				799A9CE614F9D91200454F81 /* button50x42pressed.png in Resources */,
+				799A9CE914F9EA1500454F81 /* background.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		799A9CBA14F9B2EA00454F81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				799A9CCF14F9B2EA00454F81 /* main.m in Sources */,
+				799A9CD314F9B2EA00454F81 /* DZAppDelegate.m in Sources */,
+				799A9CD614F9B2EA00454F81 /* DZViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		799A9CCB14F9B2EA00454F81 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				799A9CCC14F9B2EA00454F81 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		799A9CD714F9B2EA00454F81 /* DZViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				799A9CD814F9B2EA00454F81 /* en */,
+			);
+			name = DZViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		799A9CDA14F9B2EA00454F81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		799A9CDB14F9B2EA00454F81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		799A9CDD14F9B2EA00454F81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
+				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		799A9CDE14F9B2EA00454F81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
+				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		799A9CB814F9B2EA00454F81 /* Build configuration list for PBXProject "ScienceCalculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				799A9CDA14F9B2EA00454F81 /* Debug */,
+				799A9CDB14F9B2EA00454F81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		799A9CDC14F9B2EA00454F81 /* Build configuration list for PBXNativeTarget "ScienceCalculator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				799A9CDD14F9B2EA00454F81 /* Debug */,
+				799A9CDE14F9B2EA00454F81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 799A9CB514F9B2EA00454F81 /* Project object */;
+}
