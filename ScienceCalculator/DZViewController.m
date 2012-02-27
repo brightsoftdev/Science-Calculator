@@ -8,6 +8,16 @@
 
 #import "DZViewController.h"
 
+#define ADDBUTTON(index,name,image) \
+    [self addButtonAtIndex:index \
+    withText:name \
+    orImageNamed:image \
+    backgroundImage:bkImg \
+    backgroundImagePressed:pressedImg]
+#define MOVEBUTTON(index,x,y,width,height) \
+    [self moveButtonAtIndex:index \
+    toFrameRect:CGRectMake(x,y,width,height)]
+
 @interface DZViewController ()
 
 @property (nonatomic,retain) NSMutableArray * allButtons;
@@ -54,7 +64,7 @@
                    forState:UIControlStateNormal];
     [btn setBackgroundImage:pressedImage
                    forState:UIControlStateHighlighted];
-    if (title != nil) {
+    if (image == nil) {
         [btn setTitle:title forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor blackColor]
                   forState:UIControlStateNormal];
@@ -75,9 +85,19 @@
     }
     if (self.interfaceOrientation == UIInterfaceOrientationPortrait
         || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        [self moveButtonAtIndex:0 toFrameRect:CGRectMake(100, 100, 50, 42)];
+        MOVEBUTTON(0, 5, 138, 50, 42);
+        MOVEBUTTON(1, 57, 138, 50, 42);
+        MOVEBUTTON(2, 109, 138, 50, 42);
+        MOVEBUTTON(3, 161, 138, 50, 42);
+        MOVEBUTTON(4, 213, 138, 50, 42);
+        MOVEBUTTON(5, 265, 138, 50, 42);
     } else {
-        [self moveButtonAtIndex:0 toFrameRect:CGRectMake(200, 50, 50, 42)];
+        MOVEBUTTON(0, 3, 80, 50, 42);
+        MOVEBUTTON(1, 56, 80, 50, 42);
+        MOVEBUTTON(2, 109, 80, 50, 42);
+        MOVEBUTTON(3, 161, 138, 50, 42);
+        MOVEBUTTON(4, 213, 138, 50, 42);
+        MOVEBUTTON(5, 427, 80, 50, 42);
     }
     if (animated == YES)
         [UIView commitAnimations];
@@ -90,11 +110,12 @@
     self.allButtons = [NSMutableArray array];
     UIImage * bkImg = [UIImage imageNamed:@"button50x42.png"];
     UIImage * pressedImg = [UIImage imageNamed:@"button50x42pressed.png"];
-    [self addButtonAtIndex:0 
-                  withText:@"ln" 
-              orImageNamed:nil
-           backgroundImage:bkImg 
-    backgroundImagePressed:pressedImg];
+    ADDBUTTON(0, @"shift", nil);
+    ADDBUTTON(1, @"hyp", nil);
+    ADDBUTTON(2, @"deg", nil);
+    ADDBUTTON(3, @"x^y", nil);
+    ADDBUTTON(4, @"x^-1", nil);
+    ADDBUTTON(5, @"<=", nil);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 

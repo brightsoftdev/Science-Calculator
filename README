@@ -1,0 +1,21 @@
+README
+
+A README file for my first serious iOS project.
+It is yet another science calculator.
+--By Richard Dong
+
+## Log
+2012-02-26 Start coding the UI.
+2012-02-27 Create a git repository.
+
+## Todo
+1st Week:
+ > Finish Calculator layout for both landscape and protrait orientations.
+2nd Week:
+ > Integration with Three20.
+ > Add UI for simple configurations.
+ > Add UI for calculation history.
+3rd Week:
+ > FSMs (automata) for both 'Classic' and 'Line Mode' calculation.
+ > None-calculation-related button actions.
+
