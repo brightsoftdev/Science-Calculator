@@ -8,7 +8,6 @@ It is yet another science calculator.
 2012-02-26 Start coding the UI.
 2012-02-27 Create a git repository.
 
-<<<<<<< HEAD
 ## Todo
 1st Week:
  > Finish Calculator layout for both landscape and protrait orientations.
@@ -20,5 +19,3 @@ It is yet another science calculator.
  > FSMs (automata) for both 'Classic' and 'Line Mode' calculation.
  > None-calculation-related button actions.
 
-=======
->>>>>>> efc63f5df34cf94061551c2dd65ff919498da7e9
