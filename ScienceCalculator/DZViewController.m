@@ -91,6 +91,12 @@
         MOVEBUTTON(3, 161, 138, 50, 42);
         MOVEBUTTON(4, 213, 138, 50, 42);
         MOVEBUTTON(5, 265, 138, 50, 42);
+        MOVEBUTTON(6, 5, 184, 50, 42);
+        MOVEBUTTON(7, 57, 184, 50, 42);
+        MOVEBUTTON(8, 109, 184, 50, 42);
+        MOVEBUTTON(9, 161, 184, 50, 42);
+        MOVEBUTTON(10, 213, 184, 50, 42);
+        MOVEBUTTON(11, 265, 184, 50, 42);
     } else {
         MOVEBUTTON(0, 3, 80, 50, 42);
         MOVEBUTTON(1, 56, 80, 50, 42);
@@ -110,12 +116,18 @@
     self.allButtons = [NSMutableArray array];
     UIImage * bkImg = [UIImage imageNamed:@"button50x42.png"];
     UIImage * pressedImg = [UIImage imageNamed:@"button50x42pressed.png"];
-    ADDBUTTON(0, @"shift", nil);
-    ADDBUTTON(1, @"hyp", nil);
-    ADDBUTTON(2, @"deg", nil);
-    ADDBUTTON(3, @"x^y", nil);
-    ADDBUTTON(4, @"x^-1", nil);
-    ADDBUTTON(5, @"<=", nil);
+    ADDBUTTON(0, @"shift", @"shift.png");
+    ADDBUTTON(1, @"±", nil);
+    ADDBUTTON(2, @"÷", nil);
+    ADDBUTTON(3, @"x^y", @"xpowery.png");
+    ADDBUTTON(4, @"x^-1", @"xreciprocal.png");
+    ADDBUTTON(5, @"<=", @"delete.png");
+    ADDBUTTON(6, @"sin^-1", @"log2.png");
+    ADDBUTTON(7, @"cos^-1", @"log10.png");
+    ADDBUTTON(8, @"tan^-1", @"arctanh.png");
+    ADDBUTTON(9, @"+", nil);
+    ADDBUTTON(10, @"−", nil);
+    ADDBUTTON(11, @"×", nil);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 
