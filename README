@@ -10,6 +10,9 @@ It is yet another science calculator.
 2012-02-28 Draw button images.
     For some devices, default fonts may be replaced.
     So I may have to use images for all buttons.
+2012-02-29 Layout buttons.
+    Still some button images to draw.
+    Move images to a single directory.
 
 ## Todo
 1st Week:
