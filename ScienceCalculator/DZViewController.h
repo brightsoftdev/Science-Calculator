@@ -10,4 +10,6 @@
 
 @interface DZViewController : UIViewController 
 
+@property (nonatomic,retain) IBOutlet UIImageView * screenImgView;
+
 @end
