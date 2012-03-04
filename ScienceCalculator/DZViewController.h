@@ -11,5 +11,9 @@
 @interface DZViewController : UIViewController 
 
 @property (nonatomic,retain) IBOutlet UIImageView * screenImgView;
+@property (nonatomic,retain) IBOutlet UIImageView * ledDegRad;
+@property (nonatomic,retain) IBOutlet UIImageView * ledNormSci;
+@property (nonatomic,retain) IBOutlet UIImageView * ledM;
+@property (nonatomic,retain) IBOutlet UIButton * menu;
 
 @end

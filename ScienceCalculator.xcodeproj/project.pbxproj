@@ -26,6 +26,12 @@
 		7913175F150095660094894B /* MC.png in Resources */ = {isa = PBXBuildFile; fileRef = 79131759150095660094894B /* MC.png */; };
 		79131760150095660094894B /* MR.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175A150095660094894B /* MR.png */; };
 		79131761150095660094894B /* Msub.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175B150095660094894B /* Msub.png */; };
+		795A79CE1503474D00DA69DC /* LEDdeg.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C81503474D00DA69DC /* LEDdeg.png */; };
+		795A79CF1503474D00DA69DC /* LEDm.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C91503474D00DA69DC /* LEDm.png */; };
+		795A79D01503474D00DA69DC /* LEDnorm.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79CA1503474D00DA69DC /* LEDnorm.png */; };
+		795A79D11503474D00DA69DC /* LEDrad.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79CB1503474D00DA69DC /* LEDrad.png */; };
+		795A79D21503474D00DA69DC /* LEDsci.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79CC1503474D00DA69DC /* LEDsci.png */; };
+		795A79D31503474D00DA69DC /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79CD1503474D00DA69DC /* menu.png */; };
 		799A771C14FE111500916017 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A771014FE111500916017 /* 1.png */; };
 		799A771D14FE111500916017 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A771114FE111500916017 /* 2.png */; };
 		799A771E14FE111500916017 /* 2powerx.png in Resources */ = {isa = PBXBuildFile; fileRef = 799A771214FE111500916017 /* 2powerx.png */; };
@@ -101,6 +107,12 @@
 		79131759150095660094894B /* MC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MC.png; path = Images/MC.png; sourceTree = "<group>"; };
 		7913175A150095660094894B /* MR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MR.png; path = Images/MR.png; sourceTree = "<group>"; };
 		7913175B150095660094894B /* Msub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Msub.png; path = Images/Msub.png; sourceTree = "<group>"; };
+		795A79C81503474D00DA69DC /* LEDdeg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDdeg.png; path = Images/LEDdeg.png; sourceTree = "<group>"; };
+		795A79C91503474D00DA69DC /* LEDm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDm.png; path = Images/LEDm.png; sourceTree = "<group>"; };
+		795A79CA1503474D00DA69DC /* LEDnorm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnorm.png; path = Images/LEDnorm.png; sourceTree = "<group>"; };
+		795A79CB1503474D00DA69DC /* LEDrad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDrad.png; path = Images/LEDrad.png; sourceTree = "<group>"; };
+		795A79CC1503474D00DA69DC /* LEDsci.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDsci.png; path = Images/LEDsci.png; sourceTree = "<group>"; };
+		795A79CD1503474D00DA69DC /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Images/menu.png; sourceTree = "<group>"; };
 		799A771014FE111500916017 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = Images/1.png; sourceTree = "<group>"; };
 		799A771114FE111500916017 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2.png; path = Images/2.png; sourceTree = "<group>"; };
 		799A771214FE111500916017 /* 2powerx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2powerx.png; path = Images/2powerx.png; sourceTree = "<group>"; };
@@ -233,6 +245,12 @@
 		79F19BF014FC97B400AD2119 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				795A79C81503474D00DA69DC /* LEDdeg.png */,
+				795A79C91503474D00DA69DC /* LEDm.png */,
+				795A79CA1503474D00DA69DC /* LEDnorm.png */,
+				795A79CB1503474D00DA69DC /* LEDrad.png */,
+				795A79CC1503474D00DA69DC /* LEDsci.png */,
+				795A79CD1503474D00DA69DC /* menu.png */,
 				79131756150095660094894B /* C.png */,
 				79131757150095660094894B /* equ.png */,
 				79131758150095660094894B /* Madd.png */,
@@ -417,6 +435,12 @@
 				7913175F150095660094894B /* MC.png in Resources */,
 				79131760150095660094894B /* MR.png in Resources */,
 				79131761150095660094894B /* Msub.png in Resources */,
+				795A79CE1503474D00DA69DC /* LEDdeg.png in Resources */,
+				795A79CF1503474D00DA69DC /* LEDm.png in Resources */,
+				795A79D01503474D00DA69DC /* LEDnorm.png in Resources */,
+				795A79D11503474D00DA69DC /* LEDrad.png in Resources */,
+				795A79D21503474D00DA69DC /* LEDsci.png in Resources */,
+				795A79D31503474D00DA69DC /* menu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
