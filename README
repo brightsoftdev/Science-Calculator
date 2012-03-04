@@ -17,7 +17,7 @@ It is yet another science calculator.
     Button images have to be cached.
     I will make a cache for them.
 2012-03-04 Add image-pool for buttons.
-	Use tag for buttons.
+    Use tag for buttons.
 
 ## Todo
 1st Week:
