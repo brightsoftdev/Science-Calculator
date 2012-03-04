@@ -16,6 +16,8 @@ It is yet another science calculator.
 2012-03-02 Draw button images and add screen.
     Button images have to be cached.
     I will make a cache for them.
+2012-03-04 Add image-pool for buttons.
+	Use tag for buttons.
 
 ## Todo
 1st Week:

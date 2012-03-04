@@ -48,6 +48,7 @@
 		799A9CD314F9B2EA00454F81 /* DZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 799A9CD214F9B2EA00454F81 /* DZAppDelegate.m */; };
 		799A9CD614F9B2EA00454F81 /* DZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799A9CD514F9B2EA00454F81 /* DZViewController.m */; };
 		799A9CD914F9B2EA00454F81 /* DZViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 799A9CD714F9B2EA00454F81 /* DZViewController.xib */; };
+		79AB41A61502F6B900D63B89 /* DZImagePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AB41A51502F6B900D63B89 /* DZImagePool.m */; };
 		79B5A64314FDC7B1009D0E29 /* arccos.png in Resources */ = {isa = PBXBuildFile; fileRef = 79B5A63014FDC7B1009D0E29 /* arccos.png */; };
 		79B5A64414FDC7B1009D0E29 /* arccosh.png in Resources */ = {isa = PBXBuildFile; fileRef = 79B5A63114FDC7B1009D0E29 /* arccosh.png */; };
 		79B5A64514FDC7B1009D0E29 /* arcsin.png in Resources */ = {isa = PBXBuildFile; fileRef = 79B5A63214FDC7B1009D0E29 /* arcsin.png */; };
@@ -127,6 +128,8 @@
 		799A9CD414F9B2EA00454F81 /* DZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DZViewController.h; sourceTree = "<group>"; };
 		799A9CD514F9B2EA00454F81 /* DZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DZViewController.m; sourceTree = "<group>"; };
 		799A9CD814F9B2EA00454F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DZViewController.xib; sourceTree = "<group>"; };
+		79AB41A41502F6B900D63B89 /* DZImagePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZImagePool.h; sourceTree = "<group>"; };
+		79AB41A51502F6B900D63B89 /* DZImagePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZImagePool.m; sourceTree = "<group>"; };
 		79B5A63014FDC7B1009D0E29 /* arccos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arccos.png; path = Images/arccos.png; sourceTree = "<group>"; };
 		79B5A63114FDC7B1009D0E29 /* arccosh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arccosh.png; path = Images/arccosh.png; sourceTree = "<group>"; };
 		79B5A63214FDC7B1009D0E29 /* arcsin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arcsin.png; path = Images/arcsin.png; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				799A9CD514F9B2EA00454F81 /* DZViewController.m */,
 				799A9CD714F9B2EA00454F81 /* DZViewController.xib */,
 				799A9CC914F9B2EA00454F81 /* Supporting Files */,
+				79AB41A41502F6B900D63B89 /* DZImagePool.h */,
+				79AB41A51502F6B900D63B89 /* DZImagePool.m */,
 			);
 			path = ScienceCalculator;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				799A9CCF14F9B2EA00454F81 /* main.m in Sources */,
 				799A9CD314F9B2EA00454F81 /* DZAppDelegate.m in Sources */,
 				799A9CD614F9B2EA00454F81 /* DZViewController.m in Sources */,
+				79AB41A61502F6B900D63B89 /* DZImagePool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,19 +7,60 @@
 //
 
 #import "DZViewController.h"
+#import "DZImagePool.h"
+
+#define kButton_shift 0
+#define kButton_hyp 1
+#define kButton_deg 2
+#define kButton_xpowery 3
+#define kButton_xreciprocal 4
+#define kButton_delete 5
+#define kButton_nCr 6
+#define kButton_log2 7
+#define kButton_log10 8
+#define kButton_ln 9
+#define kButton_xsquareroot 10
+#define kButton_xsquare 11
+#define kButton_nfactorial 12
+#define kButton_sin 13
+#define kButton_cos 14
+#define kButton_tan 15
+#define kButton_leftpar 16
+#define kButton_rightpar 17
+#define kButton_pi 18
+#define kButton_7 19
+#define kButton_8 20
+#define kButton_9 21
+#define kButton_neg 22
+#define kButton_C 23
+#define kButton_MR 24
+#define kButton_4 25
+#define kButton_5 26
+#define kButton_6 27
+#define kButton_add 28
+#define kButton_sub 29
+#define kButton_Madd 30
+#define kButton_1 31
+#define kButton_2 32
+#define kButton_3 33
+#define kButton_mul 34
+#define kButton_div 35
+#define kButton_Msub 36
+#define kButton_timestenpowerx 37
+#define kButton_0 38
+#define kButton_point 39
+#define kButton_equ 40
 
 #define ADDBUTTON(index,name,image) \
     [self addButtonAtIndex:index \
-    withText:name \
-    orImageNamed:image \
-    backgroundImage:bkImg \
-    backgroundImagePressed:pressedImg]
+    withImageIndex:image \
+    backgroundIndex:kImage_button50x42 \
+    backgroundIndexPressed:kImage_button50x42pressed]
 #define ADDBUTTON2(index,name,image) \
     [self addButtonAtIndex:index \
-    withText:name \
-    orImageNamed:image \
-    backgroundImage:bkImg2 \
-    backgroundImagePressed:pressedImg2]
+    withImageIndex:image \
+    backgroundIndex:kImage_button102x42 \
+    backgroundIndexPressed:kImage_button102x42pressed]
 #define MOVEBUTTON(index,x,y,width,height) \
     [self moveButtonAtIndex:index \
     toFrameRect:CGRectMake(x,y,width,height)]
@@ -27,14 +68,14 @@
 @interface DZViewController ()
 
 @property (nonatomic,retain) NSMutableArray * allButtons;
+@property (nonatomic,retain) DZImagePool * imagePool;
 
 - (void)buttonPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
-                withText:(NSString *)title
-            orImageNamed:(NSString *)image
-         backgroundImage:(UIImage *)bkImage
-  backgroundImagePressed:(UIImage *)pressedImage;
+          withImageIndex:(NSInteger)image
+         backgroundIndex:(NSInteger)bkImage
+  backgroundIndexPressed:(NSInteger)pressedImage;
 
 - (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated;
 
@@ -47,6 +88,7 @@
 
 @synthesize allButtons;
 @synthesize screenImgView;
+@synthesize imagePool;
 
 - (void)moveButtonAtIndex:(NSInteger)index toFrameRect:(CGRect)rect
 {
@@ -57,26 +99,21 @@
 - (void)buttonPressed:(id)sender
 {
     UIButton * btn = sender;
-    NSLog(@"btn: %@", [btn titleForState:UIControlStateNormal]);
+    NSLog(@"btn: %d", btn.tag);
 }
 
 - (void)addButtonAtIndex:(NSInteger)index
-                withText:(NSString *)title
-            orImageNamed:(NSString *)image
-         backgroundImage:(UIImage *)bkImage
-  backgroundImagePressed:(UIImage *)pressedImage
+          withImageIndex:(NSInteger)image
+         backgroundIndex:(NSInteger)bkImage
+  backgroundIndexPressed:(NSInteger)pressedImage
 {
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setBackgroundImage:bkImage
+    [btn setTag:index];
+    [btn setBackgroundImage:[self.imagePool imageAtIndex:bkImage]
                    forState:UIControlStateNormal];
-    [btn setBackgroundImage:pressedImage
+    [btn setBackgroundImage:[self.imagePool imageAtIndex:pressedImage]
                    forState:UIControlStateHighlighted];
-    if (image == nil) {
-        [btn setTitle:title forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor]
-                  forState:UIControlStateNormal];
-    } else
-        [btn setImage:[UIImage imageNamed:image]
+    [btn setImage:[self.imagePool imageAtIndex:image]
              forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(buttonPressed:)
   forControlEvents:UIControlEventTouchUpInside];
@@ -133,53 +170,49 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
-    UIImage * bkImg = [UIImage imageNamed:@"button50x42.png"];
-    UIImage * pressedImg = [UIImage imageNamed:@"button50x42pressed.png"];
-    UIImage * bkImg2 = [UIImage imageNamed:@"button102x42.png"];
-    UIImage * pressedImg2 = [UIImage imageNamed:@"button102x42pressed.png"];
-    ADDBUTTON(0, @"shift", @"shift.png");
-    ADDBUTTON(1, @"hyp", @"hyp.png");
-    ADDBUTTON(2, @"deg", @"deg.png");
-    ADDBUTTON(3, @"x^y", @"xpowery.png");
-    ADDBUTTON(4, @"x^-1", @"xreciprocal.png");
-    ADDBUTTON(5, @"<=", @"delete.png");
-    ADDBUTTON(6, @"nCr", @"nCr.png");
-    ADDBUTTON(7, @"log2", @"log2.png");
-    ADDBUTTON(8, @"log10", @"log10.png");
-    ADDBUTTON(9, @"ln", @"ln.png");
-    ADDBUTTON(10, @"xsquareroot", @"xsquareroot.png");
-    ADDBUTTON(11, @"×square", @"xsquare.png");
-    ADDBUTTON(12, @"n!", @"nfactorial.png");
-    ADDBUTTON(13, @"sin", @"sin.png");
-    ADDBUTTON(14, @"cos", @"cos.png");
-    ADDBUTTON(15, @"tan", @"tan.png");
-    ADDBUTTON(16, @"(", @"leftpar.png");
-    ADDBUTTON(17, @")", @"rightpar.png");
-    ADDBUTTON(18, @"", @"pi.png");
-    ADDBUTTON(19, @"7", @"7.png");
-    ADDBUTTON(20, @"8", @"8.png");
-    ADDBUTTON(21, @"9", @"9.png");
-    ADDBUTTON(22, @"neg", @"neg.png");
-    ADDBUTTON(23, @"C", @"C.png");
-    ADDBUTTON(24, @"MR", @"MR.png");
-    ADDBUTTON(25, @"4", @"4.png");
-    ADDBUTTON(26, @"5", @"5.png");
-    ADDBUTTON(27, @"6", @"6.png");
-    ADDBUTTON(28, @"+", @"add.png");
-    ADDBUTTON(29, @"-", @"sub.png");
-    ADDBUTTON(30, @"M+", @"Madd.png");
-    ADDBUTTON(31, @"1", @"1.png");
-    ADDBUTTON(32, @"2", @"2.png");
-    ADDBUTTON(33, @"3", @"3.png");
-    ADDBUTTON(34, @"mul", @"mul.png");
-    ADDBUTTON(35, @"div", @"div.png");
-    ADDBUTTON(36, @"M-", @"Msub.png");
-    ADDBUTTON(37, @"EE", @"timestenpowerx.png");
-    ADDBUTTON(38, @"0", @"0.png");
-    ADDBUTTON(39, @".", @"point.png");
-    ADDBUTTON2(40, @"=", @"equ.png");
-    
+    ADDBUTTON(0,@"shift",kImage_shift);
+    ADDBUTTON(1,@"hyp",kImage_hyp);
+    ADDBUTTON(2,@"deg",kImage_deg);
+    ADDBUTTON(3,@"xpowery",kImage_xpowery);
+    ADDBUTTON(4,@"xreciprocal",kImage_xreciprocal);
+    ADDBUTTON(5,@"delete",kImage_delete);
+    ADDBUTTON(6,@"nCr",kImage_nCr);
+    ADDBUTTON(7,@"log2",kImage_log2);
+    ADDBUTTON(8,@"log10",kImage_log10);
+    ADDBUTTON(9,@"ln",kImage_ln);
+    ADDBUTTON(10,@"xsquareroot",kImage_xsquareroot);
+    ADDBUTTON(11,@"xsquare",kImage_xsquare);
+    ADDBUTTON(12,@"nfactorial",kImage_nfactorial);
+    ADDBUTTON(13,@"sin",kImage_sin);
+    ADDBUTTON(14,@"cos",kImage_cos);
+    ADDBUTTON(15,@"tan",kImage_tan);
+    ADDBUTTON(16,@"leftpar",kImage_leftpar);
+    ADDBUTTON(17,@"rightpar",kImage_rightpar);
+    ADDBUTTON(18,@"pi",kImage_pi);
+    ADDBUTTON(19,@"7",kImage_7);
+    ADDBUTTON(20,@"8",kImage_8);
+    ADDBUTTON(21,@"9",kImage_9);
+    ADDBUTTON(22,@"neg",kImage_neg);
+    ADDBUTTON(23,@"C",kImage_C);
+    ADDBUTTON(24,@"MR",kImage_MR);
+    ADDBUTTON(25,@"4",kImage_4);
+    ADDBUTTON(26,@"5",kImage_5);
+    ADDBUTTON(27,@"6",kImage_6);
+    ADDBUTTON(28,@"add",kImage_add);
+    ADDBUTTON(29,@"sub",kImage_sub);
+    ADDBUTTON(30,@"Madd",kImage_Madd);
+    ADDBUTTON(31,@"1",kImage_1);
+    ADDBUTTON(32,@"2",kImage_2);
+    ADDBUTTON(33,@"3",kImage_3);
+    ADDBUTTON(34,@"mul",kImage_mul);
+    ADDBUTTON(35,@"div",kImage_div);
+    ADDBUTTON(36,@"Msub",kImage_Msub);
+    ADDBUTTON(37,@"timestenpowerx",kImage_timestenpowerx);
+    ADDBUTTON(38,@"0",kImage_0);
+    ADDBUTTON(39,@"point",kImage_point);
+    ADDBUTTON2(40,@"equ",kImage_equ);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 
