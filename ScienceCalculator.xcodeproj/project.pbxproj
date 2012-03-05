@@ -344,6 +344,7 @@
 		79D37C6D15008F9800CD33BD /* nPr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nPr.png; path = Images/nPr.png; sourceTree = "<group>"; };
 		79E22DF91504809D007086BB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		79E22DFB15048645007086BB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		79E22DFD15048ECA007086BB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -615,6 +616,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 799A9CB314F9B2EA00454F81;
 			productRefGroup = 799A9CBF14F9B2EA00454F81 /* Products */;
@@ -898,6 +900,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				799A9CCC14F9B2EA00454F81 /* en */,
+				79E22DFD15048ECA007086BB /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
