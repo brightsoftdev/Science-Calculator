@@ -177,6 +177,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    if (self.navigationController != nil) {
+        self.navigationController.navigationBarHidden = YES;
+    }
     self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
     ADDBUTTON(0,@"shift",kImage_shift);

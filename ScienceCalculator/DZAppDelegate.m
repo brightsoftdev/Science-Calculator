@@ -17,11 +17,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[DZViewController alloc] initWithNibName:@"DZViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+    //self.viewController = [[DZViewController alloc] initWithNibName:@"DZViewController" bundle:nil];
+    //self.window.rootViewController = self.viewController;
+    //[self.window makeKeyAndVisible];
+    TTNavigator * navigator = [TTNavigator navigator];
+    navigator.window = self.window;
+    navigator.persistenceMode = TTNavigatorPersistenceModeAll;
+    
+    TTURLMap * map = navigator.URLMap;
+    [map from:@"*" toViewController:[TTWebController class]];
+    [map from:@"tt://home" toViewController:[DZViewController class]];
+    
+    if (![navigator restoreViewControllers]) {
+        [navigator openURLAction:[TTURLAction actionWithURLPath:@"tt://home"]];
+    }
     return YES;
 }
 
