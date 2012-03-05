@@ -20,6 +20,9 @@ It is yet another science calculator.
     Use tag for buttons.
     Add LED indicators.
     I don't like the indicators.
+2012-03-05 Localize display name.
+    Add launch image and app icon.
+    Add three20 as sub-module.
 
 ## Todo
 1st Week:
