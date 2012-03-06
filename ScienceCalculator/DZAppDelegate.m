@@ -9,6 +9,7 @@
 #import "DZAppDelegate.h"
 
 #import "DZViewController.h"
+#import "DZMenuViewController.h"
 
 @implementation DZAppDelegate
 
@@ -29,6 +30,7 @@
     TTURLMap * map = navigator.URLMap;
     [map from:@"*" toViewController:[TTWebController class]];
     [map from:@"tt://home" toViewController:[DZViewController class]];
+    [map from:@"tt://menu" toViewController:[DZMenuViewController class]];
     
     if (![navigator restoreViewControllers]) {
         [navigator openURLAction:[TTURLAction actionWithURLPath:@"tt://home"]];

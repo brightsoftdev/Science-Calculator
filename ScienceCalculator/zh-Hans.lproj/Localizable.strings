@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  ScienceCalculator
+
+  Created by 董 政 on 12-3-6.
+  Copyright (c) 2012年 复旦大学. All rights reserved.
+*/
+
+"Menu" = "菜单";
+"Settings" = "选项";
+"History" = "历史记录";
+"Advanced Mode" = "使用高级模式";
+"Scientific Notation" = "强制科学记数法";
+"Show History" = "查看历史记录";
+"Clear History" = "清空历史记录";

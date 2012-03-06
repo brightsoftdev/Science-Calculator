@@ -16,4 +16,6 @@
 @property (nonatomic,retain) IBOutlet UIImageView * ledM;
 @property (nonatomic,retain) IBOutlet UIButton * menu;
 
+- (IBAction)menuButtonPressed:(id)sender;
+
 @end
