@@ -35,6 +35,7 @@
 		7913175F150095660094894B /* MC.png in Resources */ = {isa = PBXBuildFile; fileRef = 79131759150095660094894B /* MC.png */; };
 		79131760150095660094894B /* MR.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175A150095660094894B /* MR.png */; };
 		79131761150095660094894B /* Msub.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175B150095660094894B /* Msub.png */; };
+		793431921507405A00D360A4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 793431911507405A00D360A4 /* Settings.bundle */; };
 		795A79CE1503474D00DA69DC /* LEDdeg.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C81503474D00DA69DC /* LEDdeg.png */; };
 		795A79CF1503474D00DA69DC /* LEDm.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C91503474D00DA69DC /* LEDm.png */; };
 		795A79D01503474D00DA69DC /* LEDnorm.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79CA1503474D00DA69DC /* LEDnorm.png */; };
@@ -279,6 +280,7 @@
 		79131759150095660094894B /* MC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MC.png; path = Images/MC.png; sourceTree = "<group>"; };
 		7913175A150095660094894B /* MR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MR.png; path = Images/MR.png; sourceTree = "<group>"; };
 		7913175B150095660094894B /* Msub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Msub.png; path = Images/Msub.png; sourceTree = "<group>"; };
+		793431911507405A00D360A4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		795A79C81503474D00DA69DC /* LEDdeg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDdeg.png; path = Images/LEDdeg.png; sourceTree = "<group>"; };
 		795A79C91503474D00DA69DC /* LEDm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDm.png; path = Images/LEDm.png; sourceTree = "<group>"; };
 		795A79CA1503474D00DA69DC /* LEDnorm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDnorm.png; path = Images/LEDnorm.png; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 		799A9CC914F9B2EA00454F81 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				793431911507405A00D360A4 /* Settings.bundle */,
 				320B6C86F11D9990244A9730 /* Three20.bundle */,
 				799A9CCA14F9B2EA00454F81 /* ScienceCalculator-Info.plist */,
 				799A9CCB14F9B2EA00454F81 /* InfoPlist.strings */,
@@ -848,6 +851,7 @@
 				79E22DFA1504809D007086BB /* Default.png in Resources */,
 				79E22DFC15048645007086BB /* icon.png in Resources */,
 				79B59C301505AD0500CF0825 /* Localizable.strings in Resources */,
+				793431921507405A00D360A4 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
