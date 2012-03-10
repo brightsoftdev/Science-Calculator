@@ -8,6 +8,74 @@
 
 #import "DZImagePool.h"
 
+const int kImage_0 = 0;
+const int kImage_1 = 1;
+const int kImage_10powerx = 2;
+const int kImage_2 = 3;
+const int kImage_2powerx = 4;
+const int kImage_3 = 5;
+const int kImage_4 = 6;
+const int kImage_5 = 7;
+const int kImage_6 = 8;
+const int kImage_7 = 9;
+const int kImage_8 = 10;
+const int kImage_9 = 11;
+const int kImage_C = 12;
+const int kImage_LEDdeg = 13;
+const int kImage_LEDm = 14;
+const int kImage_LEDnorm = 15;
+const int kImage_LEDrad = 16;
+const int kImage_LEDsci = 17;
+const int kImage_MC = 18;
+const int kImage_MR = 19;
+const int kImage_Madd = 20;
+const int kImage_Msub = 21;
+const int kImage_add = 22;
+const int kImage_arccos = 23;
+const int kImage_arccosh = 24;
+const int kImage_arcsin = 25;
+const int kImage_arcsinh = 26;
+const int kImage_arctan = 27;
+const int kImage_arctanh = 28;
+const int kImage_button102x42 = 29;
+const int kImage_button102x42pressed = 30;
+const int kImage_button50x42 = 31;
+const int kImage_button50x42pressed = 32;
+const int kImage_cos = 33;
+const int kImage_cosh = 34;
+const int kImage_deg = 35;
+const int kImage_delete = 36;
+const int kImage_div = 37;
+const int kImage_e = 38;
+const int kImage_equ = 39;
+const int kImage_exp = 40;
+const int kImage_hyp = 41;
+const int kImage_leftpar = 42;
+const int kImage_ln = 43;
+const int kImage_log10 = 44;
+const int kImage_log2 = 45;
+const int kImage_menu = 46;
+const int kImage_mul = 47;
+const int kImage_nCr = 48;
+const int kImage_nPr = 49;
+const int kImage_neg = 50;
+const int kImage_nfactorial = 51;
+const int kImage_pi = 52;
+const int kImage_point = 53;
+const int kImage_rightpar = 54;
+const int kImage_shift = 55;
+const int kImage_sin = 56;
+const int kImage_sinh = 57;
+const int kImage_sub = 58;
+const int kImage_tan = 59;
+const int kImage_tanh = 60;
+const int kImage_timestenpowerx = 61;
+const int kImage_xpowery = 62;
+const int kImage_xreciprocal = 63;
+const int kImage_xrooty = 64;
+const int kImage_xsquare = 65;
+const int kImage_xsquareroot = 66;
+
 #define POOLIMAGE(index,name,filename) \
     [self.pool insertObject: \
     [UIImage imageNamed:filename] \

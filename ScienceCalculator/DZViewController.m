@@ -9,53 +9,54 @@
 #import "DZViewController.h"
 #import "DZImagePool.h"
 
-#define kButton_shift 0
-#define kButton_hyp 1
-#define kButton_deg 2
-#define kButton_xpowery 3
-#define kButton_xreciprocal 4
-#define kButton_delete 5
-#define kButton_nCr 6
-#define kButton_log2 7
-#define kButton_log10 8
-#define kButton_ln 9
-#define kButton_xsquareroot 10
-#define kButton_xsquare 11
-#define kButton_nfactorial 12
-#define kButton_sin 13
-#define kButton_cos 14
-#define kButton_tan 15
-#define kButton_leftpar 16
-#define kButton_rightpar 17
-#define kButton_pi 18
-#define kButton_7 19
-#define kButton_8 20
-#define kButton_9 21
-#define kButton_neg 22
-#define kButton_C 23
-#define kButton_MR 24
-#define kButton_4 25
-#define kButton_5 26
-#define kButton_6 27
-#define kButton_add 28
-#define kButton_sub 29
-#define kButton_Madd 30
-#define kButton_1 31
-#define kButton_2 32
-#define kButton_3 33
-#define kButton_mul 34
-#define kButton_div 35
-#define kButton_Msub 36
-#define kButton_timestenpowerx 37
-#define kButton_0 38
-#define kButton_point 39
-#define kButton_equ 40
+const int kButton_shift = 0;
+const int kButton_hyp = 1;
+const int kButton_deg = 2;
+const int kButton_xpowery = 3;
+const int kButton_xreciprocal = 4;
+const int kButton_delete = 5;
+const int kButton_nCr = 6;
+const int kButton_log2 = 7;
+const int kButton_log10 = 8;
+const int kButton_ln = 9;
+const int kButton_xsquareroot = 10;
+const int kButton_xsquare = 11;
+const int kButton_nfactorial = 12;
+const int kButton_sin = 13;
+const int kButton_cos = 14;
+const int kButton_tan = 15;
+const int kButton_leftpar = 16;
+const int kButton_rightpar = 17;
+const int kButton_pi = 18;
+const int kButton_7 = 19;
+const int kButton_8 = 20;
+const int kButton_9 = 21;
+const int kButton_neg = 22;
+const int kButton_C = 23;
+const int kButton_MR = 24;
+const int kButton_4 = 25;
+const int kButton_5 = 26;
+const int kButton_6 = 27;
+const int kButton_add = 28;
+const int kButton_sub = 29;
+const int kButton_Madd = 30;
+const int kButton_1 = 31;
+const int kButton_2 = 32;
+const int kButton_3 = 33;
+const int kButton_mul = 34;
+const int kButton_div = 35;
+const int kButton_Msub = 36;
+const int kButton_timestenpowerx = 37;
+const int kButton_0 = 38;
+const int kButton_point = 39;
+const int kButton_equ = 40;
 
-#define ADDBUTTON(index,name,image) \
+#define ADDBUTTON(index,name,action) \
     [self addButtonAtIndex:index \
-    withImageIndex:image \
+    withImageIndex:kImage_##name \
     backgroundIndex:kImage_button50x42 \
-    backgroundIndexPressed:kImage_button50x42pressed]
+    backgroundIndexPressed:kImage_button50x42pressed \
+    andAction:@selector(action)]
 #define ADDBUTTON2(index,name,image) \
     [self addButtonAtIndex:index \
     withImageIndex:image \
@@ -75,7 +76,8 @@
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
          backgroundIndex:(NSInteger)bkImage
-  backgroundIndexPressed:(NSInteger)pressedImage;
+  backgroundIndexPressed:(NSInteger)pressedImage
+               andAction:(SEL)action;
 
 - (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated;
 
@@ -107,6 +109,7 @@
           withImageIndex:(NSInteger)image
          backgroundIndex:(NSInteger)bkImage
   backgroundIndexPressed:(NSInteger)pressedImage
+               andAction:(SEL)action
 {
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTag:index];
@@ -116,7 +119,7 @@
                    forState:UIControlStateHighlighted];
     [btn setImage:[self.imagePool imageAtIndex:image]
              forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(buttonPressed:)
+    [btn addTarget:self action:action
   forControlEvents:UIControlEventTouchUpInside];
     [self.allButtons insertObject:btn atIndex:index];
     [self.view addSubview:btn];
@@ -179,47 +182,47 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
-    ADDBUTTON(0,@"shift",kImage_shift);
-    ADDBUTTON(1,@"hyp",kImage_hyp);
-    ADDBUTTON(2,@"deg",kImage_deg);
-    ADDBUTTON(3,@"xpowery",kImage_xpowery);
-    ADDBUTTON(4,@"xreciprocal",kImage_xreciprocal);
-    ADDBUTTON(5,@"delete",kImage_delete);
-    ADDBUTTON(6,@"nCr",kImage_nCr);
-    ADDBUTTON(7,@"log2",kImage_log2);
-    ADDBUTTON(8,@"log10",kImage_log10);
-    ADDBUTTON(9,@"ln",kImage_ln);
-    ADDBUTTON(10,@"xsquareroot",kImage_xsquareroot);
-    ADDBUTTON(11,@"xsquare",kImage_xsquare);
-    ADDBUTTON(12,@"nfactorial",kImage_nfactorial);
-    ADDBUTTON(13,@"sin",kImage_sin);
-    ADDBUTTON(14,@"cos",kImage_cos);
-    ADDBUTTON(15,@"tan",kImage_tan);
-    ADDBUTTON(16,@"leftpar",kImage_leftpar);
-    ADDBUTTON(17,@"rightpar",kImage_rightpar);
-    ADDBUTTON(18,@"pi",kImage_pi);
-    ADDBUTTON(19,@"7",kImage_7);
-    ADDBUTTON(20,@"8",kImage_8);
-    ADDBUTTON(21,@"9",kImage_9);
-    ADDBUTTON(22,@"neg",kImage_neg);
-    ADDBUTTON(23,@"C",kImage_C);
-    ADDBUTTON(24,@"MR",kImage_MR);
-    ADDBUTTON(25,@"4",kImage_4);
-    ADDBUTTON(26,@"5",kImage_5);
-    ADDBUTTON(27,@"6",kImage_6);
-    ADDBUTTON(28,@"add",kImage_add);
-    ADDBUTTON(29,@"sub",kImage_sub);
-    ADDBUTTON(30,@"Madd",kImage_Madd);
-    ADDBUTTON(31,@"1",kImage_1);
-    ADDBUTTON(32,@"2",kImage_2);
-    ADDBUTTON(33,@"3",kImage_3);
-    ADDBUTTON(34,@"mul",kImage_mul);
-    ADDBUTTON(35,@"div",kImage_div);
-    ADDBUTTON(36,@"Msub",kImage_Msub);
-    ADDBUTTON(37,@"timestenpowerx",kImage_timestenpowerx);
-    ADDBUTTON(38,@"0",kImage_0);
-    ADDBUTTON(39,@"point",kImage_point);
-    ADDBUTTON2(40,@"equ",kImage_equ);
+    ADDBUTTON(0,shift,buttonPressed:);
+    ADDBUTTON(1,hyp,buttonPressed:);
+    ADDBUTTON(2,deg,buttonPressed:);
+    ADDBUTTON(3,xpowery,buttonPressed:);
+    ADDBUTTON(4,xreciprocal,buttonPressed:);
+    ADDBUTTON(5,delete,buttonPressed:);
+    ADDBUTTON(6,nCr,buttonPressed:);
+    ADDBUTTON(7,log2,buttonPressed:);
+    ADDBUTTON(8,log10,buttonPressed:);
+    ADDBUTTON(9,ln,buttonPressed:);
+    ADDBUTTON(10,xsquareroot,buttonPressed:);
+    ADDBUTTON(11,xsquare,buttonPressed:);
+    ADDBUTTON(12,nfactorial,buttonPressed:);
+    ADDBUTTON(13,sin,buttonPressed:);
+    ADDBUTTON(14,cos,buttonPressed:);
+    ADDBUTTON(15,tan,buttonPressed:);
+    ADDBUTTON(16,leftpar,buttonPressed:);
+    ADDBUTTON(17,rightpar,buttonPressed:);
+    ADDBUTTON(18,pi,buttonPressed:);
+    ADDBUTTON(19,7,buttonPressed:);
+    ADDBUTTON(20,8,buttonPressed:);
+    ADDBUTTON(21,9,buttonPressed:);
+    ADDBUTTON(22,neg,buttonPressed:);
+    ADDBUTTON(23,C,buttonPressed:);
+    ADDBUTTON(24,MR,buttonPressed:);
+    ADDBUTTON(25,4,buttonPressed:);
+    ADDBUTTON(26,5,buttonPressed:);
+    ADDBUTTON(27,6,buttonPressed:);
+    ADDBUTTON(28,add,buttonPressed:);
+    ADDBUTTON(29,sub,buttonPressed:);
+    ADDBUTTON(30,Madd,buttonPressed:);
+    ADDBUTTON(31,1,buttonPressed:);
+    ADDBUTTON(32,2,buttonPressed:);
+    ADDBUTTON(33,3,buttonPressed:);
+    ADDBUTTON(34,mul,buttonPressed:);
+    ADDBUTTON(35,div,buttonPressed:);
+    ADDBUTTON(36,Msub,buttonPressed:);
+    ADDBUTTON(37,timestenpowerx,buttonPressed:);
+    ADDBUTTON(38,0,buttonPressed:);
+    ADDBUTTON(39,point,buttonPressed:);
+    ADDBUTTON(40,equ,buttonPressed:);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 
