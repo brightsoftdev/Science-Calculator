@@ -68,6 +68,10 @@ const int kButton_equ = 40;
 #define MOVEBUTTON(index,x,y,width,height) \
     [self moveButtonAtIndex:index \
     toFrameRect:CGRectMake(x,y,width,height)]
+#define SETBUTTONIMAGE(index,image) \
+    [[self.allButtons objectAtIndex:index] \
+    setImage:[self.imagePool imageAtIndex:image] \
+    forState:UIControlStateNormal]
 
 #pragma mark -
 #pragma mark Private extention
@@ -127,8 +131,40 @@ const int kButton_equ = 40;
 {
     if (self.shiftIsPressed) {
         self.shiftIsPressed = NO;
+        SETBUTTONIMAGE(kButton_xpowery, kImage_xpowery);
+        SETBUTTONIMAGE(kButton_nCr, kImage_nCr);
+        SETBUTTONIMAGE(kButton_log2, kImage_log2);
+        SETBUTTONIMAGE(kButton_log10, kImage_log10);
+        SETBUTTONIMAGE(kButton_ln, kImage_ln);
+        SETBUTTONIMAGE(kButton_pi, kImage_pi);
+        SETBUTTONIMAGE(kButton_MR, kImage_MR);
+        if (self.hypIsPressed) {
+            SETBUTTONIMAGE(kButton_sin, kImage_sinh);
+            SETBUTTONIMAGE(kButton_cos, kImage_cosh);
+            SETBUTTONIMAGE(kButton_tan, kImage_tanh);
+        } else {
+            SETBUTTONIMAGE(kButton_sin, kImage_sin);
+            SETBUTTONIMAGE(kButton_cos, kImage_cos);
+            SETBUTTONIMAGE(kButton_tan, kImage_tan);
+        }
     } else {
         self.shiftIsPressed = YES;
+        SETBUTTONIMAGE(kButton_xpowery, kImage_xrooty);
+        SETBUTTONIMAGE(kButton_nCr, kImage_nPr);
+        SETBUTTONIMAGE(kButton_log2, kImage_2powerx);
+        SETBUTTONIMAGE(kButton_log10, kImage_10powerx);
+        SETBUTTONIMAGE(kButton_ln, kImage_exp);
+        SETBUTTONIMAGE(kButton_pi, kImage_e);
+        SETBUTTONIMAGE(kButton_MR, kImage_MC);
+        if (self.hypIsPressed) {
+            SETBUTTONIMAGE(kButton_sin, kImage_arcsinh);
+            SETBUTTONIMAGE(kButton_cos, kImage_arccosh);
+            SETBUTTONIMAGE(kButton_tan, kImage_arctanh);
+        } else {
+            SETBUTTONIMAGE(kButton_sin, kImage_arcsin);
+            SETBUTTONIMAGE(kButton_cos, kImage_arccos);
+            SETBUTTONIMAGE(kButton_tan, kImage_arctan);
+        }
     }
 }
 
@@ -136,8 +172,26 @@ const int kButton_equ = 40;
 {
     if (self.hypIsPressed) {
         self.hypIsPressed = NO;
+        if (self.shiftIsPressed) {
+            SETBUTTONIMAGE(kButton_sin, kImage_arcsin);
+            SETBUTTONIMAGE(kButton_cos, kImage_arccos);
+            SETBUTTONIMAGE(kButton_tan, kImage_arctan);
+        } else {
+            SETBUTTONIMAGE(kButton_sin, kImage_sin);
+            SETBUTTONIMAGE(kButton_cos, kImage_cos);
+            SETBUTTONIMAGE(kButton_tan, kImage_tan);
+        }
     } else {
         self.hypIsPressed = YES;
+        if (self.shiftIsPressed) {
+            SETBUTTONIMAGE(kButton_sin, kImage_arcsinh);
+            SETBUTTONIMAGE(kButton_cos, kImage_arccosh);
+            SETBUTTONIMAGE(kButton_tan, kImage_arctanh);
+        } else {
+            SETBUTTONIMAGE(kButton_sin, kImage_sinh);
+            SETBUTTONIMAGE(kButton_cos, kImage_cosh);
+            SETBUTTONIMAGE(kButton_tan, kImage_tanh);
+        }
     }
 }
 
@@ -233,7 +287,7 @@ const int kButton_equ = 40;
     self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
     ADDBUTTON(0,shift,shiftButtonPressed:);
-    ADDBUTTON(1,hyp,buttonPressed:);
+    ADDBUTTON(1,hyp,hypButtonPressed:);
     ADDBUTTON(2,deg,buttonPressed:);
     ADDBUTTON(3,xpowery,buttonPressed:);
     ADDBUTTON(4,xreciprocal,buttonPressed:);

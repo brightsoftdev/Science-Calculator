@@ -28,6 +28,8 @@ It is yet another science calculator.
 2012-03-07 Add Settings bundle.
 2012-03-10 Change AddButton Macro.
     Change macro to const vars.
+2012-03-12 Finish 'shift' and 'hyp' buttons.
+    I want to change the corresponding button appearance.
 
 ## Todo
 1st Week:
