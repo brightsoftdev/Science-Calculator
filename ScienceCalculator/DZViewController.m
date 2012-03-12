@@ -9,6 +9,9 @@
 #import "DZViewController.h"
 #import "DZImagePool.h"
 
+#pragma mark -
+#pragma mark kButton consts
+
 const int kButton_shift = 0;
 const int kButton_hyp = 1;
 const int kButton_deg = 2;
@@ -66,12 +69,19 @@ const int kButton_equ = 40;
     [self moveButtonAtIndex:index \
     toFrameRect:CGRectMake(x,y,width,height)]
 
+#pragma mark -
+#pragma mark Private extention
+
 @interface DZViewController ()
 
 @property (nonatomic,retain) NSMutableArray * allButtons;
 @property (nonatomic,retain) DZImagePool * imagePool;
+@property (nonatomic,assign) BOOL shiftIsPressed;
+@property (nonatomic,assign) BOOL hypIsPressed;
 
 - (void)buttonPressed:(id)sender;
+- (void)shiftButtonPressed:(id)sender;
+- (void)hypButtonPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -86,17 +96,25 @@ const int kButton_equ = 40;
 
 @end
 
+#pragma mark - 
+#pragma mark Implementation start here
+
 @implementation DZViewController
 
 @synthesize allButtons;
 @synthesize screenImgView;
 @synthesize imagePool;
 @synthesize ledM,ledDegRad,ledNormSci,menu;
+@synthesize shiftIsPressed,hypIsPressed;
 
-- (void)moveButtonAtIndex:(NSInteger)index toFrameRect:(CGRect)rect
+#pragma mark -
+#pragma mark buttonPress actions
+
+- (IBAction)menuButtonPressed:(id)sender
 {
-    UIButton * btn = [self.allButtons objectAtIndex:index];
-    [btn setFrame:rect];
+    TTNavigator * navigator = [TTNavigator navigator];
+    TTURLAction * action = [[TTURLAction actionWithURLPath:@"tt://menu"]applyAnimated:YES];
+    [navigator openURLAction:action];
 }
 
 - (void)buttonPressed:(id)sender
@@ -104,6 +122,27 @@ const int kButton_equ = 40;
     UIButton * btn = sender;
     NSLog(@"btn: %d", btn.tag);
 }
+
+- (void)shiftButtonPressed:(id)sender
+{
+    if (self.shiftIsPressed) {
+        self.shiftIsPressed = NO;
+    } else {
+        self.shiftIsPressed = YES;
+    }
+}
+
+- (void)hypButtonPressed:(id)sender
+{
+    if (self.hypIsPressed) {
+        self.hypIsPressed = NO;
+    } else {
+        self.hypIsPressed = YES;
+    }
+}
+
+#pragma mark -
+#pragma mark add and move buttons
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -123,6 +162,12 @@ const int kButton_equ = 40;
   forControlEvents:UIControlEventTouchUpInside];
     [self.allButtons insertObject:btn atIndex:index];
     [self.view addSubview:btn];
+}
+
+- (void)moveButtonAtIndex:(NSInteger)index toFrameRect:(CGRect)rect
+{
+    UIButton * btn = [self.allButtons objectAtIndex:index];
+    [btn setFrame:rect];
 }
 
 - (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated
@@ -176,13 +221,18 @@ const int kButton_equ = 40;
         [UIView commitAnimations];
 }
 
+#pragma mark -
+#pragma mark UIViewController
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.shiftIsPressed = NO;
+    self.hypIsPressed = NO;
     self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
-    ADDBUTTON(0,shift,buttonPressed:);
+    ADDBUTTON(0,shift,shiftButtonPressed:);
     ADDBUTTON(1,hyp,buttonPressed:);
     ADDBUTTON(2,deg,buttonPressed:);
     ADDBUTTON(3,xpowery,buttonPressed:);
@@ -240,13 +290,6 @@ const int kButton_equ = 40;
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self moveAllButtonsToDeviceOrientationAnimated:YES];
-}
-
-- (IBAction)menuButtonPressed:(id)sender
-{
-    TTNavigator * navigator = [TTNavigator navigator];
-    TTURLAction * action = [[TTURLAction actionWithURLPath:@"tt://menu"]applyAnimated:YES];
-    [navigator openURLAction:action];
 }
 
 - (void)viewWillAppear:(BOOL)animated
