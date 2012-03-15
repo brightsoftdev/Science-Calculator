@@ -60,11 +60,12 @@ const int kButton_equ = 40;
     backgroundIndex:kImage_button50x42 \
     backgroundIndexPressed:kImage_button50x42pressed \
     andAction:@selector(action)]
-#define ADDBUTTON2(index,name,image) \
+#define ADDBUTTON2(index,name,action) \
     [self addButtonAtIndex:index \
-    withImageIndex:image \
+    withImageIndex:kImage_##name \
     backgroundIndex:kImage_button102x42 \
-    backgroundIndexPressed:kImage_button102x42pressed]
+    backgroundIndexPressed:kImage_button102x42pressed \
+    andAction:@selector(action)]
 #define MOVEBUTTON(index,x,y,width,height) \
     [self moveButtonAtIndex:index \
     toFrameRect:CGRectMake(x,y,width,height)]
@@ -82,10 +83,12 @@ const int kButton_equ = 40;
 @property (nonatomic,retain) DZImagePool * imagePool;
 @property (nonatomic,assign) BOOL shiftIsPressed;
 @property (nonatomic,assign) BOOL hypIsPressed;
+@property (nonatomic,assign) BOOL degIsPressed;
 
 - (void)buttonPressed:(id)sender;
 - (void)shiftButtonPressed:(id)sender;
 - (void)hypButtonPressed:(id)sender;
+- (void)degButtonPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -109,7 +112,7 @@ const int kButton_equ = 40;
 @synthesize screenImgView;
 @synthesize imagePool;
 @synthesize ledM,ledDegRad,ledNormSci,menu;
-@synthesize shiftIsPressed,hypIsPressed;
+@synthesize shiftIsPressed,hypIsPressed,degIsPressed;
 
 #pragma mark -
 #pragma mark buttonPress actions
@@ -192,6 +195,17 @@ const int kButton_equ = 40;
             SETBUTTONIMAGE(kButton_cos, kImage_cosh);
             SETBUTTONIMAGE(kButton_tan, kImage_tanh);
         }
+    }
+}
+
+- (void)degButtonPressed:(id)sender
+{
+    if (self.degIsPressed) {
+        self.degIsPressed = NO;
+        self.ledDegRad.image = [self.imagePool imageAtIndex:kImage_LEDrad];
+    } else {
+        self.degIsPressed = YES;
+        self.ledDegRad.image = [self.imagePool imageAtIndex:kImage_LEDdeg];
     }
 }
 
@@ -284,11 +298,13 @@ const int kButton_equ = 40;
 	// Do any additional setup after loading the view, typically from a nib.
     self.shiftIsPressed = NO;
     self.hypIsPressed = NO;
+    self.degIsPressed = YES;
+    self.ledM.image = nil;
     self.imagePool = [DZImagePool new];
     self.allButtons = [NSMutableArray array];
     ADDBUTTON(0,shift,shiftButtonPressed:);
     ADDBUTTON(1,hyp,hypButtonPressed:);
-    ADDBUTTON(2,deg,buttonPressed:);
+    ADDBUTTON(2,deg,degButtonPressed:);
     ADDBUTTON(3,xpowery,buttonPressed:);
     ADDBUTTON(4,xreciprocal,buttonPressed:);
     ADDBUTTON(5,delete,buttonPressed:);
@@ -326,7 +342,7 @@ const int kButton_equ = 40;
     ADDBUTTON(37,timestenpowerx,buttonPressed:);
     ADDBUTTON(38,0,buttonPressed:);
     ADDBUTTON(39,point,buttonPressed:);
-    ADDBUTTON(40,equ,buttonPressed:);
+    ADDBUTTON2(40,equ,buttonPressed:);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 

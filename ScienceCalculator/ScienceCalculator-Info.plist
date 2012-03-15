@@ -14,6 +14,7 @@
 			<array>
 				<string>Default.png</string>
 				<string>icon.png</string>
+				<string>icon2x.png</string>
 			</array>
 		</dict>
 	</dict>
@@ -31,6 +32,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -43,7 +46,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>LSHasLocalizedDisplayName</key>
-	<true/>
 </dict>
 </plist>
