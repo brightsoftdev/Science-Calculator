@@ -30,6 +30,8 @@ It is yet another science calculator.
     Change macro to const vars.
 2012-03-12 Finish 'shift' and 'hyp' buttons.
     I want to change the corresponding button appearance.
+2012-03-17 Add labels for LED display.
+    Start coding for classis calculator.
 
 ## Todo
 1st Week:
@@ -44,5 +46,7 @@ It is yet another science calculator.
 4th Week:
  > Finish 'Classic' mode.
  > Design the display of 'Line Mode'.
+5th Week:
+ > Branch for simplified FreeEdition and finish that branch.
 
 
