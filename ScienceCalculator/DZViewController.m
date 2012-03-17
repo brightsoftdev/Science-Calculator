@@ -113,6 +113,7 @@ const int kButton_equ = 40;
 @synthesize imagePool;
 @synthesize ledM,ledDegRad,ledNormSci,menu;
 @synthesize shiftIsPressed,hypIsPressed,degIsPressed;
+@synthesize numberLabel,exprLabel;
 
 #pragma mark -
 #pragma mark buttonPress actions
@@ -257,6 +258,9 @@ const int kButton_equ = 40;
         self.ledDegRad.frame = CGRectMake(57, 5, 50, 21);
         self.ledNormSci.frame = CGRectMake(109, 5, 50, 21);
         self.ledM.frame = CGRectMake(161, 5, 50, 21);
+        self.exprLabel.numberOfLines = 3;
+        self.exprLabel.frame = CGRectMake(10, 30, 300, 60);
+        self.numberLabel.frame = CGRectMake(10, 86, 300, 40);
     } else {
         for (int r = 3; r < 6; r++) 
             for (int c = 0; c < 6; c++) 
@@ -284,6 +288,9 @@ const int kButton_equ = 40;
         self.ledDegRad.frame = CGRectMake(187, 101, 50, 21);
         self.ledNormSci.frame = CGRectMake(240,101, 50, 21);
         self.ledM.frame = CGRectMake(240, 80, 50, 21);
+        self.exprLabel.numberOfLines = 2;
+        self.exprLabel.frame = CGRectMake(10, 6, 460, 40);
+        self.numberLabel.frame = CGRectMake(10, 42, 460, 30);
     }
     if (animated == YES)
         [UIView commitAnimations];

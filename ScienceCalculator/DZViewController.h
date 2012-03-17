@@ -57,6 +57,8 @@ extern const int kButton_equ;
 @property (nonatomic,retain) IBOutlet UIImageView * ledNormSci;
 @property (nonatomic,retain) IBOutlet UIImageView * ledM;
 @property (nonatomic,retain) IBOutlet UIButton * menu;
+@property (nonatomic,retain) IBOutlet UILabel * numberLabel;
+@property (nonatomic,retain) IBOutlet UILabel * exprLabel;
 
 - (IBAction)menuButtonPressed:(id)sender;
 

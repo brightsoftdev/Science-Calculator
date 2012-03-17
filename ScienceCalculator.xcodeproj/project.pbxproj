@@ -35,6 +35,7 @@
 		7913175F150095660094894B /* MC.png in Resources */ = {isa = PBXBuildFile; fileRef = 79131759150095660094894B /* MC.png */; };
 		79131760150095660094894B /* MR.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175A150095660094894B /* MR.png */; };
 		79131761150095660094894B /* Msub.png in Resources */ = {isa = PBXBuildFile; fileRef = 7913175B150095660094894B /* Msub.png */; };
+		7930901B1514238A0027BDDB /* DZClassicCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7930901A1514238A0027BDDB /* DZClassicCalculator.m */; };
 		793431921507405A00D360A4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 793431911507405A00D360A4 /* Settings.bundle */; };
 		795A79CE1503474D00DA69DC /* LEDdeg.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C81503474D00DA69DC /* LEDdeg.png */; };
 		795A79CF1503474D00DA69DC /* LEDm.png in Resources */ = {isa = PBXBuildFile; fileRef = 795A79C91503474D00DA69DC /* LEDm.png */; };
@@ -281,6 +282,8 @@
 		79131759150095660094894B /* MC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MC.png; path = Images/MC.png; sourceTree = "<group>"; };
 		7913175A150095660094894B /* MR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MR.png; path = Images/MR.png; sourceTree = "<group>"; };
 		7913175B150095660094894B /* Msub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Msub.png; path = Images/Msub.png; sourceTree = "<group>"; };
+		793090191514238A0027BDDB /* DZClassicCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZClassicCalculator.h; sourceTree = "<group>"; };
+		7930901A1514238A0027BDDB /* DZClassicCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZClassicCalculator.m; sourceTree = "<group>"; };
 		793431911507405A00D360A4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		795A79C81503474D00DA69DC /* LEDdeg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDdeg.png; path = Images/LEDdeg.png; sourceTree = "<group>"; };
 		795A79C91503474D00DA69DC /* LEDm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LEDm.png; path = Images/LEDm.png; sourceTree = "<group>"; };
@@ -442,6 +445,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		79309018151423420027BDDB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				793090191514238A0027BDDB /* DZClassicCalculator.h */,
+				7930901A1514238A0027BDDB /* DZClassicCalculator.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		799A9CB314F9B2EA00454F81 = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +495,7 @@
 		799A9CC814F9B2EA00454F81 /* ScienceCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				79309018151423420027BDDB /* Model */,
 				79F19BF014FC97B400AD2119 /* Images */,
 				799A9CD114F9B2EA00454F81 /* DZAppDelegate.h */,
 				799A9CD214F9B2EA00454F81 /* DZAppDelegate.m */,
@@ -871,6 +884,7 @@
 				799A9CD614F9B2EA00454F81 /* DZViewController.m in Sources */,
 				79AB41A61502F6B900D63B89 /* DZImagePool.m in Sources */,
 				79B59C2D15059E4E00CF0825 /* DZMenuViewController.m in Sources */,
+				7930901B1514238A0027BDDB /* DZClassicCalculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
