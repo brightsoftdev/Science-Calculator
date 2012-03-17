@@ -59,12 +59,14 @@ const int kButton_equ = 40;
     withImageIndex:kImage_##name \
     backgroundIndex:kImage_button50x42 \
     backgroundIndexPressed:kImage_button50x42pressed \
+    addTarget:self \
     andAction:@selector(action)]
 #define ADDBUTTON2(index,name,action) \
     [self addButtonAtIndex:index \
     withImageIndex:kImage_##name \
     backgroundIndex:kImage_button102x42 \
     backgroundIndexPressed:kImage_button102x42pressed \
+    addTarget:self \
     andAction:@selector(action)]
 #define MOVEBUTTON(index,x,y,width,height) \
     [self moveButtonAtIndex:index \
@@ -94,6 +96,7 @@ const int kButton_equ = 40;
           withImageIndex:(NSInteger)image
          backgroundIndex:(NSInteger)bkImage
   backgroundIndexPressed:(NSInteger)pressedImage
+               addTarget:(id)target
                andAction:(SEL)action;
 
 - (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated;
@@ -217,6 +220,7 @@ const int kButton_equ = 40;
           withImageIndex:(NSInteger)image
          backgroundIndex:(NSInteger)bkImage
   backgroundIndexPressed:(NSInteger)pressedImage
+               addTarget:(id)target
                andAction:(SEL)action
 {
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -227,7 +231,7 @@ const int kButton_equ = 40;
                    forState:UIControlStateHighlighted];
     [btn setImage:[self.imagePool imageAtIndex:image]
              forState:UIControlStateNormal];
-    [btn addTarget:self action:action
+    [btn addTarget:target action:action
   forControlEvents:UIControlEventTouchUpInside];
     [self.allButtons insertObject:btn atIndex:index];
     [self.view addSubview:btn];
