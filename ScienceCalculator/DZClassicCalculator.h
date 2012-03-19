@@ -10,7 +10,14 @@
 
 @interface DZClassicCalculator : NSObject
 
-@property (nonatomic,copy) NSString * displayNumber;
-@property (nonatomic,copy) NSString * displayExpression;
++ (DZClassicCalculator *)sharedCalculator;
+
+- (NSString *)displayNumber;
+
+- (void)pressDigit:(NSInteger)digit;
+- (void)pressNeg;
+- (void)pressPoint;
+- (void)pressTimesTenPowerX;
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "DZViewController.h"
 #import "DZImagePool.h"
+#import "DZClassicCalculator.h"
 
 #pragma mark -
 #pragma mark kButton consts
@@ -81,6 +82,7 @@ const int kButton_equ = 40;
 
 @interface DZViewController ()
 
+@property (nonatomic,retain) DZClassicCalculator * calculator;
 @property (nonatomic,retain) NSMutableArray * allButtons;
 @property (nonatomic,retain) DZImagePool * imagePool;
 @property (nonatomic,assign) BOOL shiftIsPressed;
@@ -91,6 +93,7 @@ const int kButton_equ = 40;
 - (void)shiftButtonPressed:(id)sender;
 - (void)hypButtonPressed:(id)sender;
 - (void)degButtonPressed:(id)sender;
+- (void)digitButtonPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -117,6 +120,7 @@ const int kButton_equ = 40;
 @synthesize ledM,ledDegRad,ledNormSci,menu;
 @synthesize shiftIsPressed,hypIsPressed,degIsPressed;
 @synthesize numberLabel,exprLabel;
+@synthesize calculator;
 
 #pragma mark -
 #pragma mark buttonPress actions
@@ -131,7 +135,23 @@ const int kButton_equ = 40;
 - (void)buttonPressed:(id)sender
 {
     UIButton * btn = sender;
-    NSLog(@"btn: %d", btn.tag);
+    switch ([btn tag]) {
+        case kButton_point:
+            [self.calculator pressPoint];
+            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        case kButton_neg:
+            [self.calculator pressNeg];
+            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        case kButton_timestenpowerx:
+            [self.calculator pressTimesTenPowerX];
+            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        default:
+            NSLog(@"btn: %d", btn.tag);
+            break;
+    }
 }
 
 - (void)shiftButtonPressed:(id)sender
@@ -211,6 +231,43 @@ const int kButton_equ = 40;
         self.degIsPressed = YES;
         self.ledDegRad.image = [self.imagePool imageAtIndex:kImage_LEDdeg];
     }
+}
+
+- (void)digitButtonPressed:(id)sender
+{
+    switch ([sender tag]) {
+        case kButton_0:
+            [self.calculator pressDigit:0];
+            break;
+        case kButton_1:
+            [self.calculator pressDigit:1];
+            break;
+        case kButton_2:
+            [self.calculator pressDigit:2];
+            break;
+        case kButton_3:
+            [self.calculator pressDigit:3];
+            break;
+        case kButton_4:
+            [self.calculator pressDigit:4];
+            break;
+        case kButton_5:
+            [self.calculator pressDigit:5];
+            break;
+        case kButton_6:
+            [self.calculator pressDigit:6];
+            break;
+        case kButton_7:
+            [self.calculator pressDigit:7];
+            break;
+        case kButton_8:
+            [self.calculator pressDigit:8];
+            break;
+        case kButton_9:
+            [self.calculator pressDigit:9];
+            break;
+    }
+    self.numberLabel.text = [self.calculator displayNumber];
 }
 
 #pragma mark -
@@ -307,6 +364,8 @@ const int kButton_equ = 40;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.calculator = [DZClassicCalculator sharedCalculator];
+    self.numberLabel.text = [calculator displayNumber];
     self.shiftIsPressed = NO;
     self.hypIsPressed = NO;
     self.degIsPressed = YES;
@@ -332,26 +391,26 @@ const int kButton_equ = 40;
     ADDBUTTON(16,leftpar,buttonPressed:);
     ADDBUTTON(17,rightpar,buttonPressed:);
     ADDBUTTON(18,pi,buttonPressed:);
-    ADDBUTTON(19,7,buttonPressed:);
-    ADDBUTTON(20,8,buttonPressed:);
-    ADDBUTTON(21,9,buttonPressed:);
+    ADDBUTTON(19,7,digitButtonPressed:);
+    ADDBUTTON(20,8,digitButtonPressed:);
+    ADDBUTTON(21,9,digitButtonPressed:);
     ADDBUTTON(22,neg,buttonPressed:);
     ADDBUTTON(23,C,buttonPressed:);
     ADDBUTTON(24,MR,buttonPressed:);
-    ADDBUTTON(25,4,buttonPressed:);
-    ADDBUTTON(26,5,buttonPressed:);
-    ADDBUTTON(27,6,buttonPressed:);
+    ADDBUTTON(25,4,digitButtonPressed:);
+    ADDBUTTON(26,5,digitButtonPressed:);
+    ADDBUTTON(27,6,digitButtonPressed:);
     ADDBUTTON(28,add,buttonPressed:);
     ADDBUTTON(29,sub,buttonPressed:);
     ADDBUTTON(30,Madd,buttonPressed:);
-    ADDBUTTON(31,1,buttonPressed:);
-    ADDBUTTON(32,2,buttonPressed:);
-    ADDBUTTON(33,3,buttonPressed:);
+    ADDBUTTON(31,1,digitButtonPressed:);
+    ADDBUTTON(32,2,digitButtonPressed:);
+    ADDBUTTON(33,3,digitButtonPressed:);
     ADDBUTTON(34,mul,buttonPressed:);
     ADDBUTTON(35,div,buttonPressed:);
     ADDBUTTON(36,Msub,buttonPressed:);
     ADDBUTTON(37,timestenpowerx,buttonPressed:);
-    ADDBUTTON(38,0,buttonPressed:);
+    ADDBUTTON(38,0,digitButtonPressed:);
     ADDBUTTON(39,point,buttonPressed:);
     ADDBUTTON2(40,equ,buttonPressed:);
     [self moveAllButtonsToDeviceOrientationAnimated:NO];

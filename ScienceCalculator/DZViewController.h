@@ -50,7 +50,7 @@ extern const int kButton_0;
 extern const int kButton_point;
 extern const int kButton_equ;
 
-@interface DZViewController : UIViewController 
+@interface DZViewController : UIViewController
 
 @property (nonatomic,retain) IBOutlet UIImageView * screenImgView;
 @property (nonatomic,retain) IBOutlet UIImageView * ledDegRad;
