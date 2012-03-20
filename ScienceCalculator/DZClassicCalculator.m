@@ -8,12 +8,16 @@
 
 #import "DZClassicCalculator.h"
 
-const int kMaxNumberLength = 14;
-const int kMaxPowerNumberLength = 3;
+#pragma mark -
+#pragma mark Constant
+
 const int kStatus_init = 0;
 const int kStatus_integer = 1;
 const int kStatus_fraction = 2;
 const int kStatus_scientific = 3;
+
+#pragma mark -
+#pragma mark Private Interface
 
 @interface DZClassicCalculator ()
 @property (nonatomic,copy) NSString * number;
@@ -28,9 +32,23 @@ const int kStatus_scientific = 3;
 
 @implementation DZClassicCalculator
 
+#pragma mark -
+#pragma mark Properties
+
 @synthesize number,powerNumber,isNegNumber,isNegPowerNumber;
 @synthesize numberStack,opStack,exprStack;
 @synthesize status;
+
+- (NSInteger)maxNumberLength {
+    return _maxNumberLength;
+}
+
+- (NSInteger)maxPowerNumberLength {
+    return _maxPowerNumberLength;
+}
+
+#pragma mark -
+#pragma mark Static Member
 
 static DZClassicCalculator * _sharedCalculator;
 
@@ -42,10 +60,22 @@ static DZClassicCalculator * _sharedCalculator;
     return _sharedCalculator;
 }
 
+#pragma mark -
+#pragma mark Initialization
+
 - (id)init
+{
+    return [self initWithMaxNumberLength:14
+                    maxPowerNumberLength:3];
+}
+
+- (id)initWithMaxNumberLength:(NSInteger)maxNumberLen
+         maxPowerNumberLength:(NSInteger)maxPowerNumberlen
 {
     self = [super init];
     if (nil != self) {
+        _maxNumberLength = maxNumberLen;
+        _maxPowerNumberLength = maxPowerNumberlen;
         self.number = @"0";
         self.powerNumber = @"";
         self.isNegNumber = NO;
@@ -58,6 +88,9 @@ static DZClassicCalculator * _sharedCalculator;
     return self;
 }
 
+#pragma mark -
+#pragma mark Public Interface Implementations
+
 - (NSString *)displayNumber
 {
     BOOL hasPowerNumber = self.powerNumber.length > 0;
@@ -69,6 +102,9 @@ static DZClassicCalculator * _sharedCalculator;
             self.powerNumber];
 }
 
+#pragma mark -
+#pragma mark Button Pressed
+
 - (void)pressDigit:(NSInteger)digit
 {
     switch (self.status) {
@@ -79,19 +115,19 @@ static DZClassicCalculator * _sharedCalculator;
             }
             break;
         case kStatus_integer:
-            if (kMaxNumberLength > [self.number length]) {
+            if (self.maxNumberLength > [self.number length]) {
                 self.number = [NSString stringWithFormat:@"%@%d", self.number, digit];
             }
             break;
         case kStatus_fraction:
-            if (kMaxNumberLength > [self.number length]-1) {
+            if (self.maxNumberLength > [self.number length]-1) {
                 self.number = [NSString stringWithFormat:@"%@%d", self.number, digit];
             }
             break;
         case kStatus_scientific:
             if ([self.powerNumber isEqualToString:@"0"]) {
                 self.powerNumber = [NSString stringWithFormat:@"%d", digit];
-            } else if (kMaxPowerNumberLength > [self.powerNumber length]) {
+            } else if (self.maxPowerNumberLength > [self.powerNumber length]) {
                 self.powerNumber = [NSString stringWithFormat:@"%@%d", self.powerNumber, digit];
             }
             break;

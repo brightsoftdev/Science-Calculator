@@ -99,6 +99,7 @@
 		79D37C7115008F9800CD33BD /* nCr.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6B15008F9800CD33BD /* nCr.png */; };
 		79D37C7215008F9800CD33BD /* nfactorial.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6C15008F9800CD33BD /* nfactorial.png */; };
 		79D37C7315008F9800CD33BD /* nPr.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6D15008F9800CD33BD /* nPr.png */; };
+		79DBECF7151852B30057398C /* DZNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DBECF6151852B30057398C /* DZNumberFormatter.m */; };
 		79E22DFA1504809D007086BB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E22DF91504809D007086BB /* Default.png */; };
 		79E22DFC15048645007086BB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E22DFB15048645007086BB /* icon.png */; };
 /* End PBXBuildFile section */
@@ -355,6 +356,8 @@
 		79D37C6B15008F9800CD33BD /* nCr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nCr.png; path = Images/nCr.png; sourceTree = "<group>"; };
 		79D37C6C15008F9800CD33BD /* nfactorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nfactorial.png; path = Images/nfactorial.png; sourceTree = "<group>"; };
 		79D37C6D15008F9800CD33BD /* nPr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nPr.png; path = Images/nPr.png; sourceTree = "<group>"; };
+		79DBECF5151852B30057398C /* DZNumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZNumberFormatter.h; sourceTree = "<group>"; };
+		79DBECF6151852B30057398C /* DZNumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZNumberFormatter.m; sourceTree = "<group>"; };
 		79E22DF91504809D007086BB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		79E22DFB15048645007086BB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		79E22DFD15048ECA007086BB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -450,6 +453,8 @@
 			children = (
 				793090191514238A0027BDDB /* DZClassicCalculator.h */,
 				7930901A1514238A0027BDDB /* DZClassicCalculator.m */,
+				79DBECF5151852B30057398C /* DZNumberFormatter.h */,
+				79DBECF6151852B30057398C /* DZNumberFormatter.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -885,6 +890,7 @@
 				79AB41A61502F6B900D63B89 /* DZImagePool.m in Sources */,
 				79B59C2D15059E4E00CF0825 /* DZMenuViewController.m in Sources */,
 				7930901B1514238A0027BDDB /* DZClassicCalculator.m in Sources */,
+				79DBECF7151852B30057398C /* DZNumberFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1027,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
 				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1032,6 +1039,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
 				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

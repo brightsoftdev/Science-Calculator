@@ -9,8 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @interface DZClassicCalculator : NSObject
+{
+    NSInteger _maxNumberLength;
+    NSInteger _maxPowerNumberLength;
+}
+
+@property (readonly) NSInteger maxNumberLength;
+@property (readonly) NSInteger maxPowerNumberLength;
 
 + (DZClassicCalculator *)sharedCalculator;
+
+- (id)initWithMaxNumberLength:(NSInteger)maxNumberLen
+         maxPowerNumberLength:(NSInteger)maxPowerNumberlen;
 
 - (NSString *)displayNumber;
 
