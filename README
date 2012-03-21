@@ -32,6 +32,8 @@ It is yet another science calculator.
     I want to change the corresponding button appearance.
 2012-03-17 Add labels for LED display.
     Start coding for classis calculator.
+2012-03-21 Finish number formatter.
+    Add Delete to number input logic.
 
 ## Todo
 1st Week:
