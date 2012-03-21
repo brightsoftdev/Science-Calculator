@@ -8,6 +8,11 @@
 
 #import "DZClassicCalculator.h"
 
+#define LASTCHAR(nsstr) [nsstr characterAtIndex: \
+    ([nsstr length]-1)]
+#define TRIMRIGHT(nsstr,len) [nsstr substringToIndex: \
+    ([nsstr length]-len)]
+
 #pragma mark -
 #pragma mark Constant
 
@@ -38,6 +43,7 @@ const int kStatus_scientific = 3;
 @synthesize number,powerNumber,isNegNumber,isNegPowerNumber;
 @synthesize numberStack,opStack,exprStack;
 @synthesize status;
+@synthesize numberFormatter;
 
 - (NSInteger)maxNumberLength {
     return _maxNumberLength;
@@ -84,6 +90,7 @@ static DZClassicCalculator * _sharedCalculator;
         self.opStack = [NSMutableArray arrayWithCapacity:32];
         self.exprStack = [NSMutableArray arrayWithCapacity:32];
         self.status = kStatus_init;
+        self.numberFormatter = [DZNumberFormatter sharedFormatter];
     }
     return self;
 }
@@ -169,6 +176,75 @@ static DZClassicCalculator * _sharedCalculator;
             self.powerNumber = @"0";
             break;
     }
+}
+
+- (void)longPressDelete
+{
+    switch (self.status) {
+        case kStatus_fraction:
+        case kStatus_integer:
+        case kStatus_scientific:
+            self.status = kStatus_init;
+            self.powerNumber = @"";
+            self.number = @"0";
+            self.isNegNumber = NO;
+            self.isNegPowerNumber = NO;
+            break;
+    }
+}
+
+- (void)pressDelete
+{
+    switch (self.status) {
+        case kStatus_fraction:
+            if (LASTCHAR(self.number) == '.') {
+                self.number = TRIMRIGHT(self.number, 1);
+                if ([self.number isEqualToString:@"0"]) {
+                    self.status = kStatus_init;
+                    self.isNegNumber = NO;
+                } else {
+                    self.status = kStatus_integer;
+                }
+            } else {
+                self.number = TRIMRIGHT(self.number, 1);
+            }
+            break;
+        case kStatus_integer:
+            if (self.number.length > 1) {
+                self.number = TRIMRIGHT(self.number, 1);
+            } else {
+                self.number = @"0";
+                self.isNegNumber = NO;
+                self.status = kStatus_init;
+            }
+            break;
+        case kStatus_scientific:
+            if (self.powerNumber.length > 1) {
+                self.powerNumber = TRIMRIGHT(self.powerNumber, 1);
+            } else {
+                self.powerNumber = @"";
+                self.isNegPowerNumber = NO;
+                NSRange range = [self.number rangeOfString:@"."];
+                if (range.location == NSNotFound) {
+                    if ([self.number isEqualToString:@"0"]) {
+                        self.status = kStatus_init;
+                        self.isNegNumber = NO;
+                    } else {
+                        self.status = kStatus_integer;
+                    }
+                } else {
+                    self.status = kStatus_fraction;
+                }
+            }
+            break;
+    }
+}
+
+- (void)pressEqu
+{
+    self.status = kStatus_init;
+    double value = [[self displayNumber]doubleValue];
+    NSLog(@"%@", [self.numberFormatter formatDouble:value]);
 }
 
 @end

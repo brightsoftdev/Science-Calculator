@@ -88,12 +88,14 @@ const int kButton_equ = 40;
 @property (nonatomic,assign) BOOL shiftIsPressed;
 @property (nonatomic,assign) BOOL hypIsPressed;
 @property (nonatomic,assign) BOOL degIsPressed;
+@property (nonatomic,retain) UILongPressGestureRecognizer * longPressRecognizer;
 
 - (void)buttonPressed:(id)sender;
 - (void)shiftButtonPressed:(id)sender;
 - (void)hypButtonPressed:(id)sender;
 - (void)degButtonPressed:(id)sender;
 - (void)digitButtonPressed:(id)sender;
+- (void)deleteButtonLongPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -121,6 +123,7 @@ const int kButton_equ = 40;
 @synthesize shiftIsPressed,hypIsPressed,degIsPressed;
 @synthesize numberLabel,exprLabel;
 @synthesize calculator;
+@synthesize longPressRecognizer;
 
 #pragma mark -
 #pragma mark buttonPress actions
@@ -146,6 +149,14 @@ const int kButton_equ = 40;
             break;
         case kButton_timestenpowerx:
             [self.calculator pressTimesTenPowerX];
+            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        case kButton_delete:
+            [self.calculator pressDelete];
+            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        case kButton_equ:
+            [self.calculator pressEqu];
             self.numberLabel.text = [self.calculator displayNumber];
             break;
         default:
@@ -270,6 +281,15 @@ const int kButton_equ = 40;
     self.numberLabel.text = [self.calculator displayNumber];
 }
 
+- (void)deleteButtonLongPressed:(id)sender
+{
+    UILongPressGestureRecognizer * gr = sender;
+    if (gr.state == UIGestureRecognizerStateEnded) {
+        [self.calculator longPressDelete];
+        self.numberLabel.text = [self.calculator displayNumber];
+    }
+}
+
 #pragma mark -
 #pragma mark add and move buttons
 
@@ -364,6 +384,10 @@ const int kButton_equ = 40;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.longPressRecognizer = 
+        [[UILongPressGestureRecognizer alloc]
+         initWithTarget:self 
+         action:@selector(deleteButtonLongPressed:)];
     self.calculator = [DZClassicCalculator sharedCalculator];
     self.numberLabel.text = [calculator displayNumber];
     self.shiftIsPressed = NO;
@@ -413,6 +437,7 @@ const int kButton_equ = 40;
     ADDBUTTON(38,0,digitButtonPressed:);
     ADDBUTTON(39,point,buttonPressed:);
     ADDBUTTON2(40,equ,buttonPressed:);
+    [[self.allButtons objectAtIndex:kButton_delete]addGestureRecognizer:self.longPressRecognizer];
     [self moveAllButtonsToDeviceOrientationAnimated:NO];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DZNumberFormatter.h"
 
 @interface DZClassicCalculator : NSObject
 {
@@ -16,6 +17,7 @@
 
 @property (readonly) NSInteger maxNumberLength;
 @property (readonly) NSInteger maxPowerNumberLength;
+@property (nonatomic,retain) DZNumberFormatter * numberFormatter;
 
 + (DZClassicCalculator *)sharedCalculator;
 
@@ -28,6 +30,9 @@
 - (void)pressNeg;
 - (void)pressPoint;
 - (void)pressTimesTenPowerX;
+- (void)pressDelete;
+- (void)longPressDelete;
+- (void)pressEqu;
 
 
 @end
