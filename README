@@ -34,6 +34,8 @@ It is yet another science calculator.
     Start coding for classis calculator.
 2012-03-21 Finish number formatter.
     Add Delete to number input logic.
+2012-03-22 Add 'answer' state.
+    The logic to display the expression is complicated.
 
 ## Todo
 1st Week:
@@ -47,8 +49,7 @@ It is yet another science calculator.
  > None-calculation-related button actions.
 4th Week:
  > Finish 'Classic' mode.
- > Design the display of 'Line Mode'.
+ > Design the display of 'Line Mode'.(postponed)
 5th Week:
  > Branch for simplified FreeEdition and finish that branch.
-
 
