@@ -20,6 +20,17 @@ const int kStatus_init = 0;
 const int kStatus_integer = 1;
 const int kStatus_fraction = 2;
 const int kStatus_scientific = 3;
+const int kStatus_answer = 4;
+
+const int kOperator_nil = 0;
+const int kOperator_add = 1;
+const int kOperator_sub = 2;
+const int kOperator_mul = 3;
+const int kOperator_div = 4;
+const int kOperator_power = 5;
+const int kOperator_root = 6;
+const int kOperator_nCr = 7;
+const int kOperator_nPr = 8;
 
 #pragma mark -
 #pragma mark Private Interface
@@ -29,9 +40,11 @@ const int kStatus_scientific = 3;
 @property (nonatomic,copy) NSString * powerNumber;
 @property (nonatomic,assign) BOOL isNegNumber;
 @property (nonatomic,assign) BOOL isNegPowerNumber;
+@property (nonatomic,assign) double answer;
 @property (nonatomic,retain) NSMutableArray * numberStack;
 @property (nonatomic,retain) NSMutableArray * opStack;
 @property (nonatomic,retain) NSMutableArray * exprStack;
+@property (nonatomic,assign) NSInteger currentOperator;
 @property (nonatomic,assign) NSInteger status;
 @end
 
@@ -41,9 +54,10 @@ const int kStatus_scientific = 3;
 #pragma mark Properties
 
 @synthesize number,powerNumber,isNegNumber,isNegPowerNumber;
-@synthesize numberStack,opStack,exprStack;
+@synthesize numberStack,opStack,exprStack,currentOperator;
 @synthesize status;
 @synthesize numberFormatter;
+@synthesize answer;
 
 - (NSInteger)maxNumberLength {
     return _maxNumberLength;
@@ -86,6 +100,8 @@ static DZClassicCalculator * _sharedCalculator;
         self.powerNumber = @"";
         self.isNegNumber = NO;
         self.isNegPowerNumber = NO;
+        self.answer = 0;
+        self.currentOperator = kOperator_nil;
         self.numberStack = [NSMutableArray arrayWithCapacity:32];
         self.opStack = [NSMutableArray arrayWithCapacity:32];
         self.exprStack = [NSMutableArray arrayWithCapacity:32];
@@ -100,6 +116,9 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (NSString *)displayNumber
 {
+    if (self.status == kStatus_answer) {
+        return [self.numberFormatter formatDouble:self.answer];
+    }
     BOOL hasPowerNumber = self.powerNumber.length > 0;
     return [NSString stringWithFormat:@"%@%@%@%@%@",
             (self.isNegNumber)?(@"-"):(@""),
@@ -115,6 +134,15 @@ static DZClassicCalculator * _sharedCalculator;
 - (void)pressDigit:(NSInteger)digit
 {
     switch (self.status) {
+        case kStatus_answer:
+            if (digit == 0) {
+                self.status = kStatus_init;
+                self.number = @"0";
+                self.isNegNumber = NO;
+                self.powerNumber = @"";
+                self.isNegPowerNumber = NO;
+                break;
+            }
         case kStatus_init:
             if (digit != 0) {
                 self.status = kStatus_integer;
@@ -160,6 +188,7 @@ static DZClassicCalculator * _sharedCalculator;
     switch (self.status) {
         case kStatus_init:
         case kStatus_integer:
+        case kStatus_answer:
             self.status = kStatus_fraction;
             self.number = [self.number stringByAppendingString:@"."];
             break;
@@ -184,6 +213,7 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_fraction:
         case kStatus_integer:
         case kStatus_scientific:
+        case kStatus_answer:
             self.status = kStatus_init;
             self.powerNumber = @"";
             self.number = @"0";
@@ -196,6 +226,9 @@ static DZClassicCalculator * _sharedCalculator;
 - (void)pressDelete
 {
     switch (self.status) {
+        case kStatus_answer:
+            [self longPressDelete];
+            break;
         case kStatus_fraction:
             if (LASTCHAR(self.number) == '.') {
                 self.number = TRIMRIGHT(self.number, 1);
@@ -242,9 +275,14 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (void)pressEqu
 {
-    self.status = kStatus_init;
-    double value = [[self displayNumber]doubleValue];
-    NSLog(@"%@", [self.numberFormatter formatDouble:value]);
+    self.answer = [[self displayNumber]doubleValue];
+    self.status = kStatus_answer;
+}
+
+- (void)pressOperator:(NSInteger)op
+{
+    currentOperator = op;
+    //TODO not finished code ...
 }
 
 @end

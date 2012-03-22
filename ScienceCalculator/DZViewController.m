@@ -96,6 +96,7 @@ const int kButton_equ = 40;
 - (void)degButtonPressed:(id)sender;
 - (void)digitButtonPressed:(id)sender;
 - (void)deleteButtonLongPressed:(id)sender;
+- (void)operatorButtonPressed:(id)sender;
 
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
@@ -290,6 +291,32 @@ const int kButton_equ = 40;
     }
 }
 
+- (void)operatorButtonPressed:(id)sender
+{
+    switch ([sender tag]) {
+        case kButton_add:
+            [self.calculator pressOperator:kOperator_add];
+            break;
+        case kButton_sub:
+            [self.calculator pressOperator:kOperator_sub];
+            break;
+        case kButton_mul:
+            [self.calculator pressOperator:kOperator_mul];
+            break;
+        case kButton_div:
+            [self.calculator pressOperator:kOperator_div];
+            break;
+        case kButton_xpowery:
+            [self.calculator pressOperator:
+             (self.shiftIsPressed?kOperator_root:kOperator_power)];
+            break;
+        case kButton_nCr:
+            [self.calculator pressOperator:
+             (self.shiftIsPressed?kOperator_nPr:kOperator_nCr)];
+            break;
+    }
+}
+
 #pragma mark -
 #pragma mark add and move buttons
 
@@ -399,10 +426,10 @@ const int kButton_equ = 40;
     ADDBUTTON(0,shift,shiftButtonPressed:);
     ADDBUTTON(1,hyp,hypButtonPressed:);
     ADDBUTTON(2,deg,degButtonPressed:);
-    ADDBUTTON(3,xpowery,buttonPressed:);
+    ADDBUTTON(3,xpowery,operatorButtonPressed:);
     ADDBUTTON(4,xreciprocal,buttonPressed:);
     ADDBUTTON(5,delete,buttonPressed:);
-    ADDBUTTON(6,nCr,buttonPressed:);
+    ADDBUTTON(6,nCr,operatorButtonPressed:);
     ADDBUTTON(7,log2,buttonPressed:);
     ADDBUTTON(8,log10,buttonPressed:);
     ADDBUTTON(9,ln,buttonPressed:);
@@ -424,14 +451,14 @@ const int kButton_equ = 40;
     ADDBUTTON(25,4,digitButtonPressed:);
     ADDBUTTON(26,5,digitButtonPressed:);
     ADDBUTTON(27,6,digitButtonPressed:);
-    ADDBUTTON(28,add,buttonPressed:);
-    ADDBUTTON(29,sub,buttonPressed:);
+    ADDBUTTON(28,add,operatorButtonPressed:);
+    ADDBUTTON(29,sub,operatorButtonPressed:);
     ADDBUTTON(30,Madd,buttonPressed:);
     ADDBUTTON(31,1,digitButtonPressed:);
     ADDBUTTON(32,2,digitButtonPressed:);
     ADDBUTTON(33,3,digitButtonPressed:);
-    ADDBUTTON(34,mul,buttonPressed:);
-    ADDBUTTON(35,div,buttonPressed:);
+    ADDBUTTON(34,mul,operatorButtonPressed:);
+    ADDBUTTON(35,div,operatorButtonPressed:);
     ADDBUTTON(36,Msub,buttonPressed:);
     ADDBUTTON(37,timestenpowerx,buttonPressed:);
     ADDBUTTON(38,0,digitButtonPressed:);
