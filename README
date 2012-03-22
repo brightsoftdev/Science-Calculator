@@ -36,6 +36,7 @@ It is yet another science calculator.
     Add Delete to number input logic.
 2012-03-22 Add 'answer' state.
     The logic to display the expression is complicated.
+    Use 'isnan' in std c lib.
 
 ## Todo
 1st Week:

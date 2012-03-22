@@ -7,6 +7,7 @@
 //
 
 #import "DZClassicCalculator.h"
+#import "DZStackedNumber.h"
 
 #define LASTCHAR(nsstr) [nsstr characterAtIndex: \
     ([nsstr length]-1)]
@@ -43,7 +44,6 @@ const int kOperator_nPr = 8;
 @property (nonatomic,assign) double answer;
 @property (nonatomic,retain) NSMutableArray * numberStack;
 @property (nonatomic,retain) NSMutableArray * opStack;
-@property (nonatomic,retain) NSMutableArray * exprStack;
 @property (nonatomic,assign) NSInteger currentOperator;
 @property (nonatomic,assign) NSInteger status;
 @end
@@ -54,7 +54,7 @@ const int kOperator_nPr = 8;
 #pragma mark Properties
 
 @synthesize number,powerNumber,isNegNumber,isNegPowerNumber;
-@synthesize numberStack,opStack,exprStack,currentOperator;
+@synthesize numberStack,opStack,currentOperator;
 @synthesize status;
 @synthesize numberFormatter;
 @synthesize answer;
@@ -104,7 +104,6 @@ static DZClassicCalculator * _sharedCalculator;
         self.currentOperator = kOperator_nil;
         self.numberStack = [NSMutableArray arrayWithCapacity:32];
         self.opStack = [NSMutableArray arrayWithCapacity:32];
-        self.exprStack = [NSMutableArray arrayWithCapacity:32];
         self.status = kStatus_init;
         self.numberFormatter = [DZNumberFormatter sharedFormatter];
     }
@@ -135,6 +134,7 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
+            //TODO: push op to stack?
             if (digit == 0) {
                 self.status = kStatus_init;
                 self.number = @"0";
@@ -186,9 +186,11 @@ static DZClassicCalculator * _sharedCalculator;
 - (void)pressPoint
 {
     switch (self.status) {
+        case kStatus_answer:
+            //TODO: push op to stack?
+            // NO break HERE, run THROUGH
         case kStatus_init:
         case kStatus_integer:
-        case kStatus_answer:
             self.status = kStatus_fraction;
             self.number = [self.number stringByAppendingString:@"."];
             break;
@@ -210,10 +212,11 @@ static DZClassicCalculator * _sharedCalculator;
 - (void)longPressDelete
 {
     switch (self.status) {
+        case kStatus_answer:
+            self.answer = 0;
         case kStatus_fraction:
         case kStatus_integer:
         case kStatus_scientific:
-        case kStatus_answer:
             self.status = kStatus_init;
             self.powerNumber = @"";
             self.number = @"0";
@@ -275,14 +278,28 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (void)pressEqu
 {
+    //TODO: These codes are PLACE HOLDER only.
     self.answer = [[self displayNumber]doubleValue];
     self.status = kStatus_answer;
 }
 
 - (void)pressOperator:(NSInteger)op
 {
-    currentOperator = op;
-    //TODO not finished code ...
+    switch (self.status) {
+        case kStatus_init:
+        case kStatus_integer:
+        case kStatus_fraction:
+        case kStatus_scientific:
+            self.answer = [[self displayNumber]doubleValue];
+            [self.numberStack addObject:
+             [[DZStackedNumber alloc]initWithDouble:self.answer]];
+            currentOperator = op;
+            self.status = kStatus_answer;
+            break;
+        case kStatus_answer:
+            self.currentOperator = op;
+            break;
+    }
 }
 
 @end
