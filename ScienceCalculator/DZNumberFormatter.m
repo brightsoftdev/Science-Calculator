@@ -45,6 +45,12 @@ static DZNumberFormatter * _sharedFormatter;
         self.sci.maximumSignificantDigits = maxNumberLen;
         self.sci.maximumFractionDigits = maxNumberLen-1;
         self.sci.maximumIntegerDigits = maxNumberLen;
+        self.sci.positiveInfinitySymbol
+            = NSLocalizedString(@"Positive Infinity", nil);
+        self.sci.negativeInfinitySymbol
+            = NSLocalizedString(@"Negative Infinity", nil);
+        self.sci.notANumberSymbol
+            = NSLocalizedString(@"Not a Number", nil);
         self.dec = [[NSNumberFormatter alloc]init];
         self.dec.numberStyle = NSNumberFormatterDecimalStyle;
         self.dec.usesGroupingSeparator = NO;

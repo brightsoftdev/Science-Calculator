@@ -315,6 +315,7 @@ const int kButton_equ = 40;
              (self.shiftIsPressed?kOperator_nPr:kOperator_nCr)];
             break;
     }
+    self.numberLabel.text = [self.calculator displayNumber];
 }
 
 #pragma mark -

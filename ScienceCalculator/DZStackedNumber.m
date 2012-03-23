@@ -21,11 +21,20 @@
 
 - (id)initWithDouble:(double)d
 {
+    return [self initWithDouble:d
+                     Expression:[[DZNumberFormatter sharedFormatter]
+                                 formatDouble:d]
+                    andOperator:kOperator_nil];
+}
+
+- (id)initWithDouble:(double)d 
+          Expression:(NSString *)str 
+         andOperator:(int)op
+{
     self = [super init];
     if (nil != self) {
-        self.rootOperator = kOperator_nil;
-        self.expression = [[DZNumberFormatter sharedFormatter]
-                           formatDouble:d];
+        self.rootOperator = op;
+        self.expression = str;
         self.value = d;
     }
     return self;

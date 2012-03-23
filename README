@@ -37,6 +37,7 @@ It is yet another science calculator.
 2012-03-22 Add 'answer' state.
     The logic to display the expression is complicated.
     Use 'isnan' in std c lib.
+2012-03-23 Add 'error' state.
 
 ## Todo
 1st Week:

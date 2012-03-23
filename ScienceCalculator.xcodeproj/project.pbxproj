@@ -93,6 +93,7 @@
 		79B5A65D14FDD4A6009D0E29 /* button102x42pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 79B5A65B14FDD4A6009D0E29 /* button102x42pressed.png */; };
 		79BC6DAD1511BCAB00027FF4 /* icon2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BC6DAC1511BCAB00027FF4 /* icon2x.png */; };
 		79CAEB641500763E00B047EA /* screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 79CAEB631500763E00B047EA /* screen.png */; };
+		79D17D90151B39E600236290 /* DZStackedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D17D8F151B39E600236290 /* DZStackedNumber.m */; };
 		79D37C6E15008F9800CD33BD /* deg.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6815008F9800CD33BD /* deg.png */; };
 		79D37C6F15008F9800CD33BD /* hyp.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6915008F9800CD33BD /* hyp.png */; };
 		79D37C7015008F9800CD33BD /* ln.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D37C6A15008F9800CD33BD /* ln.png */; };
@@ -350,6 +351,8 @@
 		79B5A65B14FDD4A6009D0E29 /* button102x42pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button102x42pressed.png; path = Images/button102x42pressed.png; sourceTree = "<group>"; };
 		79BC6DAC1511BCAB00027FF4 /* icon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2x.png; sourceTree = "<group>"; };
 		79CAEB631500763E00B047EA /* screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screen.png; path = Images/screen.png; sourceTree = "<group>"; };
+		79D17D8E151B39E600236290 /* DZStackedNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZStackedNumber.h; sourceTree = "<group>"; };
+		79D17D8F151B39E600236290 /* DZStackedNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZStackedNumber.m; sourceTree = "<group>"; };
 		79D37C6815008F9800CD33BD /* deg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deg.png; path = Images/deg.png; sourceTree = "<group>"; };
 		79D37C6915008F9800CD33BD /* hyp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hyp.png; path = Images/hyp.png; sourceTree = "<group>"; };
 		79D37C6A15008F9800CD33BD /* ln.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ln.png; path = Images/ln.png; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				7930901A1514238A0027BDDB /* DZClassicCalculator.m */,
 				79DBECF5151852B30057398C /* DZNumberFormatter.h */,
 				79DBECF6151852B30057398C /* DZNumberFormatter.m */,
+				79D17D8E151B39E600236290 /* DZStackedNumber.h */,
+				79D17D8F151B39E600236290 /* DZStackedNumber.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -891,6 +896,7 @@
 				79B59C2D15059E4E00CF0825 /* DZMenuViewController.m in Sources */,
 				7930901B1514238A0027BDDB /* DZClassicCalculator.m in Sources */,
 				79DBECF7151852B30057398C /* DZNumberFormatter.m in Sources */,
+				79D17D90151B39E600236290 /* DZStackedNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,5 +15,8 @@
 @property(nonatomic,assign) double value;
 
 - (id)initWithDouble:(double)d;
+- (id)initWithDouble:(double)d 
+          Expression:(NSString *)str
+         andOperator:(int)op;
 
 @end

@@ -22,6 +22,7 @@ const int kStatus_integer = 1;
 const int kStatus_fraction = 2;
 const int kStatus_scientific = 3;
 const int kStatus_answer = 4;
+const int kStatus_error = -1;
 
 const int kOperator_nil = 0;
 const int kOperator_add = 1;
@@ -46,6 +47,10 @@ const int kOperator_nPr = 8;
 @property (nonatomic,retain) NSMutableArray * opStack;
 @property (nonatomic,assign) NSInteger currentOperator;
 @property (nonatomic,assign) NSInteger status;
+
+/// This happens when leaving from answer status for number input.
+- (void)tryStackCurrentOperator;
+
 @end
 
 @implementation DZClassicCalculator
@@ -115,7 +120,8 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (NSString *)displayNumber
 {
-    if (self.status == kStatus_answer) {
+    if (self.status == kStatus_answer
+        || self.status == kStatus_error) {
         return [self.numberFormatter formatDouble:self.answer];
     }
     BOOL hasPowerNumber = self.powerNumber.length > 0;
@@ -134,7 +140,7 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            //TODO: push op to stack?
+            [self tryStackCurrentOperator];
             if (digit == 0) {
                 self.status = kStatus_init;
                 self.number = @"0";
@@ -187,7 +193,7 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            //TODO: push op to stack?
+            [self tryStackCurrentOperator];
             // NO break HERE, run THROUGH
         case kStatus_init:
         case kStatus_integer:
@@ -292,14 +298,29 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_scientific:
             self.answer = [[self displayNumber]doubleValue];
             [self.numberStack addObject:
-             [[DZStackedNumber alloc]initWithDouble:self.answer]];
+             [[DZStackedNumber alloc]
+              initWithDouble:self.answer
+              Expression:[self displayNumber]
+              andOperator:kOperator_nil]];
             currentOperator = op;
-            self.status = kStatus_answer;
+            if (isfinite(self.answer)) {
+                self.status = kStatus_answer;
+            } else {
+                self.status = kStatus_error;
+            }
             break;
         case kStatus_answer:
             self.currentOperator = op;
             break;
     }
+}
+
+#pragma mark -
+#pragma mark Private Interface Implementations
+
+- (void)tryStackCurrentOperator
+{
+    // TODO: not finished code.
 }
 
 @end
