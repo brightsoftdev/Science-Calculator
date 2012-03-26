@@ -33,6 +33,7 @@ const int kOperator_power = 5;
 const int kOperator_root = 6;
 const int kOperator_nCr = 7;
 const int kOperator_nPr = 8;
+const int kOperator_leftPar = 9;
 
 #pragma mark -
 #pragma mark Private Interface
@@ -48,8 +49,15 @@ const int kOperator_nPr = 8;
 @property (nonatomic,assign) NSInteger currentOperator;
 @property (nonatomic,assign) NSInteger status;
 
-/// This happens when leaving from answer status for number input.
-- (void)tryStackCurrentOperator;
+- (void)statusChangedFrom:(int)from to:(int)to;
+- (void)pushCurrentOperator;
+- (int)levelOfOperator:(int)op;
+- (void)setStatusToAnswer:(double)answer;
+- (double)doOperation:(int)op 
+          leftOperand:(double)left
+         rightOperand:(double)right;
+- (void)doStackTopOperation;
+- (NSString *)stringFromOperator:(int)op;
 
 @end
 
@@ -140,8 +148,9 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            [self tryStackCurrentOperator];
             if (digit == 0) {
+                [self statusChangedFrom:kStatus_answer
+                                     to:kStatus_init];
                 self.status = kStatus_init;
                 self.number = @"0";
                 self.isNegNumber = NO;
@@ -149,6 +158,9 @@ static DZClassicCalculator * _sharedCalculator;
                 self.isNegPowerNumber = NO;
                 break;
             }
+            [self statusChangedFrom:kStatus_answer 
+                                 to:kStatus_integer];
+            // NO break HERE, run THROUGH.
         case kStatus_init:
             if (digit != 0) {
                 self.status = kStatus_integer;
@@ -193,7 +205,8 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            [self tryStackCurrentOperator];
+            [self statusChangedFrom:kStatus_answer
+                                 to:kStatus_fraction];
             // NO break HERE, run THROUGH
         case kStatus_init:
         case kStatus_integer:
@@ -296,21 +309,24 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_integer:
         case kStatus_fraction:
         case kStatus_scientific:
-            self.answer = [[self displayNumber]doubleValue];
-            [self.numberStack addObject:
-             [[DZStackedNumber alloc]
-              initWithDouble:self.answer
-              Expression:[self displayNumber]
-              andOperator:kOperator_nil]];
-            currentOperator = op;
-            if (isfinite(self.answer)) {
-                self.status = kStatus_answer;
-            } else {
-                self.status = kStatus_error;
+            [self setStatusToAnswer:[[self displayNumber]doubleValue]];
+            if (self.status != kStatus_error) {
+                [self.numberStack addObject:
+                 [[DZStackedNumber alloc]
+                  initWithDouble:self.answer
+                  Expression:[self displayNumber]
+                  andOperator:kOperator_nil]];
+                currentOperator = op;
+                [self pushCurrentOperator];
             }
             break;
         case kStatus_answer:
+            if (self.currentOperator != kOperator_nil
+                && [self.opStack count] > 0) {
+                [self.opStack removeLastObject];
+            }
             self.currentOperator = op;
+            [self pushCurrentOperator];
             break;
     }
 }
@@ -318,9 +334,154 @@ static DZClassicCalculator * _sharedCalculator;
 #pragma mark -
 #pragma mark Private Interface Implementations
 
-- (void)tryStackCurrentOperator
+- (void)statusChangedFrom:(int)from to:(int)to
 {
-    // TODO: not finished code.
+    if (from == kStatus_answer && 
+        (to == kStatus_init || to == kStatus_integer ||
+         to == kStatus_fraction)) {
+            self.isNegNumber = NO;
+            self.isNegPowerNumber = NO;
+            self.powerNumber = @"";
+    }
+}
+
+- (int)levelOfOperator:(int)op
+{
+    switch (op) {
+        case kOperator_add: 
+        case kOperator_sub:
+            return 1;
+        case kOperator_mul:
+        case kOperator_div:
+            return 2;
+        case kOperator_power:
+        case kOperator_root:
+            return 3;
+        case kOperator_nCr:
+        case kOperator_nPr:
+            return 4;
+        case kOperator_nil:
+            return 5;
+        default:
+            return 0;
+    }
+}
+
+- (void)pushCurrentOperator
+{
+    int curOp = self.currentOperator;
+    if (curOp == kOperator_nil) 
+        return;
+    while ([self.opStack count] > 0 
+           && [self.numberStack count] >= 2
+           && kStatus_error != self.status) {
+        int topOp = [[self.opStack lastObject]intValue];
+        if ([self levelOfOperator:topOp] 
+            >= [self levelOfOperator:curOp]) {
+            [self doStackTopOperation];
+        } else {
+            break;
+        }
+    }
+    [self.opStack addObject:[NSNumber numberWithInt:curOp]];
+}
+
+- (void)doStackTopOperation
+{
+    if (self.opStack.count < 1)
+        return;
+    if (self.numberStack.count < 2)
+        return;
+    int topOp = [[self.opStack lastObject]intValue];
+    [self.opStack removeLastObject];
+    DZStackedNumber * right = [self.numberStack lastObject];
+    [self.numberStack removeLastObject];
+    DZStackedNumber * left = [self.numberStack lastObject];
+    [self.numberStack removeLastObject];
+    double resultDouble = [self doOperation:topOp
+                                leftOperand:left.value
+                               rightOperand:right.value];
+    BOOL leftParNeeded =
+        [self levelOfOperator:left.rootOperator] <
+        [self levelOfOperator:topOp];
+    BOOL rightParNeeded = 
+        [self levelOfOperator:topOp] >=
+        [self levelOfOperator:right.rootOperator];
+    NSString * resultExpr = [NSString stringWithFormat:
+                             @"%@%@%@ %@ %@%@%@",
+                             leftParNeeded?@"(":@"",
+                             left.expression,
+                             leftParNeeded?@")":@"",
+                             [self stringFromOperator:topOp],
+                             rightParNeeded?@"(":@"",
+                             right.expression,
+                             rightParNeeded?@")":@""];
+    [self.numberStack addObject:
+     [[DZStackedNumber alloc]initWithDouble:resultDouble
+                                 Expression:resultExpr
+                                andOperator:topOp]];
+    [self setStatusToAnswer:resultDouble];
+}
+
+- (void)setStatusToAnswer:(double)theAnswer
+{
+    self.answer = theAnswer;
+    if (isfinite(self.answer)) {
+        self.status = kStatus_answer;
+    } else {
+        self.status = kStatus_error;
+    }
+}
+
+
+- (double)doOperation:(int)op 
+          leftOperand:(double)left
+         rightOperand:(double)right
+{
+    switch (op) {
+        case kOperator_add:
+            return left + right;
+        case kOperator_sub:
+            return left - right;
+        case kOperator_mul:
+            return left * right;
+        case kOperator_div:
+            return left / right;
+        case kOperator_power:
+            return pow(left, right);
+        case kOperator_root:
+            return pow(left, 1/right);
+        case kOperator_nCr:
+            return 0;
+        case kOperator_nPr:
+            return 0;
+        default:
+            return left;
+    }
+}
+
+- (NSString *)stringFromOperator:(int)op
+{
+    switch (op) {
+        case kOperator_add:
+            return @"+";
+        case kOperator_sub:
+            return @"-";
+        case kOperator_mul:
+            return @"*";
+        case kOperator_div:
+            return @"/";
+        case kOperator_power:
+            return @"^";
+        case kOperator_root:
+            return @"root";
+        case kOperator_nCr:
+            return @"C";
+        case kOperator_nPr:
+            return @"P";
+        default:
+            return @"nop";
+    }
 }
 
 @end

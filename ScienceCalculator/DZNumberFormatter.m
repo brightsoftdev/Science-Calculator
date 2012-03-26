@@ -68,8 +68,8 @@ static DZNumberFormatter * _sharedFormatter;
         return @"0";
     }
     NSNumber * num = [NSNumber numberWithDouble:number];
-    if (number+1 < pow(10, _maxNumberLength)
-        && number > pow(0.1, _maxNumberLength/2)) {
+    if (fabs(number+1) < pow(10, _maxNumberLength)
+        && fabs(number) > pow(0.1, _maxNumberLength/2)) {
         return [dec stringFromNumber:num];
     } else {
         return [sci stringFromNumber:num];
