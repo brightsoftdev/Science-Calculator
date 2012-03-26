@@ -38,6 +38,7 @@ It is yet another science calculator.
     The logic to display the expression is complicated.
     Use 'isnan' in std c lib.
 2012-03-23 Add 'error' state.
+2012-03-26 Add logic for operators with two operands.
 
 ## Todo
 1st Week:
