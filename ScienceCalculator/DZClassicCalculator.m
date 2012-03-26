@@ -8,6 +8,7 @@
 
 #import "DZClassicCalculator.h"
 #import "DZStackedNumber.h"
+#import "DZMath.h"
 
 #define LASTCHAR(nsstr) [nsstr characterAtIndex: \
     ([nsstr length]-1)]
@@ -452,9 +453,9 @@ static DZClassicCalculator * _sharedCalculator;
         case kOperator_root:
             return pow(left, 1/right);
         case kOperator_nCr:
-            return 0;
+            return [DZMath combination:right outOf:left];
         case kOperator_nPr:
-            return 0;
+            return [DZMath permutation:right outOf:left];
         default:
             return left;
     }
