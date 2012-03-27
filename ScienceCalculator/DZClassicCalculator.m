@@ -49,15 +49,20 @@ const int kOperator_leftPar = 9;
 @property (nonatomic,retain) NSMutableArray * opStack;
 @property (nonatomic,assign) NSInteger currentOperator;
 @property (nonatomic,assign) NSInteger status;
+@property (nonatomic,assign) NSInteger unmatchedLeftPars;
 
-- (void)statusChangedFrom:(int)from to:(int)to;
 - (void)pushCurrentOperator;
-- (int)levelOfOperator:(int)op;
 - (void)setStatusToAnswer:(double)answer;
+- (BOOL)doStackTopOperation;
+- (void)startNewExpression;
+- (void)clearDisplayNumber;
+- (void)matchOneLeftPar;
+
+/// Utilities
 - (double)doOperation:(int)op 
           leftOperand:(double)left
          rightOperand:(double)right;
-- (void)doStackTopOperation;
+- (int)levelOfOperator:(int)op;
 - (NSString *)stringFromOperator:(int)op;
 
 @end
@@ -72,6 +77,7 @@ const int kOperator_leftPar = 9;
 @synthesize status;
 @synthesize numberFormatter;
 @synthesize answer;
+@synthesize unmatchedLeftPars;
 
 - (NSInteger)maxNumberLength {
     return _maxNumberLength;
@@ -110,12 +116,9 @@ static DZClassicCalculator * _sharedCalculator;
     if (nil != self) {
         _maxNumberLength = maxNumberLen;
         _maxPowerNumberLength = maxPowerNumberlen;
-        self.number = @"0";
-        self.powerNumber = @"";
-        self.isNegNumber = NO;
-        self.isNegPowerNumber = NO;
-        self.answer = 0;
+        [self clearDisplayNumber];
         self.currentOperator = kOperator_nil;
+        self.unmatchedLeftPars = 0;
         self.numberStack = [NSMutableArray arrayWithCapacity:32];
         self.opStack = [NSMutableArray arrayWithCapacity:32];
         self.status = kStatus_init;
@@ -149,18 +152,16 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
+            // If no current operator is set, start new expression.
+            if (self.currentOperator == kOperator_nil)
+                [self startNewExpression];
+            [self clearDisplayNumber];
+            self.currentOperator = kOperator_nil;
             if (digit == 0) {
-                [self statusChangedFrom:kStatus_answer
-                                     to:kStatus_init];
                 self.status = kStatus_init;
                 self.number = @"0";
-                self.isNegNumber = NO;
-                self.powerNumber = @"";
-                self.isNegPowerNumber = NO;
-                break;
+                break; // break ONLY when 0 pressed.
             }
-            [self statusChangedFrom:kStatus_answer 
-                                 to:kStatus_integer];
             // NO break HERE, run THROUGH.
         case kStatus_init:
             if (digit != 0) {
@@ -206,8 +207,11 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            [self statusChangedFrom:kStatus_answer
-                                 to:kStatus_fraction];
+            // If no current operator is set, start new expression.
+            if (self.currentOperator == kOperator_nil)
+                [self startNewExpression];
+            [self clearDisplayNumber];
+            self.currentOperator = kOperator_nil;
             // NO break HERE, run THROUGH
         case kStatus_init:
         case kStatus_integer:
@@ -233,15 +237,13 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (self.status) {
         case kStatus_answer:
-            self.answer = 0;
+            if (kOperator_nil == self.currentOperator) 
+                [self startNewExpression];
         case kStatus_fraction:
         case kStatus_integer:
         case kStatus_scientific:
             self.status = kStatus_init;
-            self.powerNumber = @"";
-            self.number = @"0";
-            self.isNegNumber = NO;
-            self.isNegPowerNumber = NO;
+            [self clearDisplayNumber];
             break;
     }
 }
@@ -310,18 +312,19 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_integer:
         case kStatus_fraction:
         case kStatus_scientific:
-            [self setStatusToAnswer:[[self displayNumber]doubleValue]];
+            [self setStatusToAnswer:self.displayNumber.doubleValue];
             if (self.status != kStatus_error) {
                 [self.numberStack addObject:
                  [[DZStackedNumber alloc]
-                  initWithDouble:self.answer
-                  Expression:[self displayNumber]
-                  andOperator:kOperator_nil]];
+                  initWithDouble:self.answer]];
                 currentOperator = op;
                 [self pushCurrentOperator];
             }
             break;
         case kStatus_answer:
+            if (self.currentOperator == kOperator_leftPar) {
+                break;
+            }
             if (self.currentOperator != kOperator_nil
                 && [self.opStack count] > 0) {
                 [self.opStack removeLastObject];
@@ -332,39 +335,61 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
-#pragma mark -
-#pragma mark Private Interface Implementations
-
-- (void)statusChangedFrom:(int)from to:(int)to
+- (void)pressLeftPar
 {
-    if (from == kStatus_answer && 
-        (to == kStatus_init || to == kStatus_integer ||
-         to == kStatus_fraction)) {
-            self.isNegNumber = NO;
-            self.isNegPowerNumber = NO;
-            self.powerNumber = @"";
+    switch (self.status) {
+        case kStatus_init:
+        case kStatus_answer:
+            if (self.currentOperator != kOperator_nil ||
+                self.status == kStatus_init) {
+                [self.opStack addObject:[NSNumber numberWithInt:kOperator_leftPar]];
+                self.currentOperator = kOperator_leftPar;
+                self.unmatchedLeftPars = self.unmatchedLeftPars + 1;
+            }
+            break;
     }
 }
 
-- (int)levelOfOperator:(int)op
+- (void)pressRightPar
 {
-    switch (op) {
-        case kOperator_add: 
-        case kOperator_sub:
-            return 1;
-        case kOperator_mul:
-        case kOperator_div:
-            return 2;
-        case kOperator_power:
-        case kOperator_root:
-            return 3;
-        case kOperator_nCr:
-        case kOperator_nPr:
-            return 4;
-        case kOperator_nil:
-            return 5;
+    if (self.unmatchedLeftPars < 1) 
+        return;
+    switch (self.status) {
+        case kStatus_answer:
+            if (self.currentOperator == kOperator_nil)
+                break;
+        case kStatus_fraction:
+        case kStatus_init:
+        case kStatus_integer:
+        case kStatus_scientific:
+            [self setStatusToAnswer:self.displayNumber.doubleValue];
+            if (self.status == kStatus_error)
+                return;
+            [self.numberStack addObject:
+             [[DZStackedNumber alloc]
+              initWithDouble:self.answer]];
+            break;
         default:
-            return 0;
+            return;
+    }
+    [self matchOneLeftPar];
+}
+
+#pragma mark -
+#pragma mark Private Interface Implementations
+
+- (void)matchOneLeftPar
+{
+    while (self.opStack.count > 0) {
+        int topOp = [self.opStack.lastObject intValue];
+        if (topOp == kOperator_leftPar) {
+            [self.opStack removeLastObject];
+            self.unmatchedLeftPars = self.unmatchedLeftPars - 1;
+            return;
+        }
+        if ([self doStackTopOperation] == NO) {
+            return;
+        }
     }
 }
 
@@ -373,13 +398,14 @@ static DZClassicCalculator * _sharedCalculator;
     int curOp = self.currentOperator;
     if (curOp == kOperator_nil) 
         return;
-    while ([self.opStack count] > 0 
-           && [self.numberStack count] >= 2
+    while (self.opStack.count > 0 
+           && self.numberStack.count >= 2
            && kStatus_error != self.status) {
-        int topOp = [[self.opStack lastObject]intValue];
+        int topOp = [self.opStack.lastObject intValue];
         if ([self levelOfOperator:topOp] 
             >= [self levelOfOperator:curOp]) {
-            [self doStackTopOperation];
+            if ([self doStackTopOperation] == NO)
+                break;
         } else {
             break;
         }
@@ -387,13 +413,15 @@ static DZClassicCalculator * _sharedCalculator;
     [self.opStack addObject:[NSNumber numberWithInt:curOp]];
 }
 
-- (void)doStackTopOperation
+- (BOOL)doStackTopOperation
 {
     if (self.opStack.count < 1)
-        return;
+        return NO;
     if (self.numberStack.count < 2)
-        return;
+        return NO;
     int topOp = [[self.opStack lastObject]intValue];
+    if (topOp == kOperator_nil || topOp == kOperator_leftPar)
+        return NO;
     [self.opStack removeLastObject];
     DZStackedNumber * right = [self.numberStack lastObject];
     [self.numberStack removeLastObject];
@@ -422,6 +450,9 @@ static DZClassicCalculator * _sharedCalculator;
                                  Expression:resultExpr
                                 andOperator:topOp]];
     [self setStatusToAnswer:resultDouble];
+    if (self.status != kStatus_error)
+        return YES;
+    return NO;
 }
 
 - (void)setStatusToAnswer:(double)theAnswer
@@ -434,6 +465,47 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
+- (void)clearDisplayNumber
+{
+    //self.answer = 0;
+    self.number = @"0";
+    self.powerNumber = @"";
+    self.isNegNumber = NO;
+    self.isNegPowerNumber = NO;
+}
+
+- (void)startNewExpression
+{
+    [self.numberStack removeAllObjects];
+    [self.opStack removeAllObjects];
+    self.currentOperator = kOperator_nil;
+    self.unmatchedLeftPars = 0;
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (int)levelOfOperator:(int)op
+{
+    switch (op) {
+        case kOperator_add: 
+        case kOperator_sub:
+            return 1;
+        case kOperator_mul:
+        case kOperator_div:
+            return 2;
+        case kOperator_power:
+        case kOperator_root:
+            return 3;
+        case kOperator_nCr:
+        case kOperator_nPr:
+            return 4;
+        case kOperator_nil:
+            return 5;
+        default:
+            return 0;
+    }
+}
 
 - (double)doOperation:(int)op 
           leftOperand:(double)left

@@ -40,6 +40,7 @@ It is yet another science calculator.
 2012-03-23 Add 'error' state.
 2012-03-26 Add logic for operators with two operands.
     Add combination computation.
+2012-03-27 Add logic for parentheses.
 
 ## Todo
 1st Week:

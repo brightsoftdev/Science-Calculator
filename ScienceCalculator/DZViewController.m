@@ -139,31 +139,33 @@ const int kButton_equ = 40;
 - (void)buttonPressed:(id)sender
 {
     UIButton * btn = sender;
-    switch ([btn tag]) {
+    switch (btn.tag) {
         case kButton_point:
             [self.calculator pressPoint];
-            self.numberLabel.text = [self.calculator displayNumber];
             break;
         case kButton_neg:
             [self.calculator pressNeg];
-            self.numberLabel.text = [self.calculator displayNumber];
             break;
         case kButton_timestenpowerx:
             [self.calculator pressTimesTenPowerX];
-            self.numberLabel.text = [self.calculator displayNumber];
             break;
         case kButton_delete:
             [self.calculator pressDelete];
-            self.numberLabel.text = [self.calculator displayNumber];
             break;
         case kButton_equ:
             [self.calculator pressEqu];
-            self.numberLabel.text = [self.calculator displayNumber];
+            break;
+        case kButton_leftpar:
+            [self.calculator pressLeftPar];
+            break;
+        case kButton_rightpar:
+            [self.calculator pressRightPar];
             break;
         default:
             NSLog(@"btn: %d", btn.tag);
-            break;
+            return;
     }
+    self.numberLabel.text = [self.calculator displayNumber];
 }
 
 - (void)shiftButtonPressed:(id)sender

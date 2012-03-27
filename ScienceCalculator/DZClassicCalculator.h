@@ -44,6 +44,8 @@ extern const int kOperator_nPr;
 - (void)longPressDelete;
 - (void)pressEqu;
 - (void)pressOperator:(NSInteger)op;
+- (void)pressLeftPar;
+- (void)pressRightPar;
 
 
 @end
