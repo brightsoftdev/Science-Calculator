@@ -41,6 +41,7 @@ It is yet another science calculator.
 2012-03-26 Add logic for operators with two operands.
     Add combination computation.
 2012-03-27 Add logic for parentheses.
+	Finish code for '=' button.
 
 ## Todo
 1st Week:

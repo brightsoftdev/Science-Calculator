@@ -117,6 +117,7 @@ static DZClassicCalculator * _sharedCalculator;
         _maxNumberLength = maxNumberLen;
         _maxPowerNumberLength = maxPowerNumberlen;
         [self clearDisplayNumber];
+		self.answer = 0;
         self.currentOperator = kOperator_nil;
         self.unmatchedLeftPars = 0;
         self.numberStack = [NSMutableArray arrayWithCapacity:32];
@@ -300,9 +301,13 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (void)pressEqu
 {
-    //TODO: These codes are PLACE HOLDER only.
-    self.answer = [[self displayNumber]doubleValue];
-    self.status = kStatus_answer;
+    while (self.status != kStatus_error &&
+           self.unmatchedLeftPars > 0) {
+        [self pressRightPar];
+    }
+    self.unmatchedLeftPars = 1;
+    [self pressRightPar];
+    self.unmatchedLeftPars = 0;
 }
 
 - (void)pressOperator:(NSInteger)op
@@ -340,12 +345,13 @@ static DZClassicCalculator * _sharedCalculator;
     switch (self.status) {
         case kStatus_init:
         case kStatus_answer:
-            if (self.currentOperator != kOperator_nil ||
-                self.status == kStatus_init) {
-                [self.opStack addObject:[NSNumber numberWithInt:kOperator_leftPar]];
-                self.currentOperator = kOperator_leftPar;
-                self.unmatchedLeftPars = self.unmatchedLeftPars + 1;
+            if (self.status == kStatus_answer &&
+                self.currentOperator == kOperator_nil) {
+                [self startNewExpression];
             }
+            [self.opStack addObject:[NSNumber numberWithInt:kOperator_leftPar]];
+            self.currentOperator = kOperator_leftPar;
+            self.unmatchedLeftPars = self.unmatchedLeftPars + 1;
             break;
     }
 }
@@ -373,6 +379,7 @@ static DZClassicCalculator * _sharedCalculator;
             return;
     }
     [self matchOneLeftPar];
+    self.currentOperator = kOperator_nil;
 }
 
 #pragma mark -
