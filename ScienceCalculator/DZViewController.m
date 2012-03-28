@@ -98,6 +98,8 @@ const int kButton_equ = 40;
 - (void)deleteButtonLongPressed:(id)sender;
 - (void)operatorButtonPressed:(id)sender;
 
+- (void)updateDisplay;
+
 - (void)addButtonAtIndex:(NSInteger)index
           withImageIndex:(NSInteger)image
          backgroundIndex:(NSInteger)bkImage
@@ -165,7 +167,7 @@ const int kButton_equ = 40;
             NSLog(@"btn: %d", btn.tag);
             return;
     }
-    self.numberLabel.text = [self.calculator displayNumber];
+    [self updateDisplay];
 }
 
 - (void)shiftButtonPressed:(id)sender
@@ -281,7 +283,7 @@ const int kButton_equ = 40;
             [self.calculator pressDigit:9];
             break;
     }
-    self.numberLabel.text = [self.calculator displayNumber];
+    [self updateDisplay];
 }
 
 - (void)deleteButtonLongPressed:(id)sender
@@ -289,7 +291,7 @@ const int kButton_equ = 40;
     UILongPressGestureRecognizer * gr = sender;
     if (gr.state == UIGestureRecognizerStateEnded) {
         [self.calculator longPressDelete];
-        self.numberLabel.text = [self.calculator displayNumber];
+        [self updateDisplay];
     }
 }
 
@@ -317,7 +319,16 @@ const int kButton_equ = 40;
              (self.shiftIsPressed?kOperator_nPr:kOperator_nCr)];
             break;
     }
+    [self updateDisplay];
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (void)updateDisplay
+{
     self.numberLabel.text = [self.calculator displayNumber];
+    self.exprLabel.text = [self.calculator displayExpression];
 }
 
 #pragma mark -

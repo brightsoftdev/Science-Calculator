@@ -57,6 +57,7 @@ const int kOperator_leftPar = 9;
 - (void)startNewExpression;
 - (void)clearDisplayNumber;
 - (void)matchOneLeftPar;
+- (void)parenthesesTopStackedNumber;
 
 /// Utilities
 - (double)doOperation:(int)op 
@@ -144,6 +145,40 @@ static DZClassicCalculator * _sharedCalculator;
             (hasPowerNumber)?(@"E"):(@""),
             (hasPowerNumber && self.isNegPowerNumber)?(@"-"):(@""),
             self.powerNumber];
+}
+
+- (NSString *)displayExpression
+{
+    if (self.opStack.count < 1) {
+        if (self.numberStack.count < 1)
+            return @"";
+        else 
+            return [self.numberStack.lastObject expression];
+    }
+    NSString * rightopr = @"";
+    int opTop = self.opStack.count - 1;
+    int numTop = self.numberStack.count - 1;
+    if (self.status == kStatus_answer && 
+        self.currentOperator == kOperator_nil) {
+        rightopr = [[self.numberStack objectAtIndex:numTop]expression];
+        numTop--;
+    }
+    for (int i = opTop; i >= 0; i--) {
+        int op = [[self.opStack objectAtIndex:i]intValue];
+        switch (op) {
+            case kOperator_leftPar:
+                rightopr = [NSString stringWithFormat:@"(%@", rightopr];
+                break;
+            default:
+                rightopr = [NSString stringWithFormat:@"%@ %@ %@",
+                            [[self.numberStack objectAtIndex:numTop]expression],
+                            [self stringFromOperator:op],
+                            rightopr];
+                numTop--;
+                break;
+        }
+    }
+    return rightopr;
 }
 
 #pragma mark -
@@ -334,6 +369,11 @@ static DZClassicCalculator * _sharedCalculator;
                 && [self.opStack count] > 0) {
                 [self.opStack removeLastObject];
             }
+            if (self.numberStack.count > 0 &&
+                [self levelOfOperator:op] >
+                [self levelOfOperator:[self.numberStack.lastObject rootOperator]]) {
+                [self parenthesesTopStackedNumber];
+            }
             self.currentOperator = op;
             [self pushCurrentOperator];
             break;
@@ -385,6 +425,15 @@ static DZClassicCalculator * _sharedCalculator;
 #pragma mark -
 #pragma mark Private Interface Implementations
 
+- (void)parenthesesTopStackedNumber
+{
+    [self.numberStack.lastObject setExpression:
+     [NSString stringWithFormat:@"(%@)",
+      [self.numberStack.lastObject expression]]];
+    [self.numberStack.lastObject setRootOperator:
+     kOperator_nil];
+}
+
 - (void)matchOneLeftPar
 {
     while (self.opStack.count > 0) {
@@ -392,6 +441,7 @@ static DZClassicCalculator * _sharedCalculator;
         if (topOp == kOperator_leftPar) {
             [self.opStack removeLastObject];
             self.unmatchedLeftPars = self.unmatchedLeftPars - 1;
+            [self parenthesesTopStackedNumber];
             return;
         }
         if ([self doStackTopOperation] == NO) {

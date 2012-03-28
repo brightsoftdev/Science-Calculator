@@ -35,6 +35,7 @@ extern const int kOperator_nPr;
          maxPowerNumberLength:(NSInteger)maxPowerNumberlen;
 
 - (NSString *)displayNumber;
+- (NSString *)displayExpression;
 
 - (void)pressDigit:(NSInteger)digit;
 - (void)pressNeg;

@@ -42,6 +42,7 @@ It is yet another science calculator.
     Add combination computation.
 2012-03-27 Add logic for parentheses.
 	Finish code for '=' button.
+2012-03-28 Display expression.
 
 ## Todo
 1st Week:
