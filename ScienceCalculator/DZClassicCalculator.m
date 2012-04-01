@@ -36,6 +36,37 @@ const int kOperator_nCr = 7;
 const int kOperator_nPr = 8;
 const int kOperator_leftPar = 9;
 
+const int kFunction_reciprocal = 0;
+const int kFunction_sqr = 1;
+const int kFunction_sqrt = 2;
+const int kFunction_cube = 3;
+const int kFunction_cuberoot = 4;
+const int kFunction_factorial = 5;
+const int kFunction_sin = 6;
+const int kFunction_cos = 7;
+const int kFunction_tan = 8;
+const int kFunction_sind = 9;
+const int kFunction_cosd = 10;
+const int kFunction_tand = 11;
+const int kFunction_sinh = 12;
+const int kFunction_cosh = 13;
+const int kFunction_tanh = 14;
+const int kFunction_asin = 15;
+const int kFunction_acos = 16;
+const int kFunction_atan = 17;
+const int kFunction_asind = 18;
+const int kFunction_acosd = 19;
+const int kFunction_atand = 20;
+const int kFunction_asinh = 21;
+const int kFunction_acosh = 22;
+const int kFunction_atanh = 23;
+const int kFunction_log2 = 24;
+const int kFunction_log10 = 25;
+const int kFunction_ln = 26;
+const int kFunction_pow2 = 27;
+const int kFunction_pow10 = 28;
+const int kFunction_exp = 29;
+
 #pragma mark -
 #pragma mark Private Interface
 
@@ -63,8 +94,11 @@ const int kOperator_leftPar = 9;
 - (double)doOperation:(int)op 
           leftOperand:(double)left
          rightOperand:(double)right;
+- (double)doFunction:(int)func
+            argument:(double)arg;
 - (int)levelOfOperator:(int)op;
 - (NSString *)stringFromOperator:(int)op;
+- (NSString *)stringFromFunction:(int)func;
 
 @end
 
@@ -422,6 +456,11 @@ static DZClassicCalculator * _sharedCalculator;
     self.currentOperator = kOperator_nil;
 }
 
+- (void)pressFunction:(NSInteger)func
+{
+    
+}
+
 #pragma mark -
 #pragma mark Private Interface Implementations
 
@@ -590,6 +629,74 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
+- (double)doFunction:(int)func argument:(double)arg
+{
+    switch (func) {
+        case kFunction_reciprocal:
+            return 1 / arg;
+        case kFunction_sqr:
+            return arg * arg;
+        case kFunction_sqrt:
+            return sqrt(arg);
+        case kFunction_cube:
+            return pow(arg, 3.0);
+        case kFunction_cuberoot:
+            return pow(arg, 1.0/3.0);
+        case kFunction_factorial:
+            return [DZMath permutation:arg outOf:arg];
+        case kFunction_sin:
+            return sin(arg);
+        case kFunction_cos:
+            return cos(arg);
+        case kFunction_tan:
+            return tan(arg);
+        case kFunction_sind:
+            return sin(arg/180.0*M_PI);
+        case kFunction_cosd:
+            return cos(arg/180.0*M_PI);
+        case kFunction_tand:
+            return tan(arg/180.8*M_PI);
+        case kFunction_sinh:
+            return sinh(arg);
+        case kFunction_cosh:
+            return cosh(arg);
+        case kFunction_tanh:
+            return tanh(arg);
+        case kFunction_asin:
+            return asin(arg);
+        case kFunction_acos:
+            return acos(arg);
+        case kFunction_atan:
+            return atan(arg);
+        case kFunction_asind:
+            return asin(arg)*180.0/M_PI;
+        case kFunction_acosd:
+            return acos(arg)*180.0/M_PI;
+        case kFunction_atand:
+            return atan(arg)*180.0/M_PI;
+        case kFunction_asinh:
+            return asinh(arg);
+        case kFunction_acosh:
+            return acosh(arg);
+        case kFunction_atanh:
+            return atanh(arg);
+        case kFunction_log2:
+            return log2(arg);
+        case kFunction_log10:
+            return log10(arg);
+        case kFunction_ln:
+            return log(arg);
+        case kFunction_pow2:
+            return pow(2.0, arg);
+        case kFunction_pow10:
+            return pow(10.0, arg);
+        case kFunction_exp:
+            return exp(arg);
+        default:
+            return 0;
+    }
+}
+
 - (NSString *)stringFromOperator:(int)op
 {
     switch (op) {
@@ -611,6 +718,74 @@ static DZClassicCalculator * _sharedCalculator;
             return @"P";
         default:
             return @"nop";
+    }
+}
+
+- (NSString *)stringFromFunction:(int)func
+{
+    switch (func) {
+        case kFunction_reciprocal:
+            return @"reciprocal";
+        case kFunction_sqr:
+            return @"sqr";
+        case kFunction_sqrt:
+            return @"sqrt";
+        case kFunction_cube:
+            return @"cube";
+        case kFunction_cuberoot:
+            return @"cuberoot";
+        case kFunction_factorial:
+            return @"factorial";
+        case kFunction_sin:
+            return @"sin";
+        case kFunction_cos:
+            return @"cos";
+        case kFunction_tan:
+            return @"tan";
+        case kFunction_sind:
+            return @"sind";
+        case kFunction_cosd:
+            return @"cosd";
+        case kFunction_tand:
+            return @"tand";
+        case kFunction_sinh:
+            return @"sinh";
+        case kFunction_cosh:
+            return @"cosh";
+        case kFunction_tanh:
+            return @"tanh";
+        case kFunction_asin:
+            return @"asin";
+        case kFunction_acos:
+            return @"acos";
+        case kFunction_atan:
+            return @"atan";
+        case kFunction_asind:
+            return @"asind";
+        case kFunction_acosd:
+            return @"acosd";
+        case kFunction_atand:
+            return @"atand";
+        case kFunction_asinh:
+            return @"asinh";
+        case kFunction_acosh:
+            return @"acosh";
+        case kFunction_atanh:
+            return @"atanh";
+        case kFunction_log2:
+            return @"log2";
+        case kFunction_log10:
+            return @"log10";
+        case kFunction_ln:
+            return @"ln";
+        case kFunction_pow2:
+            return @"pow2";
+        case kFunction_pow10:
+            return @"pow10";
+        case kFunction_exp:
+            return @"exp";
+        default:
+            return @"";
     }
 }
 

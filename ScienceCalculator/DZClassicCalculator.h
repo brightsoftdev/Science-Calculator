@@ -19,6 +19,37 @@ extern const int kOperator_root;
 extern const int kOperator_nCr;
 extern const int kOperator_nPr;
 
+extern const int kFunction_reciprocal;
+extern const int kFunction_sqr;
+extern const int kFunction_sqrt;
+extern const int kFunction_cube;
+extern const int kFunction_cuberoot;
+extern const int kFunction_factorial;
+extern const int kFunction_sin;
+extern const int kFunction_cos;
+extern const int kFunction_tan;
+extern const int kFunction_sind;
+extern const int kFunction_cosd;
+extern const int kFunction_tand;
+extern const int kFunction_sinh;
+extern const int kFunction_cosh;
+extern const int kFunction_tanh;
+extern const int kFunction_asin;
+extern const int kFunction_acos;
+extern const int kFunction_atan;
+extern const int kFunction_asind;
+extern const int kFunction_acosd;
+extern const int kFunction_atand;
+extern const int kFunction_asinh;
+extern const int kFunction_acosh;
+extern const int kFunction_atanh;
+extern const int kFunction_log2;
+extern const int kFunction_log10;
+extern const int kFunction_ln;
+extern const int kFunction_pow2;
+extern const int kFunction_pow10;
+extern const int kFunction_exp;
+
 @interface DZClassicCalculator : NSObject
 {
     NSInteger _maxNumberLength;
@@ -47,6 +78,7 @@ extern const int kOperator_nPr;
 - (void)pressOperator:(NSInteger)op;
 - (void)pressLeftPar;
 - (void)pressRightPar;
+- (void)pressFunction:(NSInteger)func;
 
 
 @end
