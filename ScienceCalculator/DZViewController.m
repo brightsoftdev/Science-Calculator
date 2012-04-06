@@ -55,23 +55,14 @@ const int kButton_0 = 38;
 const int kButton_point = 39;
 const int kButton_equ = 40;
 
-#define ADDBUTTON(index,name,action) \
+#define ADDBUTTON(index,text,action,tag) \
     [self addButtonAtIndex:index \
-    withImageIndex:kImage_##name \
+    withText:text \
+    tag:tag \
     backgroundIndex:kImage_button50x42 \
     backgroundIndexPressed:kImage_button50x42pressed \
     addTarget:self \
     andAction:@selector(action)]
-#define ADDBUTTON2(index,name,action) \
-    [self addButtonAtIndex:index \
-    withImageIndex:kImage_##name \
-    backgroundIndex:kImage_button102x42 \
-    backgroundIndexPressed:kImage_button102x42pressed \
-    addTarget:self \
-    andAction:@selector(action)]
-#define MOVEBUTTON(index,x,y,width,height) \
-    [self moveButtonAtIndex:index \
-    toFrameRect:CGRectMake(x,y,width,height)]
 #define SETBUTTONIMAGE(index,image) \
     [[self.allButtons objectAtIndex:index] \
     setImage:[self.imagePool imageAtIndex:image] \
@@ -85,10 +76,6 @@ const int kButton_equ = 40;
 @property (nonatomic,retain) DZClassicCalculator * calculator;
 @property (nonatomic,retain) NSMutableArray * allButtons;
 @property (nonatomic,retain) DZImagePool * imagePool;
-@property (nonatomic,assign) BOOL shiftIsPressed;
-@property (nonatomic,assign) BOOL hypIsPressed;
-@property (nonatomic,assign) BOOL degIsPressed;
-@property (nonatomic,retain) UILongPressGestureRecognizer * longPressRecognizer;
 
 - (void)buttonPressed:(id)sender;
 - (void)shiftButtonPressed:(id)sender;
@@ -101,16 +88,12 @@ const int kButton_equ = 40;
 - (void)updateDisplay;
 
 - (void)addButtonAtIndex:(NSInteger)index
-          withImageIndex:(NSInteger)image
+                withText:(NSString *)text
+                     tag:(NSInteger)tag
          backgroundIndex:(NSInteger)bkImage
   backgroundIndexPressed:(NSInteger)pressedImage
                addTarget:(id)target
                andAction:(SEL)action;
-
-- (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated;
-
-- (void)moveButtonAtIndex:(NSInteger)index
-              toFrameRect:(CGRect)rect;
 
 @end
 
@@ -120,18 +103,13 @@ const int kButton_equ = 40;
 @implementation DZViewController
 
 @synthesize allButtons;
-@synthesize screenImgView;
 @synthesize imagePool;
-@synthesize ledM,ledDegRad,ledNormSci,menu;
-@synthesize shiftIsPressed,hypIsPressed,degIsPressed;
-@synthesize numberLabel,exprLabel;
 @synthesize calculator;
-@synthesize longPressRecognizer;
 
 #pragma mark -
 #pragma mark buttonPress actions
 
-- (IBAction)menuButtonPressed:(id)sender
+- (void)menuButtonPressed:(id)sender
 {
     TTNavigator * navigator = [TTNavigator navigator];
     TTURLAction * action = [[TTURLAction actionWithURLPath:@"tt://menu"]applyAnimated:YES];
@@ -162,6 +140,9 @@ const int kButton_equ = 40;
             break;
         case kButton_rightpar:
             [self.calculator pressRightPar];
+            break;
+        case kButton_cos:
+            [self.calculator pressFunction:kFunction_cos];
             break;
         default:
             NSLog(@"btn: %d", btn.tag);
@@ -335,87 +316,24 @@ const int kButton_equ = 40;
 #pragma mark add and move buttons
 
 - (void)addButtonAtIndex:(NSInteger)index
-          withImageIndex:(NSInteger)image
+                withText:(NSString *)text
+                     tag:(NSInteger)tag
          backgroundIndex:(NSInteger)bkImage
   backgroundIndexPressed:(NSInteger)pressedImage
                addTarget:(id)target
                andAction:(SEL)action
 {
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTag:index];
+    [btn setTag:tag];
     [btn setBackgroundImage:[self.imagePool imageAtIndex:bkImage]
                    forState:UIControlStateNormal];
     [btn setBackgroundImage:[self.imagePool imageAtIndex:pressedImage]
                    forState:UIControlStateHighlighted];
-    [btn setImage:[self.imagePool imageAtIndex:image]
-             forState:UIControlStateNormal];
+    [btn setTitle:text forState:UIControlStateNormal];
     [btn addTarget:target action:action
   forControlEvents:UIControlEventTouchUpInside];
     [self.allButtons insertObject:btn atIndex:index];
     [self.view addSubview:btn];
-}
-
-- (void)moveButtonAtIndex:(NSInteger)index toFrameRect:(CGRect)rect
-{
-    UIButton * btn = [self.allButtons objectAtIndex:index];
-    [btn setFrame:rect];
-}
-
-- (void)moveAllButtonsToDeviceOrientationAnimated:(BOOL)animated
-{
-    if (animated == YES) {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.5];
-    }
-    if (self.interfaceOrientation == UIInterfaceOrientationPortrait
-        || self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        for (int r = 0; r < 6; r++)
-            for (int c = 0; c < 6; c++)
-                MOVEBUTTON(r*6+c, 5+52*c, 138+46*r, 50, 42);
-        for (int c = 0; c < 4; c++)
-            MOVEBUTTON(36+c, 5+52*c, 414, 50, 42);
-        MOVEBUTTON(40, 213, 414, 102, 42);
-        self.screenImgView.frame = CGRectMake(5, 26, 310, 108);
-        self.menu.frame = CGRectMake(5, 5, 50, 21);
-        self.ledDegRad.frame = CGRectMake(57, 5, 50, 21);
-        self.ledNormSci.frame = CGRectMake(109, 5, 50, 21);
-        self.ledM.frame = CGRectMake(161, 5, 50, 21);
-        self.exprLabel.numberOfLines = 3;
-        self.exprLabel.frame = CGRectMake(10, 30, 300, 60);
-        self.numberLabel.frame = CGRectMake(10, 86, 300, 40);
-    } else {
-        for (int r = 3; r < 6; r++) 
-            for (int c = 0; c < 6; c++) 
-                MOVEBUTTON(r*6+c, 162+c*53, r*44-8, 50, 42);
-        for (int c = 0; c < 4; c++) 
-            MOVEBUTTON(36+c, 162+c*53, 256, 50, 42);
-        MOVEBUTTON(40, 374, 256, 103, 42);
-        for (int r = 1; r < 3; r++)
-            for (int c = 1; c < 4; c++)
-                MOVEBUTTON(r*6+c, c*53-50, r*44+80, 50, 42);
-        MOVEBUTTON(0, 3, 80, 50, 42);
-        MOVEBUTTON(1, 56, 80, 50, 42);
-        MOVEBUTTON(2, 109, 80, 50, 42);
-        MOVEBUTTON(5, 427, 80, 50, 42);
-        MOVEBUTTON(16, 321, 80, 50, 42);
-        MOVEBUTTON(17, 374, 80, 50, 42);
-        MOVEBUTTON(3, 3, 212, 50, 42);
-        MOVEBUTTON(4, 56, 212, 50, 42);
-        MOVEBUTTON(11, 109, 212, 50, 42);
-        MOVEBUTTON(6, 3, 256, 50, 42);
-        MOVEBUTTON(12, 56, 256, 50, 42);
-        MOVEBUTTON(10, 109, 256, 50, 42);
-        self.screenImgView.frame = CGRectMake(3, 5, 474, 73);
-        self.menu.frame = CGRectMake(187, 80, 50, 21);
-        self.ledDegRad.frame = CGRectMake(187, 101, 50, 21);
-        self.ledNormSci.frame = CGRectMake(240,101, 50, 21);
-        self.ledM.frame = CGRectMake(240, 80, 50, 21);
-        self.exprLabel.numberOfLines = 2;
-        self.exprLabel.frame = CGRectMake(10, 6, 460, 40);
-        self.numberLabel.frame = CGRectMake(10, 42, 460, 30);
-    }
-    if (animated == YES)
-        [UIView commitAnimations];
 }
 
 #pragma mark -
@@ -495,12 +413,8 @@ const int kButton_equ = 40;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (YES);
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self moveAllButtonsToDeviceOrientationAnimated:YES];
+    return UIInterfaceOrientationPortrait == interfaceOrientation
+    || UIInterfaceOrientationPortraitUpsideDown == interfaceOrientation;
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -66,6 +66,7 @@ const int kFunction_ln = 26;
 const int kFunction_pow2 = 27;
 const int kFunction_pow10 = 28;
 const int kFunction_exp = 29;
+const int kFunction_neg = 30;
 
 #pragma mark -
 #pragma mark Private Interface
@@ -270,6 +271,9 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_scientific:
             self.isNegPowerNumber = !(self.isNegPowerNumber);
             break;
+        case kStatus_answer:
+            [self pressFunction:kFunction_neg];
+            break;
     }
 }
 
@@ -458,7 +462,37 @@ static DZClassicCalculator * _sharedCalculator;
 
 - (void)pressFunction:(NSInteger)func
 {
-    
+    // If arg yet not stacked, stack it first.
+    switch (self.status) {
+        case kStatus_answer:
+            if (self.currentOperator == kOperator_nil)
+                break;
+            // ELSE run THROUGH
+        case kStatus_fraction:
+        case kStatus_init:
+        case kStatus_integer:
+        case kStatus_scientific:
+            [self setStatusToAnswer:self.displayNumber.doubleValue];
+            if (self.status != kStatus_error) {
+                [self.numberStack addObject:
+                 [[DZStackedNumber alloc]
+                  initWithDouble:self.answer]];
+                self.currentOperator = kOperator_nil;
+            }
+            break;
+    }
+    if (kStatus_error != self.status &&
+        self.numberStack.count > 0) {
+        DZStackedNumber * arg = self.numberStack.lastObject;
+        arg.value = [self doFunction:func argument:arg.value];
+        arg.expression = [NSString stringWithFormat:@"%@%@%@%@",
+                          [self stringFromFunction:func],
+                          (arg.rootOperator != kOperator_nil)?@"(":@" ",
+                          arg.expression,
+                          (arg.rootOperator != kOperator_nil)?@")":@""];
+        arg.rootOperator = kOperator_nil;
+        [self setStatusToAnswer:arg.value];
+    }
 }
 
 #pragma mark -
@@ -692,6 +726,8 @@ static DZClassicCalculator * _sharedCalculator;
             return pow(10.0, arg);
         case kFunction_exp:
             return exp(arg);
+        case kFunction_neg:
+            return arg * (-1.0);
         default:
             return 0;
     }
@@ -784,6 +820,8 @@ static DZClassicCalculator * _sharedCalculator;
             return @"pow10";
         case kFunction_exp:
             return @"exp";
+        case kFunction_neg:
+            return @"neg";
         default:
             return @"";
     }

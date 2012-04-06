@@ -49,6 +49,7 @@ extern const int kFunction_ln;
 extern const int kFunction_pow2;
 extern const int kFunction_pow10;
 extern const int kFunction_exp;
+extern const int kFunction_neg;
 
 @interface DZClassicCalculator : NSObject
 {

@@ -1,5 +1,5 @@
-mv background.png background.png2
-mv screen.png screen.png2
+#mv background.png background.png2
+#mv screen.png screen.png2
 count=0
 for item in *.png
 do
@@ -19,6 +19,6 @@ do
 	echo "const int kImage_$name = $count;"
 	count=$(($count+1))
 done
-mv screen.png2 screen.png
-mv background.png2 background.png
+#mv screen.png2 screen.png
+#mv background.png2 background.png
 
