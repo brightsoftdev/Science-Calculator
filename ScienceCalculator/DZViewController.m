@@ -32,6 +32,9 @@
 @property (nonatomic,retain) UIView * btnView2;
 @property (nonatomic,assign) BOOL isDegreeMode;
 @property (nonatomic,assign) BOOL isInversed;
+@property (nonatomic,retain) UILabel * exprLabel;
+@property (nonatomic,retain) UILabel * numLabel;
+@property (nonatomic,retain) UILabel * statusLabel;
 
 - (void)buildUpView;
 - (void)addButtonAt:(NSInteger)index
@@ -54,6 +57,11 @@
 - (void)onInvBtn:(id)sender;
 - (void)onRadBtn:(id)sender;
 - (void)onDigitBtn:(id)sender;
+- (void)onDot:(id)sender;
+- (void)onEE:(id)sender;
+- (void)onNeg:(id)sender;
+- (void)onDelete:(id)sender;
+- (void)onCE:(id)sender;
 
 - (void)updateDisplay;
 
@@ -69,6 +77,7 @@
 @synthesize calculator;
 @synthesize btnView1,btnView2;
 @synthesize isDegreeMode,isInversed;
+@synthesize exprLabel,numLabel,statusLabel;
 
 #pragma mark -
 #pragma mark button press actions
@@ -135,6 +144,36 @@
     [self updateDisplay];
 }
 
+- (void)onDot:(id)sender
+{
+    [self.calculator pressPoint];
+    [self updateDisplay];
+}
+
+- (void)onEE:(id)sender
+{
+    [self.calculator pressTimesTenPowerX];
+    [self updateDisplay];
+}
+
+- (void)onNeg:(id)sender
+{
+    [self.calculator pressNeg];
+    [self updateDisplay];
+}
+
+- (void)onDelete:(id)sender
+{
+    [self.calculator pressDelete];
+    [self updateDisplay];
+}
+
+- (void)onCE:(id)sender
+{
+    [self.calculator longPressDelete];
+    [self updateDisplay];
+}
+
 - (void)menuButtonPressed:(id)sender
 {
     TTNavigator * navigator = [TTNavigator navigator];
@@ -147,7 +186,10 @@
 
 - (void)updateDisplay
 {
-    
+    self.numLabel.text = self.calculator.displayNumber;
+    self.exprLabel.text = self.calculator.displayExpression;
+    self.statusLabel.text = [NSString stringWithFormat:@"%@",
+                             self.isDegreeMode?@"Deg":@"Rad"];
 }
 
 #pragma mark -
@@ -168,26 +210,26 @@
     [self addButton:1:5:@"(":1:@selector(menuButtonPressed:)];
     [self addButton:1:6:@")":1:@selector(menuButtonPressed:)];
     [self addButton:1:7:@"C":1:@selector(menuButtonPressed:)];
-    [self addButton:1:8:@"CE":1:@selector(menuButtonPressed:)];
-    [self addButton:1:9:@"DEL":1:@selector(menuButtonPressed:)];
+    [self addButton:1:8:@"CE":1:@selector(onCE:)];
+    [self addButton:1:9:@"DEL":1:@selector(onDelete:)];
     [self addButton:1:10:@"÷":1:@selector(menuButtonPressed:)];
-    [self addButton:1:11:@"7":7:@selector(menuButtonPressed:)];
-    [self addButton:1:12:@"8":8:@selector(menuButtonPressed:)];
-    [self addButton:1:13:@"9":9:@selector(menuButtonPressed:)];
-    [self addButton:1:14:@"×10ⁿ":1:@selector(menuButtonPressed:)];
+    [self addButton:1:11:@"7":7:@selector(onDigitBtn:)];
+    [self addButton:1:12:@"8":8:@selector(onDigitBtn:)];
+    [self addButton:1:13:@"9":9:@selector(onDigitBtn:)];
+    [self addButton:1:14:@"×10ⁿ":1:@selector(onEE:)];
     [self addButton:1:15:@"×":1:@selector(menuButtonPressed:)];
-    [self addButton:1:16:@"4":4:@selector(menuButtonPressed:)];
-    [self addButton:1:17:@"5":5:@selector(menuButtonPressed:)];
-    [self addButton:1:18:@"6":6:@selector(menuButtonPressed:)];
-    [self addButton:1:19:@"±":1:@selector(menuButtonPressed:)];
+    [self addButton:1:16:@"4":4:@selector(onDigitBtn:)];
+    [self addButton:1:17:@"5":5:@selector(onDigitBtn:)];
+    [self addButton:1:18:@"6":6:@selector(onDigitBtn:)];
+    [self addButton:1:19:@"±":1:@selector(onNeg:)];
     [self addButton:1:20:@"−":1:@selector(menuButtonPressed:)];
-    [self addButton:1:21:@"1":1:@selector(menuButtonPressed:)];
-    [self addButton:1:22:@"2":2:@selector(menuButtonPressed:)];
-    [self addButton:1:23:@"3":3:@selector(menuButtonPressed:)];
+    [self addButton:1:21:@"1":1:@selector(onDigitBtn:)];
+    [self addButton:1:22:@"2":2:@selector(onDigitBtn:)];
+    [self addButton:1:23:@"3":3:@selector(onDigitBtn:)];
     [self addButton:1:24:@"F-E":1:@selector(menuButtonPressed:)];
     [self addButton:1:25:@"+":1:@selector(menuButtonPressed:)];
-    [self addButton:1:26:@"0":0:@selector(menuButtonPressed:)];
-    [self addButton:1:27:@".":1:@selector(menuButtonPressed:)];
+    [self addButton:1:26:@"0":0:@selector(onDigitBtn:)];
+    [self addButton:1:27:@".":1:@selector(onDot:)];
     [self addButton:1:28:@"ans":1:@selector(menuButtonPressed:)];
     [self addButton:1:29:@"=":1:@selector(menuButtonPressed:)];
     self.btnView2 = [[UIView alloc]
@@ -221,6 +263,33 @@
     [self addButton:2:55:@"Rand":1:@selector(menuButtonPressed:)];
     [self.view addSubview:self.btnView2];
     [self.view addSubview:self.btnView1];
+    exprLabel = [[UILabel alloc]initWithFrame:
+                 CGRectMake(5, 5, 310, 20)];
+    exprLabel.font = [UIFont fontWithName:@"GillSans" size:24];
+    exprLabel.minimumFontSize = 14;
+    exprLabel.adjustsFontSizeToFitWidth = YES;
+    exprLabel.textAlignment = UITextAlignmentRight;
+    exprLabel.lineBreakMode = UILineBreakModeHeadTruncation;
+    exprLabel.textColor = [UIColor whiteColor];
+    exprLabel.backgroundColor = [UIColor clearColor];
+    numLabel = [[UILabel alloc]initWithFrame:
+                CGRectMake(5, 25, 310, 90)];
+    numLabel.font = [UIFont fontWithName:@"GillSans" size:40];
+    numLabel.adjustsFontSizeToFitWidth = YES;
+    numLabel.textAlignment = UITextAlignmentRight;
+    numLabel.textColor = [UIColor whiteColor];
+    numLabel.backgroundColor = [UIColor clearColor];
+    statusLabel = [[UILabel alloc]initWithFrame:
+                   CGRectMake(5, 106, 310, 14)];
+    statusLabel.font = [UIFont fontWithName:@"GillSans" size:14];
+    statusLabel.adjustsFontSizeToFitWidth = YES;
+    statusLabel.textAlignment = UITextAlignmentLeft;
+    statusLabel.textColor = [UIColor whiteColor];
+    statusLabel.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:exprLabel];
+    [self.view addSubview:numLabel];
+    [self.view addSubview:statusLabel];
+    [self updateDisplay];
 }
 
 - (void)addButtonAt:(NSInteger)index
