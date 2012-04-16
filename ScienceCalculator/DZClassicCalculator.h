@@ -80,6 +80,7 @@ extern const int kFunction_neg;
 - (void)pressLeftPar;
 - (void)pressRightPar;
 - (void)pressFunction:(NSInteger)func;
+- (void)pressClear;
 
 
 @end

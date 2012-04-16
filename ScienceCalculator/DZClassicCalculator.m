@@ -495,6 +495,13 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
+- (void)pressClear
+{
+    [self startNewExpression];
+    [self clearDisplayNumber];
+    self.status = kStatus_init;
+}
+
 #pragma mark -
 #pragma mark Private Interface Implementations
 
