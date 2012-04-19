@@ -47,20 +47,9 @@ It is yet another science calculator.
 	Thinking about revise the UI.
 2012-04-09 Rewrite UI.
     Give up 'Line Mode'.
+2012-04-19 Refine button pad transition.
+    Refine expression display with functions.
 
 ## Todo
-1st Week:
- > Finish Calculator layout for both landscape and protrait orientations.
-2nd Week:
- > Integration with Three20.
- > Add UI for simple configurations.
- > Add UI for calculation history.
-3rd Week:
- > FSMs (automata) for both 'Classic' and 'Line Mode' calculation.
- > None-calculation-related button actions.
-4th Week:
- > Finish 'Classic' mode.
- > Design the display of 'Line Mode'.(postponed)
-5th Week:
- > Branch for simplified FreeEdition and finish that branch.
+    > Finish M+/M-/MR/MC.
 
