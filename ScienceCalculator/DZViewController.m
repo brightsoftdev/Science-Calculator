@@ -32,6 +32,8 @@
 @property (nonatomic,retain) UIView * btnView2;
 @property (nonatomic,assign) BOOL isDegreeMode;
 @property (nonatomic,assign) BOOL isInversed;
+@property (nonatomic,assign) BOOL isHold;
+@property (nonatomic,assign) BOOL isFn;
 @property (nonatomic,retain) UILabel * exprLabel;
 @property (nonatomic,retain) UILabel * numLabel;
 @property (nonatomic,retain) UILabel * statusLabel;
@@ -68,6 +70,7 @@
 - (void)onOperator:(id)sender;
 - (void)onEqu:(id)sender;
 - (void)onFunction:(id)sender;
+- (void)onHold:(id)sender;
 
 - (void)updateDisplay;
 
@@ -82,7 +85,7 @@
 @synthesize imagePool;
 @synthesize calculator;
 @synthesize btnView1,btnView2;
-@synthesize isDegreeMode,isInversed;
+@synthesize isDegreeMode,isInversed,isHold,isFn;
 @synthesize exprLabel,numLabel,statusLabel;
 
 #pragma mark -
@@ -90,12 +93,24 @@
 
 - (void)onFnBtn:(id)sender
 {
-    [self.view bringSubviewToFront:self.btnView2];
+    [UIView transitionFromView:self.btnView1
+                        toView:self.btnView2
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    completion:NULL];
+    self.isFn = YES;
+    [self updateDisplay];
 }
 
 - (void)onFn2Btn:(id)sender
 {
-    [self.view bringSubviewToFront:self.btnView1];
+    [UIView transitionFromView:self.btnView2
+                        toView:self.btnView1
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    completion:NULL];
+    self.isFn = NO;
+    [self updateDisplay];
 }
 
 - (void)onInvBtn:(id)sender
@@ -203,6 +218,9 @@
     UIButton * btn = (UIButton *)sender;
     [self.calculator pressOperator:btn.tag];
     [self updateDisplay];
+    if (self.isFn && !(self.isHold)) {
+        [self onFn2Btn:nil];
+    }
 }
 
 - (void)onEqu:(id)sender
@@ -215,6 +233,15 @@
 {
     UIButton * btn = (UIButton *)sender;
     [self.calculator pressFunction:btn.tag];
+    [self updateDisplay];
+    if (self.isFn && !(self.isHold)) {
+        [self onFn2Btn:nil];
+    }
+}
+
+- (void)onHold:(id)sender
+{
+    self.isHold = !(self.isHold);
     [self updateDisplay];
 }
 
@@ -232,8 +259,10 @@
 {
     self.numLabel.text = self.calculator.displayNumber;
     self.exprLabel.text = self.calculator.displayExpression;
-    self.statusLabel.text = [NSString stringWithFormat:@"%@",
-                             self.isDegreeMode?@"Deg":@"Rad"];
+    self.statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",
+                             self.isDegreeMode?@"Deg":@"Rad",
+                             self.isHold?@"Hold":@"",
+                             self.isFn?@"Fn":@""];
 }
 
 #pragma mark -
@@ -255,7 +284,7 @@
     [self addButton:1:6:@")":0:@selector(onRightPar:)];
     [self addButton:1:7:@"C":0:@selector(onClear:)];
     [self addButton:1:8:@"CE":0:@selector(onCE:)];
-    [self addButton:1:9:@"DEL":0:@selector(onDelete:)];
+    [self addButton:1:9:@"⌫":0:@selector(onDelete:)];
     [self addButton:1:10:@"÷":kOperator_div:@selector(onOperator:)];
     [self addButton:1:11:@"7":7:@selector(onDigitBtn:)];
     [self addButton:1:12:@"8":8:@selector(onDigitBtn:)];
@@ -283,7 +312,7 @@
     [self addButton:2:31:@"Rad":0:@selector(onRadBtn:)];
     [self addButton:2:32:@"Inv":0:@selector(onInvBtn:)];
     [self addButton:2:33:@"x⁻¹":kFunction_reciprocal:@selector(onFunction:)];
-    [self addButton:2:34:@"Menu":1:@selector(menuButtonPressed:)];
+    [self addButton:2:34:@"Hold":0:@selector(onHold:)];
     [self addButton:2:35:@"sin":kFunction_sin:@selector(onFunction:)];
     [self addButton:2:36:@"cos":kFunction_cos:@selector(onFunction:)];
     [self addButton:2:37:@"tan":kFunction_tan:@selector(onFunction:)];
@@ -305,10 +334,11 @@
     [self addButton:2:53:@"π":1:@selector(menuButtonPressed:)];
     [self addButton:2:54:@"e":1:@selector(menuButtonPressed:)];
     [self addButton:2:55:@"Rand":1:@selector(menuButtonPressed:)];
+    [self addButton:2:56:@"Menu":0:@selector(menuButtonPressed:)];
     [self.view addSubview:self.btnView2];
     [self.view addSubview:self.btnView1];
     exprLabel = [[UILabel alloc]initWithFrame:
-                 CGRectMake(5, 5, 310, 20)];
+                 CGRectMake(5, 5, 310, 30)];
     exprLabel.font = [UIFont fontWithName:@"GillSans" size:24];
     exprLabel.minimumFontSize = 14;
     exprLabel.adjustsFontSizeToFitWidth = YES;
@@ -393,6 +423,8 @@
     self.calculator = [DZClassicCalculator sharedCalculator];
     self.isInversed = NO;
     self.isDegreeMode = NO;
+    self.isHold = NO;
+    self.isFn = NO;
     [self buildUpView];
 }
 

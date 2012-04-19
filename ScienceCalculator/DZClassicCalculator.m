@@ -35,6 +35,7 @@ const int kOperator_root = 6;
 const int kOperator_nCr = 7;
 const int kOperator_nPr = 8;
 const int kOperator_leftPar = 9;
+const int kOperator_func = 10;
 
 const int kFunction_reciprocal = 0;
 const int kFunction_sqr = 1;
@@ -485,12 +486,13 @@ static DZClassicCalculator * _sharedCalculator;
         self.numberStack.count > 0) {
         DZStackedNumber * arg = self.numberStack.lastObject;
         arg.value = [self doFunction:func argument:arg.value];
-        arg.expression = [NSString stringWithFormat:@"%@%@%@%@",
-                          [self stringFromFunction:func],
+        arg.expression = [NSString stringWithFormat:@"%@%@%@",
                           (arg.rootOperator != kOperator_nil)?@"(":@" ",
                           arg.expression,
                           (arg.rootOperator != kOperator_nil)?@")":@""];
-        arg.rootOperator = kOperator_nil;
+        arg.expression = [NSString stringWithFormat:[self stringFromFunction:func],
+                          arg.expression];
+        arg.rootOperator = kOperator_func;
         [self setStatusToAnswer:arg.value];
     }
 }
@@ -637,8 +639,10 @@ static DZClassicCalculator * _sharedCalculator;
         case kOperator_nCr:
         case kOperator_nPr:
             return 4;
-        case kOperator_nil:
+        case kOperator_func:
             return 5;
+        case kOperator_nil:
+            return 6;
         default:
             return 0;
     }
@@ -746,11 +750,11 @@ static DZClassicCalculator * _sharedCalculator;
         case kOperator_add:
             return @"+";
         case kOperator_sub:
-            return @"-";
+            return @"−";
         case kOperator_mul:
-            return @"*";
+            return @"×";
         case kOperator_div:
-            return @"/";
+            return @"÷";
         case kOperator_power:
             return @"^";
         case kOperator_root:
@@ -768,69 +772,69 @@ static DZClassicCalculator * _sharedCalculator;
 {
     switch (func) {
         case kFunction_reciprocal:
-            return @"reciprocal";
+            return @"%@⁻¹";
         case kFunction_sqr:
-            return @"sqr";
+            return @"%@²";
         case kFunction_sqrt:
-            return @"sqrt";
+            return @"√%@";
         case kFunction_cube:
-            return @"cube";
+            return @"%@³";
         case kFunction_cuberoot:
-            return @"cuberoot";
+            return @"∛%@";
         case kFunction_factorial:
-            return @"factorial";
+            return @"%@!";
         case kFunction_sin:
-            return @"sin";
+            return @"sin%@";
         case kFunction_cos:
-            return @"cos";
+            return @"cos%@";
         case kFunction_tan:
-            return @"tan";
+            return @"tan%@";
         case kFunction_sind:
-            return @"sind";
+            return @"sind%@";
         case kFunction_cosd:
-            return @"cosd";
+            return @"cosd%@";
         case kFunction_tand:
-            return @"tand";
+            return @"tand%@";
         case kFunction_sinh:
-            return @"sinh";
+            return @"sinh%@";
         case kFunction_cosh:
-            return @"cosh";
+            return @"cosh%@";
         case kFunction_tanh:
-            return @"tanh";
+            return @"tanh%@";
         case kFunction_asin:
-            return @"asin";
+            return @"sin⁻¹%@";
         case kFunction_acos:
-            return @"acos";
+            return @"cos⁻¹%@";
         case kFunction_atan:
-            return @"atan";
+            return @"tan⁻¹%@";
         case kFunction_asind:
-            return @"asind";
+            return @"sind⁻¹%@";
         case kFunction_acosd:
-            return @"acosd";
+            return @"cosd⁻¹%@";
         case kFunction_atand:
-            return @"atand";
+            return @"tand⁻¹%@";
         case kFunction_asinh:
-            return @"asinh";
+            return @"sinh⁻¹%@";
         case kFunction_acosh:
-            return @"acosh";
+            return @"cosh⁻¹%@";
         case kFunction_atanh:
-            return @"atanh";
+            return @"tanh⁻¹%@";
         case kFunction_log2:
-            return @"log2";
+            return @"log₂%@";
         case kFunction_log10:
-            return @"log10";
+            return @"log₁₀%@";
         case kFunction_ln:
-            return @"ln";
+            return @"ln%@";
         case kFunction_pow2:
-            return @"pow2";
+            return @"pow₂%@";
         case kFunction_pow10:
-            return @"pow10";
+            return @"pow₁₀%@";
         case kFunction_exp:
-            return @"exp";
+            return @"exp%@";
         case kFunction_neg:
-            return @"neg";
+            return @"-%@";
         default:
-            return @"";
+            return @"%@";
     }
 }
 
