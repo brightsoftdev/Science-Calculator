@@ -51,14 +51,21 @@ extern const int kFunction_pow10;
 extern const int kFunction_exp;
 extern const int kFunction_neg;
 
+extern const int kMemOp_add;
+extern const int kMemOp_sub;
+extern const int kMemOp_clear;
+extern const int kMemOp_read;
+
 @interface DZClassicCalculator : NSObject
 {
     NSInteger _maxNumberLength;
     NSInteger _maxPowerNumberLength;
+    double _memory;
 }
 
 @property (readonly) NSInteger maxNumberLength;
 @property (readonly) NSInteger maxPowerNumberLength;
+@property (readonly) BOOL isMemoryNoneZero;
 @property (nonatomic,retain) DZNumberFormatter * numberFormatter;
 
 + (DZClassicCalculator *)sharedCalculator;
@@ -81,6 +88,7 @@ extern const int kFunction_neg;
 - (void)pressRightPar;
 - (void)pressFunction:(NSInteger)func;
 - (void)pressClear;
+- (void)pressMemOp:(NSInteger)op;
 
 
 @end

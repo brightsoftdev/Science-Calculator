@@ -71,6 +71,7 @@
 - (void)onEqu:(id)sender;
 - (void)onFunction:(id)sender;
 - (void)onHold:(id)sender;
+- (void)onMemOp:(id)sender;
 
 - (void)updateDisplay;
 
@@ -245,6 +246,13 @@
     [self updateDisplay];
 }
 
+- (void)onMemOp:(id)sender
+{
+    UIButton * btn = (UIButton *)sender;
+    [self.calculator pressMemOp:btn.tag];
+    [self updateDisplay];
+}
+
 - (void)menuButtonPressed:(id)sender
 {
     TTNavigator * navigator = [TTNavigator navigator];
@@ -259,10 +267,11 @@
 {
     self.numLabel.text = self.calculator.displayNumber;
     self.exprLabel.text = self.calculator.displayExpression;
-    self.statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@",
+    self.statusLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@",
                              self.isDegreeMode?@"Deg":@"Rad",
                              self.isHold?@"Hold":@"",
-                             self.isFn?@"Fn":@""];
+                             self.isFn?@"Fn":@"",
+                             self.calculator.isMemoryNoneZero?@"M":@""];
 }
 
 #pragma mark -
@@ -276,10 +285,10 @@
                      initWithFrame:CGRectMake(0, 124, 320, 336)];
     self.btnView1.backgroundColor = [UIColor blackColor];
     [self addButton:1:0:@"Fn":0:@selector(onFnBtn:)];
-    [self addButton:1:1:@"M+":0:@selector(menuButtonPressed:)];
-    [self addButton:1:2:@"M−":0:@selector(menuButtonPressed:)];
-    [self addButton:1:3:@"MR":0:@selector(menuButtonPressed:)];
-    [self addButton:1:4:@"MC":0:@selector(menuButtonPressed:)];
+    [self addButton:1:1:@"M+":kMemOp_add:@selector(onMemOp:)];
+    [self addButton:1:2:@"M−":kMemOp_sub:@selector(onMemOp:)];
+    [self addButton:1:3:@"MR":kMemOp_read:@selector(onMemOp:)];
+    [self addButton:1:4:@"MC":kMemOp_clear:@selector(onMemOp:)];
     [self addButton:1:5:@"(":0:@selector(onLeftPar:)];
     [self addButton:1:6:@")":0:@selector(onRightPar:)];
     [self addButton:1:7:@"C":0:@selector(onClear:)];

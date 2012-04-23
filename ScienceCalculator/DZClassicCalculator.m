@@ -69,6 +69,11 @@ const int kFunction_pow10 = 28;
 const int kFunction_exp = 29;
 const int kFunction_neg = 30;
 
+const int kMemOp_add = 0;
+const int kMemOp_sub = 1;
+const int kMemOp_clear = 2;
+const int kMemOp_read = 3;
+
 #pragma mark -
 #pragma mark Private Interface
 
@@ -86,11 +91,13 @@ const int kFunction_neg = 30;
 
 - (void)pushCurrentOperator;
 - (void)setStatusToAnswer:(double)answer;
+- (void)setStatusToAnswerAndStackIt:(double)answer;
 - (BOOL)doStackTopOperation;
 - (void)startNewExpression;
 - (void)clearDisplayNumber;
 - (void)matchOneLeftPar;
 - (void)parenthesesTopStackedNumber;
+- (void)feedInputNumber:(double)num;
 
 /// Utilities
 - (double)doOperation:(int)op 
@@ -124,6 +131,11 @@ const int kFunction_neg = 30;
     return _maxPowerNumberLength;
 }
 
+- (BOOL)isMemoryNoneZero
+{
+    return _memory != 0.0;
+}
+
 #pragma mark -
 #pragma mark Static Member
 
@@ -153,6 +165,7 @@ static DZClassicCalculator * _sharedCalculator;
     if (nil != self) {
         _maxNumberLength = maxNumberLen;
         _maxPowerNumberLength = maxPowerNumberlen;
+        _memory = 0.0;
         [self clearDisplayNumber];
 		self.answer = 0;
         self.currentOperator = kOperator_nil;
@@ -391,14 +404,10 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_integer:
         case kStatus_fraction:
         case kStatus_scientific:
-            [self setStatusToAnswer:self.displayNumber.doubleValue];
-            if (self.status != kStatus_error) {
-                [self.numberStack addObject:
-                 [[DZStackedNumber alloc]
-                  initWithDouble:self.answer]];
-                currentOperator = op;
-                [self pushCurrentOperator];
-            }
+            currentOperator = op;
+            [self pushCurrentOperator];
+            [self setStatusToAnswerAndStackIt:
+             self.displayNumber.doubleValue];
             break;
         case kStatus_answer:
             if (self.currentOperator == kOperator_leftPar) {
@@ -447,12 +456,10 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_init:
         case kStatus_integer:
         case kStatus_scientific:
-            [self setStatusToAnswer:self.displayNumber.doubleValue];
+            [self setStatusToAnswerAndStackIt:
+             self.displayNumber.doubleValue];
             if (self.status == kStatus_error)
                 return;
-            [self.numberStack addObject:
-             [[DZStackedNumber alloc]
-              initWithDouble:self.answer]];
             break;
         default:
             return;
@@ -473,13 +480,9 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_init:
         case kStatus_integer:
         case kStatus_scientific:
-            [self setStatusToAnswer:self.displayNumber.doubleValue];
-            if (self.status != kStatus_error) {
-                [self.numberStack addObject:
-                 [[DZStackedNumber alloc]
-                  initWithDouble:self.answer]];
-                self.currentOperator = kOperator_nil;
-            }
+            self.currentOperator = kOperator_nil;
+            [self setStatusToAnswerAndStackIt:
+             self.displayNumber.doubleValue];
             break;
     }
     if (kStatus_error != self.status &&
@@ -502,6 +505,45 @@ static DZClassicCalculator * _sharedCalculator;
     [self startNewExpression];
     [self clearDisplayNumber];
     self.status = kStatus_init;
+}
+
+- (void)pressMemOp:(NSInteger)op
+{
+    if (op == kMemOp_add || op == kMemOp_sub) {
+        switch (self.status) {
+            case kStatus_init:
+            case kStatus_integer:
+            case kStatus_fraction:
+            case kStatus_scientific:
+                self.currentOperator = kOperator_nil;
+                [self setStatusToAnswerAndStackIt:
+                 self.displayNumber.doubleValue];
+                if (self.status == kStatus_error)
+                    break;
+                // RUN THROUGH
+            case kStatus_answer:
+                if (op == kMemOp_add) {
+                    _memory += self.answer;
+                } else {
+                    _memory -= self.answer;
+                }
+                if (!isfinite(_memory)) {
+                    self.answer = _memory;
+                    self.status = kStatus_error;
+                    _memory = 0.0;
+                }
+                break;
+            default:
+                break;
+        }
+        return;
+    } else if (op == kMemOp_clear) {
+        _memory = 0.0;
+        return;
+    } else if (op == kMemOp_read) {
+        [self feedInputNumber:_memory];
+        return;
+    }
 }
 
 #pragma mark -
@@ -604,6 +646,19 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
+- (void)setStatusToAnswerAndStackIt:(double)theAnswer
+{
+    self.answer = theAnswer;
+    if (isfinite(self.answer)) {
+        self.status = kStatus_answer;
+        [self.numberStack addObject:
+         [[DZStackedNumber alloc]
+          initWithDouble:theAnswer]];
+    } else {
+        self.status = kStatus_error;
+    }
+}
+
 - (void)clearDisplayNumber
 {
     //self.answer = 0;
@@ -619,6 +674,26 @@ static DZClassicCalculator * _sharedCalculator;
     [self.opStack removeAllObjects];
     self.currentOperator = kOperator_nil;
     self.unmatchedLeftPars = 0;
+}
+
+- (void)feedInputNumber:(double)num
+{
+    switch (self.status) {
+        case kStatus_answer:
+            if (self.currentOperator == kOperator_nil) {
+                [self startNewExpression];
+            }
+            // RUN THROUGH
+        case kStatus_init:
+        case kStatus_integer:
+        case kStatus_fraction:
+        case kStatus_scientific:
+            self.currentOperator = kOperator_nil;
+            [self setStatusToAnswerAndStackIt:_memory];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -

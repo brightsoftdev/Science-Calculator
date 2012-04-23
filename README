@@ -49,7 +49,11 @@ It is yet another science calculator.
     Give up 'Line Mode'.
 2012-04-19 Refine button pad transition.
     Refine expression display with functions.
+2012-04-23 Finish M+/M-/MR/MC.
+    Finish feedInputNumber method.
 
 ## Todo
-    > Finish M+/M-/MR/MC.
+    >> ans button.
+	>> F-E button.
+	>> const button (E,pi).
 
