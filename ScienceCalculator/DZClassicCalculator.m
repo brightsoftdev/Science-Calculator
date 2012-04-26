@@ -74,6 +74,10 @@ const int kMemOp_sub = 1;
 const int kMemOp_clear = 2;
 const int kMemOp_read = 3;
 
+const int kConst_pi = 0;
+const int kConst_e = 1;
+const int kConst_rand = 2;
+
 #pragma mark -
 #pragma mark Private Interface
 
@@ -92,12 +96,13 @@ const int kMemOp_read = 3;
 - (void)pushCurrentOperator;
 - (void)setStatusToAnswer:(double)answer;
 - (void)setStatusToAnswerAndStackIt:(double)answer;
+- (void)setStatusToAnswerAndStackIt:(double)answer withName:(NSString *)name;
 - (BOOL)doStackTopOperation;
 - (void)startNewExpression;
 - (void)clearDisplayNumber;
 - (void)matchOneLeftPar;
 - (void)parenthesesTopStackedNumber;
-- (void)feedInputNumber:(double)num;
+- (void)feedInputNumber:(double)num withName:(NSString *)name;
 
 /// Utilities
 - (double)doOperation:(int)op 
@@ -163,6 +168,7 @@ static DZClassicCalculator * _sharedCalculator;
 {
     self = [super init];
     if (nil != self) {
+        srand(time(0));
         _maxNumberLength = maxNumberLen;
         _maxPowerNumberLength = maxPowerNumberlen;
         _memory = 0.0;
@@ -489,6 +495,14 @@ static DZClassicCalculator * _sharedCalculator;
         self.numberStack.count > 0) {
         DZStackedNumber * arg = self.numberStack.lastObject;
         arg.value = [self doFunction:func argument:arg.value];
+        if (arg.rootOperator == kOperator_nil) {
+            NSCharacterSet * set = [NSCharacterSet 
+                                    characterSetWithCharactersInString:@"-eE"];
+            NSRange range = [arg.expression rangeOfCharacterFromSet:set];
+            if (range.location != NSNotFound) {
+                arg.rootOperator = kOperator_func;
+            }
+        }
         arg.expression = [NSString stringWithFormat:@"%@%@%@",
                           (arg.rootOperator != kOperator_nil)?@"(":@" ",
                           arg.expression,
@@ -541,9 +555,29 @@ static DZClassicCalculator * _sharedCalculator;
         _memory = 0.0;
         return;
     } else if (op == kMemOp_read) {
-        [self feedInputNumber:_memory];
+        [self feedInputNumber:_memory withName:nil];
         return;
     }
+}
+
+- (void)pressConst:(NSInteger)type
+{
+    double value = 0.0;
+    NSString * name = nil;
+    switch (type) {
+        case kConst_e:
+            value = M_E;
+            name = @"e";
+            break;
+        case kConst_pi:
+            value = M_PI;
+            name = @"pi";
+            break;
+        case kConst_rand:
+            value = (rand() % 10000)/10000.0;
+            break;
+    }
+    [self feedInputNumber:value withName:name];
 }
 
 #pragma mark -
@@ -659,6 +693,23 @@ static DZClassicCalculator * _sharedCalculator;
     }
 }
 
+- (void)setStatusToAnswerAndStackIt:(double)theAnswer 
+                           withName:(NSString *)name
+{
+    self.answer = theAnswer;
+    if (isfinite(self.answer)) {
+        self.status = kStatus_answer;
+        [self.numberStack addObject:
+         [[DZStackedNumber alloc]
+          initWithDouble:theAnswer
+          Expression:name
+          andOperator:kOperator_func]];
+    } else {
+        self.status = kStatus_error;
+    }
+    
+}
+
 - (void)clearDisplayNumber
 {
     //self.answer = 0;
@@ -677,6 +728,7 @@ static DZClassicCalculator * _sharedCalculator;
 }
 
 - (void)feedInputNumber:(double)num
+               withName:(NSString *)name
 {
     switch (self.status) {
         case kStatus_answer:
@@ -689,7 +741,12 @@ static DZClassicCalculator * _sharedCalculator;
         case kStatus_fraction:
         case kStatus_scientific:
             self.currentOperator = kOperator_nil;
-            [self setStatusToAnswerAndStackIt:_memory];
+            if (name == nil) {
+                [self setStatusToAnswerAndStackIt:num];
+            } else {
+                [self setStatusToAnswerAndStackIt:num
+                                         withName:name];
+            }
             break;
         default:
             break;

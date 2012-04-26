@@ -51,9 +51,9 @@ It is yet another science calculator.
     Refine expression display with functions.
 2012-04-23 Finish M+/M-/MR/MC.
     Finish feedInputNumber method.
+2012-04-26 Finish const PI/E,rand.
 
 ## Todo
     >> ans button.
 	>> F-E button.
-	>> const button (E,pi).
 

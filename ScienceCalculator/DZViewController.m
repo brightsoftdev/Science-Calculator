@@ -72,6 +72,7 @@
 - (void)onFunction:(id)sender;
 - (void)onHold:(id)sender;
 - (void)onMemOp:(id)sender;
+- (void)onConst:(id)sender;
 
 - (void)updateDisplay;
 
@@ -253,6 +254,16 @@
     [self updateDisplay];
 }
 
+- (void)onConst:(id)sender
+{
+    UIButton * btn = (UIButton *)sender;
+    [self.calculator pressConst:btn.tag];
+    [self updateDisplay];
+    if (self.isFn && !(self.isHold)) {
+        [self onFn2Btn:nil];
+    }
+}
+
 - (void)menuButtonPressed:(id)sender
 {
     TTNavigator * navigator = [TTNavigator navigator];
@@ -335,14 +346,14 @@
     [self addButton:2:45:@"ln":kFunction_ln:@selector(onFunction:)];
     [self addButton:2:46:@"log₁₀":kFunction_log10:@selector(onFunction:)];
     [self addButton:2:47:@"log₂":kFunction_log2:@selector(onFunction:)];
-    [self addButton:2:48:@"xⁿ":kOperator_power:@selector(onOperator:)];
-    [self addButton:2:49:@"ⁿ√":kOperator_root:@selector(onOperator:)];
+    [self addButton:2:48:@"xʸ":kOperator_power:@selector(onOperator:)];
+    [self addButton:2:49:@"ʸ√x":kOperator_root:@selector(onOperator:)];
     [self addButton:2:50:@"n!":kFunction_factorial:@selector(onFunction:)];
     [self addButton:2:51:@"nCr":kOperator_nCr:@selector(onOperator:)];
     [self addButton:2:52:@"nPr":kOperator_nPr:@selector(onOperator:)];
-    [self addButton:2:53:@"π":1:@selector(menuButtonPressed:)];
-    [self addButton:2:54:@"e":1:@selector(menuButtonPressed:)];
-    [self addButton:2:55:@"Rand":1:@selector(menuButtonPressed:)];
+    [self addButton:2:53:@"π":kConst_pi:@selector(onConst:)];
+    [self addButton:2:54:@"e":kConst_e:@selector(onConst:)];
+    [self addButton:2:55:@"Rand":kConst_rand:@selector(onConst:)];
     [self addButton:2:56:@"Menu":0:@selector(menuButtonPressed:)];
     [self.view addSubview:self.btnView2];
     [self.view addSubview:self.btnView1];

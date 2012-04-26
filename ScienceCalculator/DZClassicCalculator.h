@@ -56,6 +56,10 @@ extern const int kMemOp_sub;
 extern const int kMemOp_clear;
 extern const int kMemOp_read;
 
+extern const int kConst_pi;
+extern const int kConst_e;
+extern const int kConst_rand;
+
 @interface DZClassicCalculator : NSObject
 {
     NSInteger _maxNumberLength;
@@ -89,6 +93,6 @@ extern const int kMemOp_read;
 - (void)pressFunction:(NSInteger)func;
 - (void)pressClear;
 - (void)pressMemOp:(NSInteger)op;
-
+- (void)pressConst:(NSInteger)type;
 
 @end
