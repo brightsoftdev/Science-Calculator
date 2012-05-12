@@ -17,9 +17,10 @@
 		320D7DCCE32703ACAB9A45E5 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320D7DCCE32703ACAB9A45E4 /* libThree20.a */; };
 		320F2C48872C2E2C4DF86205 /* libThree20UI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320F2C48872C2E2C4DF86204 /* libThree20UI.a */; };
 		7930901B1514238A0027BDDB /* DZClassicCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7930901A1514238A0027BDDB /* DZClassicCalculator.m */; };
-		793431921507405A00D360A4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 793431911507405A00D360A4 /* Settings.bundle */; };
 		793E99B0152E82CB00CEA15C /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 793E99AE152E82CA00CEA15C /* button.png */; };
 		793E99B1152E82CB00CEA15C /* buttonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 793E99AF152E82CA00CEA15C /* buttonPressed.png */; };
+		79805BAD155E054000016074 /* iconiPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 79805BAC155E054000016074 /* iconiPad.png */; };
+		79805BAF155E054D00016074 /* iconIpadRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 79805BAE155E054D00016074 /* iconIpadRetina.png */; };
 		799A9CC314F9B2EA00454F81 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC214F9B2EA00454F81 /* UIKit.framework */; };
 		799A9CC514F9B2EA00454F81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC414F9B2EA00454F81 /* Foundation.framework */; };
 		799A9CC714F9B2EA00454F81 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9CC614F9B2EA00454F81 /* CoreGraphics.framework */; };
@@ -201,9 +202,10 @@
 		320F2C48872C2E2C4DF86200 /* Three20UI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20UI.xcodeproj; path = three20/src/Three20UI/Three20UI.xcodeproj; sourceTree = SOURCE_ROOT; };
 		793090191514238A0027BDDB /* DZClassicCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZClassicCalculator.h; sourceTree = "<group>"; };
 		7930901A1514238A0027BDDB /* DZClassicCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZClassicCalculator.m; sourceTree = "<group>"; };
-		793431911507405A00D360A4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		793E99AE152E82CA00CEA15C /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button.png; path = Images/button.png; sourceTree = "<group>"; };
 		793E99AF152E82CA00CEA15C /* buttonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonPressed.png; path = Images/buttonPressed.png; sourceTree = "<group>"; };
+		79805BAC155E054000016074 /* iconiPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconiPad.png; sourceTree = "<group>"; };
+		79805BAE155E054D00016074 /* iconIpadRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconIpadRetina.png; sourceTree = "<group>"; };
 		799A9CBE14F9B2EA00454F81 /* ScienceCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScienceCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		799A9CC214F9B2EA00454F81 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		799A9CC414F9B2EA00454F81 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -338,6 +340,8 @@
 		799A9CB314F9B2EA00454F81 = {
 			isa = PBXGroup;
 			children = (
+				79805BAE155E054D00016074 /* iconIpadRetina.png */,
+				79805BAC155E054000016074 /* iconiPad.png */,
 				79BC6DAC1511BCAB00027FF4 /* icon2x.png */,
 				79E22DFB15048645007086BB /* icon.png */,
 				79E22DF91504809D007086BB /* Default.png */,
@@ -395,7 +399,6 @@
 		799A9CC914F9B2EA00454F81 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				793431911507405A00D360A4 /* Settings.bundle */,
 				320B6C86F11D9990244A9730 /* Three20.bundle */,
 				799A9CCA14F9B2EA00454F81 /* ScienceCalculator-Info.plist */,
 				799A9CCB14F9B2EA00454F81 /* InfoPlist.strings */,
@@ -612,10 +615,11 @@
 				79E22DFA1504809D007086BB /* Default.png in Resources */,
 				79E22DFC15048645007086BB /* icon.png in Resources */,
 				79B59C301505AD0500CF0825 /* Localizable.strings in Resources */,
-				793431921507405A00D360A4 /* Settings.bundle in Resources */,
 				79BC6DAD1511BCAB00027FF4 /* icon2x.png in Resources */,
 				793E99B0152E82CB00CEA15C /* button.png in Resources */,
 				793E99B1152E82CB00CEA15C /* buttonPressed.png in Resources */,
+				79805BAD155E054000016074 /* iconiPad.png in Resources */,
+				79805BAF155E054D00016074 /* iconIpadRetina.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,8 +775,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
 				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -783,8 +788,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ScienceCalculator/ScienceCalculator-Prefix.pch";
 				INFOPLIST_FILE = "ScienceCalculator/ScienceCalculator-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

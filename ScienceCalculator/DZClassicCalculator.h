@@ -65,6 +65,7 @@ extern const int kConst_rand;
     NSInteger _maxNumberLength;
     NSInteger _maxPowerNumberLength;
     double _memory;
+    double _lastAnswer;
 }
 
 @property (readonly) NSInteger maxNumberLength;
@@ -94,5 +95,7 @@ extern const int kConst_rand;
 - (void)pressClear;
 - (void)pressMemOp:(NSInteger)op;
 - (void)pressConst:(NSInteger)type;
+- (void)pressAnswer;
+- (void)pressFtoE;
 
 @end

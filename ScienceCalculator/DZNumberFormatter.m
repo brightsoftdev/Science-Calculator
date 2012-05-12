@@ -16,6 +16,7 @@
 @implementation DZNumberFormatter
 
 @synthesize sci,dec;
+@synthesize forceScientific;
 
 static DZNumberFormatter * _sharedFormatter;
 
@@ -58,6 +59,7 @@ static DZNumberFormatter * _sharedFormatter;
         self.dec.maximumSignificantDigits = maxNumberLen;
         self.dec.maximumFractionDigits = maxNumberLen-1;
         self.dec.maximumIntegerDigits = maxNumberLen;
+        self.forceScientific = NO;
     }
     return self;
 }
@@ -69,7 +71,8 @@ static DZNumberFormatter * _sharedFormatter;
     }
     NSNumber * num = [NSNumber numberWithDouble:number];
     if (fabs(number+1) < pow(10, _maxNumberLength)
-        && fabs(number) > pow(0.1, _maxNumberLength/2)) {
+        && fabs(number) > pow(0.1, _maxNumberLength/2)
+        && !(self.forceScientific)) {
         return [dec stringFromNumber:num];
     } else {
         return [sci stringFromNumber:num];

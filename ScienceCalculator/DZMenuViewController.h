@@ -9,10 +9,4 @@
 
 @interface DZMenuViewController : TTTableViewController
 
-@property (nonatomic,retain) UISwitch * advancedMode;
-@property (nonatomic,retain) UISwitch * forcedScientificNotation;
-
-- (void)advancedModeChanged;
-- (void)forcedScientificNotationChanged;
-
 @end

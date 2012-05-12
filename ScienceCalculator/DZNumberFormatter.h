@@ -14,6 +14,8 @@
     NSInteger _maxPowerNumberLength;
 }
 
+@property (nonatomic,assign) BOOL forceScientific;
+
 + (DZNumberFormatter *)sharedFormatter;
 
 - (id)initWithMaxNumberLength:(NSInteger)maxNumberLen

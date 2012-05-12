@@ -7,12 +7,8 @@
 */
 
 "Menu" = "Menu";
-"Settings" = "Settings";
-"History" = "History";
-"Advanced Mode" = "Advanced Mode";
-"Scientific Notation" = "Scientific Notation";
-"Show History" = "Show History";
-"Clear History" = "Clear History";
 "Positive Infinity" = "Positive Infinity";
 "Negative Infinity" = "Negative Infinity";
 "Not a Number" = "Not a Number";
+"Hello" = "Hello";
+"Hello World" = "Hello World";

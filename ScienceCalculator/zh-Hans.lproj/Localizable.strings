@@ -7,12 +7,8 @@
 */
 
 "Menu" = "菜单";
-"Settings" = "选项";
-"History" = "历史记录";
-"Advanced Mode" = "使用高级模式";
-"Scientific Notation" = "强制科学记数法";
-"Show History" = "查看历史记录";
-"Clear History" = "清空历史记录";
 "Positive Infinity" = "正无穷";
 "Negative Infinity" = "负无穷";
 "Not a Number" = "不是数值";
+"Hello" = "你好";
+"Hello World" = "世界你好";

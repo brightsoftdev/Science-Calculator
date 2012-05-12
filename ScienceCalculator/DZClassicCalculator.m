@@ -172,6 +172,7 @@ static DZClassicCalculator * _sharedCalculator;
         _maxNumberLength = maxNumberLen;
         _maxPowerNumberLength = maxPowerNumberlen;
         _memory = 0.0;
+        _lastAnswer = 0.0;
         [self clearDisplayNumber];
 		self.answer = 0;
         self.currentOperator = kOperator_nil;
@@ -401,6 +402,9 @@ static DZClassicCalculator * _sharedCalculator;
     self.unmatchedLeftPars = 1;
     [self pressRightPar];
     self.unmatchedLeftPars = 0;
+    if (isfinite(self.answer)) {
+        _lastAnswer = self.answer;
+    }
 }
 
 - (void)pressOperator:(NSInteger)op
@@ -578,6 +582,33 @@ static DZClassicCalculator * _sharedCalculator;
             break;
     }
     [self feedInputNumber:value withName:name];
+}
+
+- (void)pressAnswer
+{
+    [self feedInputNumber:_lastAnswer withName:@"ans"];
+}
+
+- (void)pressFtoE
+{
+    switch (self.status) {
+        case kStatus_init:
+        case kStatus_integer:
+        case kStatus_fraction:
+        case kStatus_scientific:
+            self.currentOperator = kOperator_nil;
+            [self setStatusToAnswerAndStackIt:
+             self.displayNumber.doubleValue];
+            if (self.status == kStatus_error)
+                break;
+            // RUN THROUGH
+        case kStatus_answer:
+            self.numberFormatter.forceScientific = 
+            !(self.numberFormatter.forceScientific);
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -

@@ -12,6 +12,9 @@
 
 + (double)permutation:(double)k outOf:(double)n
 {
+    if (floor(k)!=k || floor(n)!=n || k > n || k < 0 || n < 0) {
+        return NAN;
+    }
     double result = 1;
     for (int i = 0; i < k; i++) {
         result *= n - i;
@@ -21,6 +24,9 @@
 
 + (double)combination:(double)k outOf:(double)n
 {
+    if (floor(k)!=k || floor(n)!=n || k > n || k < 0 || n < 0) {
+        return NAN;
+    }
     double result = 1;
     for (int i = 0; i < k; i++) {
         result *= n - i;

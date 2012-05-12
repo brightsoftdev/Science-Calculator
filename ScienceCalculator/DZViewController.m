@@ -73,6 +73,8 @@
 - (void)onHold:(id)sender;
 - (void)onMemOp:(id)sender;
 - (void)onConst:(id)sender;
+- (void)onAnswer:(id)sender;
+- (void)onFtoE:(id)sender;
 
 - (void)updateDisplay;
 
@@ -264,6 +266,18 @@
     }
 }
 
+- (void)onAnswer:(id)sender
+{
+    [self.calculator pressAnswer];
+    [self updateDisplay];
+}
+
+- (void)onFtoE:(id)sender
+{
+    [self.calculator pressFtoE];
+    [self updateDisplay];
+}
+
 - (void)menuButtonPressed:(id)sender
 {
     TTNavigator * navigator = [TTNavigator navigator];
@@ -319,11 +333,11 @@
     [self addButton:1:21:@"1":1:@selector(onDigitBtn:)];
     [self addButton:1:22:@"2":2:@selector(onDigitBtn:)];
     [self addButton:1:23:@"3":3:@selector(onDigitBtn:)];
-    [self addButton:1:24:@"F-E":0:@selector(menuButtonPressed:)];
+    [self addButton:1:24:@"F-E":0:@selector(onFtoE:)];
     [self addButton:1:25:@"+":kOperator_add:@selector(onOperator:)];
     [self addButton:1:26:@"0":0:@selector(onDigitBtn:)];
-    [self addButton:1:27:@".":1:@selector(onDot:)];
-    [self addButton:1:28:@"ans":1:@selector(menuButtonPressed:)];
+    [self addButton:1:27:@".":0:@selector(onDot:)];
+    [self addButton:1:28:@"ans":0:@selector(onAnswer:)];
     [self addButton:1:29:@"=":0:@selector(onEqu:)];
     self.btnView2 = [[UIView alloc]
                      initWithFrame:CGRectMake(0, 124, 320, 336)];
@@ -354,7 +368,6 @@
     [self addButton:2:53:@"π":kConst_pi:@selector(onConst:)];
     [self addButton:2:54:@"e":kConst_e:@selector(onConst:)];
     [self addButton:2:55:@"Rand":kConst_rand:@selector(onConst:)];
-    [self addButton:2:56:@"Menu":0:@selector(menuButtonPressed:)];
     [self.view addSubview:self.btnView2];
     [self.view addSubview:self.btnView1];
     exprLabel = [[UILabel alloc]initWithFrame:
